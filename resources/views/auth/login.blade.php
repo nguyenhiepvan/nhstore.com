@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('css')
-<link href="{{ asset('asset/dist/css/login.css') }}" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 @endsection
@@ -108,6 +107,7 @@
                 </svg>
             </div>
         </div>
+        <div class="greeting"><h3><strong>Xin chào admin,</strong></h3></div>
         <div class="inputGroup inputGroup1">
             @error('email')
             <span class="invalid-feedback" role="alert">
@@ -116,7 +116,7 @@
             @enderror
             <label for="loginEmail" id="loginEmailLabel">Email</label>
             <input id="loginEmail" maxlength="254" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-            <p class="helper helper1">email@domain.com</p>
+            <p class="helper helper1">email@example.com</p>
         </div>
         <div class="inputGroup inputGroup2">
             <label for="loginPassword" id="loginPasswordLabel">Mật khẩu</label>
@@ -141,18 +141,15 @@
         <button id="login">Đăng nhập</button>
     </div>
     <div class="inputGroup inputGroup5">
-        @if (Route::has('password.request'))
         <a href="{{ route('password.request') }}">
             Bạn quên mật khẩu?
         </a>
-        @endif
-
     </div>
 </form>
 </div>
 @endsection
 @section('script')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
-<script type="text/javascript" src="{{ asset('asset/dist/js/MorphSVGPlugin.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('asset/dist/js/login.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/dist/js/morphsvgplugin-min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/dist/js/login.js') }}"></script>
 @endsection

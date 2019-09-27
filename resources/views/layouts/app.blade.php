@@ -14,20 +14,20 @@
 
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  <link href="{{ asset('asset/dist/css/app.css') }}" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link href="{{ asset('assets/dist/css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/dist/css/login.css') }}" rel="stylesheet">
   @yield('css')
 </head>
 <body>
   <div id="app">
-    <main class="py-4">
-      @yield('content')
-    </main>
+    @yield('content')
   </div>
+  <!-- particles.js container -->
   <div id="particles-js"></div>
 </body>
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script type="text/javascript" src="{{ asset('asset/dist/js/app.js') }}">
+<script type="text/javascript" src="{{ asset('assets/dist/js/particles.js') }}">
 </script>
+<script type="text/javascript" src="{{ asset('assets/dist/js/app.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 @yield('script')
 </html>
