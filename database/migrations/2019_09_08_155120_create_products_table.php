@@ -15,9 +15,11 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('thumbnail')->comment('Ảnh sản phẩm');
             $table->string('name')->comment('tên sản phẩm');
             $table->string('SKU')->comment('mã sản phẩm');
             $table->string('slug')->comment('đường dẫn sản phẩm');
+            $table->mediumText('description')->comment('mô tả sản phẩm');
             $table->bigInteger('material_id')->unsigned()->comment('chất liệu sản phẩm');
             $table->bigInteger('brand_id')->unsigned()->comment('thương hiệu sản phẩm');
             $table->bigInteger('country_id')->unsigned()->comment('xuất sứ sản phẩm');

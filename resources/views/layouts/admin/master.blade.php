@@ -6,6 +6,7 @@
 	@yield('title')
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="icon" type="image/png" href="/favi.png" />
 	<!-- Bootstrap 3.3.7 -->
 	<link rel="stylesheet" href="{{asset('assets/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
 	<!-- Font Awesome -->
@@ -19,17 +20,26 @@
   	<link rel="stylesheet" href="{{asset('assets/dist/css/skins/_all-skins.min.css')}}">
   	<!-- Google Font -->
   	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  	<style type="text/css">
+  		.icons{
+  			width: 20px;
+  			margin-right: 5px;
+  		}
+  		q {
+  			font-style: italic;
+  		}
+  	</style>
   	@yield('css')
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
   	<!-- Site wrapper -->
   	<div class="wrapper">
-  		@include('layouts.header')
+  		@include('layouts.admin.header')
   		<!-- =============================================== -->
-  		@include('layouts.sidebar')
+  		@include('layouts.admin.sidebar')
   		<!-- =============================================== -->
   		@yield('content')
-  		@include('layouts.footer')
+  		@include('layouts.admin.footer')
 	<!-- Add the sidebar's background. This div must be placed
 		immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>

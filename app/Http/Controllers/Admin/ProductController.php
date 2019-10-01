@@ -4,6 +4,12 @@ use Illuminate\Http\Request;
 use nhstore\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
 use nhstore\Product;
+use nhstore\Material;
+use nhstore\Color;
+use nhstore\Country;
+use nhstore\Supplier;
+use nhstore\Size;
+use nhstore\Brand;
 class ProductController extends Controller
 {
     function __construct()
@@ -17,7 +23,6 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        //
         if ($request->ajax()) {
             $products = Product::where('status',true)->where('deleted_at',null)->get();
             return Datatables::of($products)
@@ -26,6 +31,11 @@ class ProductController extends Controller
             {
                 # code...
                 return $product->name;
+            })
+            ->editColumn('thumbnail',function ($product)
+            {
+                # code...
+                return '<img src ="'.$product->thumbnail.'" style="max-height:100px;" title="'.$product->slug.'">';
             })
             ->editColumn('brand', function ($product)
             {
@@ -38,13 +48,21 @@ class ProductController extends Controller
                 return $product->supplier->name;
             })
             ->editColumn('action', function($product){
-             $btn = '<a href="javascript:;" class="edit btn btn-primary btn-sm">View</a>';
-             return $btn;
-         })
-            ->rawColumns(['action'])
+               $btn = '<a href="javascript:;" class="edit btn btn-primary btn-sm">View</a>';
+               return $btn;
+           })
+            ->rawColumns(['action','thumbnail'])
             ->make(true);
         }
-        return view('admin.productsList');
+        return view('admin.productsList')
+        ->with([
+            'materials'=>Material::all(),
+            'brands'=>Brand::all(),
+            'colors'=>Color::all(),
+            'sizes'=>Size::all(),
+            'suppliers'=>Supplier::all(),
+            'countries'=>Country::all()
+        ]);
     }
     /**
      * Show the form for creating a new resource.
@@ -53,7 +71,6 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
     }
     /**
      * Store a newly created resource in storage.

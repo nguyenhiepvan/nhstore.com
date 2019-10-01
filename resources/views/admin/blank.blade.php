@@ -1,4 +1,4 @@
- @extends('layouts.master')
+ @extends('layouts.admin.master')
  @section('title')
  <title>AdminLTE 2 | Blank Page</title>
  @endsection

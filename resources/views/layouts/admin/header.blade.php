@@ -2,7 +2,7 @@
 	<!-- Logo -->
 	<a href="#" class="logo">
 		<!-- mini logo for sidebar mini 50x50 pixels -->
-		<span class="logo-mini"><b>N</b>HS</span>
+		<span class="logo-mini"><img src="/favi.png"></span>
 		<!-- logo for regular state and mobile devices -->
 		<span class="logo-lg"><b>NH</b>Store</span>
 	</a>
@@ -104,29 +104,26 @@
 			<li class="dropdown user user-menu">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 					<img src="{{asset('assets/dist/img/user2-160x160.jpg')}}" class="user-image" alt="User Image">
-					<span class="hidden-xs">Alexander Pierce</span>
+					<span class="hidden-xs">{{Auth::guard('web')->user()->name}}</span>
 				</a>
 				<ul class="dropdown-menu">
 					<!-- User image -->
 					<li class="user-header">
 						<img src="{{asset('assets/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
 						<p>
-							Alexander Pierce - Web Developer
-							<small>Member since Nov. 2012</small>
+							{{Auth::guard('web')->user()->name}} - Web Developer
+							<small>Member since
+								@php
+								$date=date_create(Auth::guard('web')->user()->created_at);
+								echo date_format($date,"M. Y");
+								@endphp
+							</small>
 						</p>
 					</li>
 					<!-- Menu Body -->
 					<li class="user-body">
-						<div class="row">
-							<div class="col-xs-4 text-center">
-								<a href="#">Followers</a>
-							</div>
-							<div class="col-xs-4 text-center">
-								<a href="#">Sales</a>
-							</div>
-							<div class="col-xs-4 text-center">
-								<a href="#">Friends</a>
-							</div>
+						<div class="row" style="text-align: center;">
+							<q>{{Auth::guard('web')->user()->quote}}</q>
 						</div>
 						<!-- /.row -->
 					</li>

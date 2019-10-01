@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 @section('content')
 <div class="container">
 <form method="POST" action="{{ route('password.email') }}">

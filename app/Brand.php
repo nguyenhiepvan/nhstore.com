@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Brand extends Model
 {
+	protected $fillable = [
+        'name', 'acronym', 'slug',
+    ];
 	/**
 	* Hàm này dùng để lấy sản phẩm thuộc về thương hiệu này
 	*

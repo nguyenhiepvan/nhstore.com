@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('avatar',255)->nullable()->comment('ảnh nhà tuyển dụng');
             $table->string('email');
+            $table->string('quote')->nullable();
             $table->string('facebook')->nullable();
             $table->string('google')->nullable();
             $table->string('linkedin')->nullable();

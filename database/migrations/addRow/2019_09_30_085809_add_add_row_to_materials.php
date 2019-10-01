@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAddRowToProducts extends Migration
+class AddAddRowToMaterials extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class AddAddRowToProducts extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
+        Schema::table('materials', function (Blueprint $table) {
             //
-            $table->boolean('status')->default(true)->comment('trạng thái hiển thị của sản phẩm');
-            $table->timestamp('deleted_at')->nullable();
+            $table->string('acronym')->comment('viết tắt');
+            $table->string('slug')->comment('đường dẫn');
         });
     }
 
@@ -27,7 +27,7 @@ class AddAddRowToProducts extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
+        Schema::table('materials', function (Blueprint $table) {
             //
         });
     }

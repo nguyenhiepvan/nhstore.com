@@ -37,10 +37,16 @@ Route::group([
     # code...
 	Route::view('/', 'admin.blank');
 	/******************************************************************************/
+	//list all lfm routes here...
+	/******************************************************************************/
+	Route::get('/laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show');
+	Route::post('/laravel-filemanager/upload', '\UniSharp\LaravelFilemanager\Controllers\UploadController@upload');
+	/******************************************************************************/
 	// Quản lý sản phẩm
 	/******************************************************************************/
 	Route::resource('products', 'ProductController');
 });
+
 //end admin
 /******************************************************************************/
 // homework
