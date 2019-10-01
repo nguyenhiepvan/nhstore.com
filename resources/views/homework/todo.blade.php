@@ -22,6 +22,7 @@
 				<tr>
 					<th>Stt</th>
 					<th>Ghi chú</th>
+					<th>Nội dung</th>
 					<th>Thời gian tạo</th>
 					<th>Đã xong?</th>
 					<th></th>
@@ -30,7 +31,7 @@
 		</table>
 	</div>
 </div>
-<!-- Modal -->
+<!-- add modal -->
 <div class="modal fade" id="addTodo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
@@ -44,8 +45,37 @@
 				@csrf
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="todo">Ghi chú</label>
-						<input type="text" id="todo-input" name="todo" class="form-control" placeholder="Tiếp theo là gì?" required>
+						<label for="title">Ghi chú</label>
+						<input type="text" id="title-input" name="title" class="form-control" placeholder="Tiếp theo là gì?" required><label for="content">Nội dung</label>
+						<input type="text" id="content-input" name="content" class="form-control" placeholder="Ghi chú của bạn" required>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+					<button type="submit" class="btn btn-primary">Lưu lại</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{{-- edit modal --}}
+<div class="modal fade" id="editTodo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalTitle">Sửa ghi chú</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form action="javascript:;" id="editForm" method="POST" role="form">
+				@csrf
+				@method('PUT')
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="title">Ghi chú</label>
+						<input type="text" id="edit-title-input" name="title" class="form-control" placeholder="Tiếp theo là gì?" required><label for="content">Nội dung</label>
+						<input type="text" id="edit-content-input" name="content" class="form-control" placeholder="Ghi chú của bạn" required>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -64,19 +94,20 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 {{-- lấy dữ liệu todo --}}
 <script>
-	var table = $('#todo-table').DataTable({
+	let table = $('#todo-table').DataTable({
 		processing: true,
 		serverSide: true,
 		ajax: "{{ route('todos.index') }}",
 		columns: [
 		{data: 'DT_RowIndex', name: 'DT_RowIndex'},
-		{data: 'todo', name: 'todo'},
+		{data: 'title', name: 'title'},
+		{data: 'content', name: 'content'},
 		{data: 'created_at', name: 'created_at'},
 		{data: 'done', name: 'done'},
 		{data: 'action', name: 'action', orderable: false, searchable: false},
 		],
 		"columnDefs": [
-		{ className: "tdclolumn", "targets": [ 0,1,2,3,4 ] }
+		{ className: "tdclolumn", "targets": [ 0,1,2,3,4,5 ] }
 		],
 		"language":{
 			"sProcessing":   "Đang xử lý...",
@@ -104,11 +135,11 @@
 			// Hàm này dùng để thay đổi trạng thái hoàn thành của todo
 			$('.js-switch').change(function () {
 				let done = $(this).prop('checked') === true ? 1 : 0;
-				let id = $(this).data('id');
+				let id_ = $(this).data('id');
 				$.ajax({
 					type: "PUT",
 					dataType: "json",
-					url: 'todos/'+id,
+					url: 'todos/'+id_,
 					data: {'done': done},
 					success: function (res) {
 						if(res.msg){
@@ -123,12 +154,17 @@
 			// Đoạn này dùng để sửa todo
 			$('.edit').click(function () {
 				let id = $(this).data('id');
-				let todo = $(this).data('todo');
-				$('#modalTitle').empty();
-				$('#modalTitle').text('Sửa ghi chú');
-				$('#todo-input').attr("placeholder",todo);
-				$('#todoForm').data('id',id);
-				$('#addTodo').modal('show');
+				$.ajax({
+					url:'/todos/'+id,
+					type:'get',
+					cache:false,
+					success: function (res) {
+						$('#edit-title-input').attr("placeholder",res.title);
+						$('#edit-content-input').attr("placeholder",res.content);
+						$('#editForm').data('id',id);
+						$('#editTodo').modal('show');
+					}
+				});
 			});
 			// Đoạn này dùng để xóa todo
 			$('.delete').click(function () {
@@ -149,7 +185,7 @@
 							'success'
 							);
 						$.ajax({
-							type: "DELETE",
+							type: "DEletE",
 							url: 'todos/'+id,
 						});
 						table.ajax.reload();
@@ -162,52 +198,56 @@
 {{-- Hàm này dùng để thêm todo --}}
 <script type="text/javascript">
 	$('#todoForm').submit(function () {
-		// đoạn này để thêm mới todo
-		if ($(this).data('id') == undefined) {
-			let form = $(this)[0];
-			let formData = new FormData(form);
-			$.ajax({
-				url:'{{ route('todos.store') }}',
-				data:formData,
-				type:'post',
-				cache:false,
-				contentType:false,
-				processData:false,
-				success: function (res) {
-					if (res.msg) {
-						$('#todoForm').trigger("reset");
-						$('#addTodo').modal('hide');
-						table.ajax.reload();
-					};
-				}
-			});
-		} else {
-			//Đoạn này để cập nhật todo
-			let id = $(this).data('id');
-			let form = $(this)[0];
-			let formData = new FormData(form);
-			$.ajax({
-				url:'{{ route('todos.store') }}',
-				type: "PUT",
-				dataType: "json",
-				url: 'todos/'+id,
-				data: {'todo': formData.get('todo')},
-				success: function (res) {
-					if (res.msg) {
-						$('#modalTitle').text('Thêm mới');
-						$('#todoForm').removeData( "id" );
-						$('#todo-input').attr("placeholder",'Tiếp theo là gì?');
-						$('#todoForm').trigger("reset");
-						$('#addTodo').modal('hide');
-						toastr.options.closeButton = true;
-						toastr.options.closeMethod = 'fadeOut';
-						toastr.options.closeDuration = 100;
-						toastr.success('Thay đổi đã được cập nhật');
-						table.ajax.reload();
-					};
-				}
-			});
-		}
+		let form = $(this)[0];
+		let formData = new FormData(form);
+		formData.append('user_id',1);
+		$.ajax({
+			url:'{{ route('todos.store') }}',
+			data:formData,
+			type:'post',
+			cache:false,
+			contentType:false,
+			processData:false,
+			success: function (res) {
+				if (res.msg) {
+					$('#todoForm').trigger("reset");
+					$('#addTodo').modal('hide');
+					toastr.options.closeButton = true;
+					toastr.options.closeMethod = 'fadeOut';
+					toastr.options.closeDuration = 100;
+					toastr.success('Thêm mới thành công')
+					table.ajax.reload();
+				};
+			}
+		});
+	})
+</script>
+{{-- Đoạn này để cập nhật todo --}}
+<script type="text/javascript">
+	$('#editForm').submit(function () {
+		let id = $(this).data('id');
+		let form = $(this)[0];
+		let formData = new FormData(form);
+		formData.append('_method', 'PUT');
+		$.ajax({
+			url:'{{ route('todos.store') }}',
+			type: 'post',
+			url: 'todos/'+id,
+			processData: false,
+			contentType: false,
+			data: formData,
+			success: function (res) {
+				if (res.msg) {
+					$('#editForm').trigger("reset");
+					$('#editTodo').modal('hide');
+					toastr.options.closeButton = true;
+					toastr.options.closeMethod = 'fadeOut';
+					toastr.options.closeDuration = 100;
+					toastr.success('Thay đổi đã được cập nhật');
+					table.ajax.reload();
+				};
+			}
+		});
 	})
 </script>
 @endsection

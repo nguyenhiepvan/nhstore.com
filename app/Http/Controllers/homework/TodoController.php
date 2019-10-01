@@ -20,9 +20,13 @@ class TodoController extends Controller
         $todos = Todo::all();
         return Datatables::of($todos)
         ->addIndexColumn()
-        ->editColumn('todo', function ($todo)
+        ->editColumn('title', function ($todo)
         {
-            return $todo->todo;
+            return $todo->title;
+        })
+        ->editColumn('content', function ($todo)
+        {
+            return $todo->content;
         })
         ->editColumn('created_at', function ($todo)
         {
@@ -38,7 +42,7 @@ class TodoController extends Controller
 
         })
         ->addColumn('action', function($todo){
-           return '<a style="display: inline-block; width: 67px;" data-id="'.$todo->id.'" data-todo="'.$todo->todo.'" href="javascript:;" class="btn btn-warning edit" title="Sửa"><i class="fa fa-edit"></i></a>
+           return '<a style="display: inline-block; width: 67px;" data-id="'.$todo->id.'" href="javascript:;" class="btn btn-warning edit" title="Sửa"><i class="fa fa-edit"></i></a>
            <a style="display: inline-block; width: 67px;" data-id="'.$todo->id.'" href="javascript:;"  class="btn btn-danger delete" title="Xóa"><i class="fa fa-trash" aria-hidden="true"></i></a>';
        })
         ->rawColumns(['action','done'])
@@ -77,7 +81,8 @@ class TodoController extends Controller
      */
     public function show($id)
     {
-        //
+        $todo = Todo::find($id);
+        return response()->json(['title'=>$todo->title,'content'=>$todo->content]);
     }
 
     /**
@@ -100,8 +105,7 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $result = Todo::where('id',$id)->update($request->all());
+        $result = Todo::where('id',$id)->update(['title'=>$request->title,'content'=>$request->content]);
         return response()->json(['msg'=>$result]);
     }
 

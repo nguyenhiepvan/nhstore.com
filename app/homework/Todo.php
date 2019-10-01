@@ -12,6 +12,8 @@ class Todo extends Model
      * @var array
      */
     protected $fillable = [
-        'todo',
+        'title',
+        'content',
+        'user_id',
     ];
 }

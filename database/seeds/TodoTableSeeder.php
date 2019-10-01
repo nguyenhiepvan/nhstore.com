@@ -13,9 +13,10 @@ class TodoTableSeeder extends Seeder
     {
         //
        $fake = \Faker\Factory::create();
-       for ($i=0; $i < 20; $i++) {
+       for ($i=0; $i < 200; $i++) {
        	\DB::table('todos')->insert([
-       		'todo' => $fake->text(20),
+       		'title' => $fake->text(10),
+          'content' => $fake->text(20),
        		'user_id' => rand(1,21),
        	]);
        }

@@ -14,8 +14,8 @@ class AddUserIdColumnTodosTable extends Migration
     public function up()
     {
         Schema::table('todos', function (Blueprint $table) {
-            //
-            $table->string('todo')->comment('Ghi chú');
+            $table->string('title')->comment('Tiêu đề');
+            $table->text('content')->comment('Nội dung');
             $table->unsignedBigInteger('user_id')->after('id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
         });
@@ -30,8 +30,8 @@ class AddUserIdColumnTodosTable extends Migration
     {
         Schema::table('todos', function (Blueprint $table) {
             //
-            $table->dropColumn(['todo']);
             $table->dropForeign(['user_id']);
+            $table->dropColumn(['todo','user_id']);
         });
     }
 }
