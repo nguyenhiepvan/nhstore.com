@@ -18,6 +18,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
   	folder instead of downloading all of them to reduce the load. -->
   	<link rel="stylesheet" href="{{asset('assets/dist/css/skins/_all-skins.min.css')}}">
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   	<!-- Google Font -->
   	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   	<style type="text/css">
@@ -57,6 +58,8 @@
 	<script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="{{asset('assets/dist/js/demo.js')}}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 	<script>
 		$(document).ready(function () {
 			$('.sidebar-menu').tree()

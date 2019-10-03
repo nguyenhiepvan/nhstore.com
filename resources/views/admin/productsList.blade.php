@@ -62,6 +62,10 @@
     border: none;
     background-color: white;
   }
+  .modal-header{
+    text-align: center;
+    font-size: large;
+  }
 </style>
 @endsection
 @section('content')
@@ -229,8 +233,8 @@
         let src = $(this).parent().find('img').attr('src');
         value = value.replace(src +',', "");
         $('#thumbnail').val(value);
-        $(this).parent().find('img').remove();
-        $(this).remove();
+        $(this).parent().find('img').empty();
+        $(this).empty();
       })
     </script>
     {{-- Hàm này dùng để tạo ký tự viết tắt --}}
@@ -279,5 +283,205 @@
       //In slug ra textbox có id “slug”
       return slug;
     }
+  </script>
+  {{-- Hàm này tạo ra ký tự viết tắt và đường dẫn khi nhập tên --}}
+  <script type="text/javascript">
+    $(document).on('input','.name',function () {
+      let name = $(this).val();
+      let slug = ChangeToSlug(name);
+      let acronym = acr(name);
+      $('.slug').val(slug);
+      $('.acronym').val(acronym);
+    })
+  </script>
+  {{-- Hàm này dùng để reset form khi mở modal --}}
+  <script type="text/javascript">
+    $(document).on('click','.more',function () {
+      $('.form').trigger("reset");
+      $('.error').empty();
+      $('.slug').val('');
+      $('.acronym').val('');
+    })
+  </script>
+  {{-- hàm này dùng để reset error khi bấm submit mới --}}
+  <script type="text/javascript">
+    $(document).on('click','.save',function () {
+      $('.error').empty();
+    })
+  </script>
+  {{-- Hàm này dùng để tạo ra chất liệu mới --}}
+  <script type="text/javascript">
+    $(document).on('submit','#materialAddForm',function () {
+      let form = $(this)[0];
+      let formData = new FormData(form);
+      $.ajax({
+        url:'{{ route('admin.materials.store') }}',
+        data: formData,
+        type: 'post',
+        contentType:false,
+        processData:false,
+        success: function (res) {
+          $('#materialModal').modal('hide');
+          $('.form').trigger("reset");
+          $('.error').empty();
+          Swal.fire({
+            position: 'center',
+            type: 'success',
+            title: 'Đã thêm chất liệu',
+            showConfirmButton: false,
+            timer: 1000
+          })
+          $('#materialsSelect').append('<option data-acroym="'+res.acronym+'" value="'+res.id+'">'+res.name+'</option>');
+          $('#materialsSelect').select2();
+        },
+        error: function(xhr, status, errors)
+        {
+          $.each(xhr.responseJSON.errors, function (key, item)
+          {
+            $(".errors_"+key).append("<p class='text-red'>"+item+"</p>")
+          });
+        }
+      })
+    })
+  </script>
+  {{-- Hàm này dùng để tạo ra màu sắc mới --}}
+  <script type="text/javascript">
+    $(document).on('submit','#colorAddForm',function () {
+      let form = $(this)[0];
+      let formData = new FormData(form);
+      $.ajax({
+        url:'{{ route('admin.colors.store') }}',
+        data: formData,
+        type: 'post',
+        contentType:false,
+        processData:false,
+        success: function (res) {
+          $('#colorModal').modal('hide');
+          $('.form').trigger("reset");
+          $('.error').empty();
+          Swal.fire({
+            position: 'center',
+            type: 'success',
+            title: 'Đã thêm màu sắc',
+            showConfirmButton: false,
+            timer: 1000
+          })
+          $('#colorsSelect').append('<option data-acroym="'+res.acronym+'" value="'+res.id+'">'+res.name+'</option>');
+          $('#colorsSelect').select2();
+        },
+        error: function(xhr, status, errors)
+        {
+          $.each(xhr.responseJSON.errors, function (key, item)
+          {
+            $(".errors_"+key).append("<p class='text-red'>"+item+"</p>")
+          });
+        }
+      })
+    })
+  </script>
+  {{-- Hàm này dùng để tạo ra màu sắc mới --}}
+  <script type="text/javascript">
+    $(document).on('submit','#originAddForm',function () {
+      let form = $(this)[0];
+      let formData = new FormData(form);
+      $.ajax({
+        url:'{{ route('admin.origins.store') }}',
+        data: formData,
+        type: 'post',
+        contentType:false,
+        processData:false,
+        success: function (res) {
+          $('#originModal').modal('hide');
+          $('.form').trigger("reset");
+          $('.error').empty();
+          Swal.fire({
+            position: 'center',
+            type: 'success',
+            title: 'Đã thêm xuất xứ',
+            showConfirmButton: false,
+            timer: 1000
+          })
+          $('#originsSelect').append('<option data-acroym="'+res.acronym+'" value="'+res.id+'">'+res.name+'</option>');
+          $('#colorsSelect').select2();
+        },
+        error: function(xhr, status, errors)
+        {
+          $.each(xhr.responseJSON.errors, function (key, item)
+          {
+            $(".errors_"+key).append("<p class='text-red'>"+item+"</p>")
+          });
+        }
+      })
+    })
+  </script>
+  {{-- Hàm này dùng để tạo ra thương hiệu mới --}}
+  <script type="text/javascript">
+    $(document).on('submit','#brandAddForm',function () {
+      let form = $(this)[0];
+      let formData = new FormData(form);
+      $.ajax({
+        url:'{{ route('admin.brands.store') }}',
+        data: formData,
+        type: 'post',
+        contentType:false,
+        processData:false,
+        success: function (res) {
+          $('#brandModal').modal('hide');
+          $('.form').trigger("reset");
+          $('.error').empty();
+          Swal.fire({
+            position: 'center',
+            type: 'success',
+            title: 'Đã thêm xuất xứ',
+            showConfirmButton: false,
+            timer: 1000
+          })
+          $('#brandsSelect').append('<option data-acroym="'+res.acronym+'" value="'+res.id+'">'+res.name+'</option>');
+          $('#colorsSelect').select2();
+        },
+        error: function(xhr, status, errors)
+        {
+          $.each(xhr.responseJSON.errors, function (key, item)
+          {
+            $(".errors_"+key).append("<p class='text-red'>"+item+"</p>")
+          });
+        }
+      })
+    })
+  </script>
+  {{-- Hàm này dùng để tạo ra nhà phân phối mới --}}
+  <script type="text/javascript">
+    $(document).on('submit','#supplierAddForm',function () {
+      let form = $(this)[0];
+      let formData = new FormData(form);
+      $.ajax({
+        url:'{{ route('admin.suppliers.store') }}',
+        data: formData,
+        type: 'post',
+        contentType:false,
+        processData:false,
+        success: function (res) {
+          $('#supplierModal').modal('hide');
+          $('.form').trigger("reset");
+          $('.error').empty();
+          Swal.fire({
+            position: 'center',
+            type: 'success',
+            title: 'Đã thêm nhà phân phối',
+            showConfirmButton: false,
+            timer: 1000
+          })
+          $('#suppliersSelect').append('<option data-acroym="'+res.acronym+'" value="'+res.id+'">'+res.name+'</option>');
+          $('#colorsSelect').select2();
+        },
+        error: function(xhr, status, errors)
+        {
+          $.each(xhr.responseJSON.errors, function (key, item)
+          {
+            $(".errors_"+key).append("<p class='text-red'>"+item+"</p>")
+          });
+        }
+      })
+    })
   </script>
   @endsection

@@ -22,13 +22,30 @@
 				<tr>
 					<th>Stt</th>
 					<th>Ghi chú</th>
-					<th>Nội dung</th>
 					<th>Thời gian tạo</th>
 					<th>Đã xong?</th>
 					<th></th>
 				</tr>
 			</thead>
 		</table>
+	</div>
+</div>
+<!-- view modal -->
+<div class="modal fade" id="detailTodo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalTitle">Tiêu để ghi chú</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="detailTodoContent">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- add modal -->
@@ -47,7 +64,7 @@
 					<div class="form-group">
 						<label for="title">Ghi chú</label>
 						<input type="text" id="title-input" name="title" class="form-control" placeholder="Tiếp theo là gì?" required><label for="content">Nội dung</label>
-						<input type="text" id="content-input" name="content" class="form-control" placeholder="Ghi chú của bạn" required>
+						<textarea id="content-input" name="content" class="form-control" placeholder="Ghi chú của bạn" required></textarea>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -75,7 +92,7 @@
 					<div class="form-group">
 						<label for="title">Ghi chú</label>
 						<input type="text" id="edit-title-input" name="title" class="form-control" placeholder="Tiếp theo là gì?" required><label for="content">Nội dung</label>
-						<input type="text" id="edit-content-input" name="content" class="form-control" placeholder="Ghi chú của bạn" required>
+						<textarea id="edit-content-input" name="content" class="form-control" placeholder="Ghi chú của bạn" required></textarea>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -94,20 +111,19 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 {{-- lấy dữ liệu todo --}}
 <script>
-	let table = $('#todo-table').DataTable({
+	var table = $('#todo-table').DataTable({
 		processing: true,
 		serverSide: true,
 		ajax: "{{ route('todos.index') }}",
 		columns: [
 		{data: 'DT_RowIndex', name: 'DT_RowIndex'},
 		{data: 'title', name: 'title'},
-		{data: 'content', name: 'content'},
 		{data: 'created_at', name: 'created_at'},
 		{data: 'done', name: 'done'},
 		{data: 'action', name: 'action', orderable: false, searchable: false},
 		],
 		"columnDefs": [
-		{ className: "tdclolumn", "targets": [ 0,1,2,3,4,5 ] }
+		{ className: "tdclolumn", "targets": [ 0,1,2,3,4] },
 		],
 		"language":{
 			"sProcessing":   "Đang xử lý...",
@@ -127,12 +143,26 @@
 			}
 		},
 		fnDrawCallback:function (oSettings) {
+			//Xem chi tiết ghi chú
+			$('.detail').click(function () {
+				let id = $(this).data('id');
+				$.ajax({
+					url:'todos/'+id,
+					type:'get',
+					success: function (res) {
+						let data = '<strong>Người tạo: </strong>'+res.user+'<br><strong>Ngày tạo: </strong>'+res.created_at+'<br><strong>Trạng thái: </strong>'+res.status+'<br><strong>Nội dung: </strong><br>'+res.content+'';
+						$('#modalTitle').text('Ghi chú: '+res.title);
+						$('#detailTodoContent').html(data);
+						$('#detailTodo').modal('show');
+					}
+				});
+			});
 			// Đoạn này dùng để set up checkbox
 			let elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 			elems.forEach(function(html) {
 				let switchery = new Switchery(html,  { size: 'big' });
 			});
-			// Hàm này dùng để thay đổi trạng thái hoàn thành của todo
+			// Đoạn này dùng để thay đổi trạng thái hoàn thành của todo
 			$('.js-switch').change(function () {
 				let done = $(this).prop('checked') === true ? 1 : 0;
 				let id_ = $(this).data('id');

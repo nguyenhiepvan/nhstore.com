@@ -4,7 +4,7 @@ namespace nhstore\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use nhstore\Http\Controllers\Controller;
-
+use nhstore\Brand;
 class BrandController extends Controller
 {
     /**
@@ -35,7 +35,13 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>['required','string','unique:brands'],
+            'slug'=>['required','string','unique:brands'],
+            'acronym'=>['required','string','unique:brands'],
+        ]);
+        $brand = Brand::create($request->all());
+        return response()->json(['id'=>$brand->id,'name'=>$brand->name,'acronym'=>$brand->acronym]);
     }
 
     /**

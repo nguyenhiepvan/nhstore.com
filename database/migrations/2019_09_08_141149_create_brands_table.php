@@ -18,8 +18,6 @@ class CreateBrandsTable extends Migration
             $table->string('name')->comment('tên thương hiệu');
             $table->string('acronym')->comment('viết tắt');
             $table->string('slug')->comment('đường dẫn');
-            $table->bigInteger('origin')->unsigned()->comment('xuất xứ thương hiệu');
-            $table->foreign('origin')->references('id')->on('countries');
             $table->timestamps();
         });
     }

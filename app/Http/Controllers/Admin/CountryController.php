@@ -4,7 +4,7 @@ namespace nhstore\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use nhstore\Http\Controllers\Controller;
-
+use nhstore\Country;
 class CountryController extends Controller
 {
     /**
@@ -35,7 +35,13 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>['required','string','unique:countries'],
+            'slug'=>['required','string','unique:countries'],
+            'acronym'=>['required','string','unique:countries'],
+        ]);
+        $country = Country::create($request->all());
+        return response()->json(['id'=>$country->id,'name'=>$country->name,'acronym'=>$country->acronym]);
     }
 
     /**

@@ -59,7 +59,6 @@ class ProductController extends Controller
             'materials'=>Material::all(),
             'brands'=>Brand::all(),
             'colors'=>Color::all(),
-            'sizes'=>Size::all(),
             'suppliers'=>Supplier::all(),
             'countries'=>Country::all()
         ]);

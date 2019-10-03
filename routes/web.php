@@ -37,7 +37,7 @@ Route::group([
     # code...
 	Route::view('/', 'admin.blank');
 	/******************************************************************************/
-	//list all lfm routes here...
+	//laravel file manager...
 	/******************************************************************************/
 	Route::get('/laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show');
 	Route::post('/laravel-filemanager/upload', '\UniSharp\LaravelFilemanager\Controllers\UploadController@upload');
@@ -45,6 +45,23 @@ Route::group([
 	// Quản lý sản phẩm
 	/******************************************************************************/
 	Route::resource('products', 'ProductController');
+	/******************************************************************************/
+	// Quản lý chất liệu
+	/******************************************************************************/
+	Route::resource('materials','MaterialController');
+	/******************************************************************************/
+	// Quản lý màu sắc
+	/******************************************************************************/
+	Route::resource('colors','ColorController');
+	// Quản lý xuất xứ
+	/******************************************************************************/
+	Route::resource('origins','CountryController');
+	// Quản lý thương hiệu
+	/******************************************************************************/
+	Route::resource('brands','BrandController');
+	// Quản lý nhà phân phối
+	/******************************************************************************/
+	Route::resource('suppliers','SupplierController');
 });
 
 //end admin
@@ -52,3 +69,4 @@ Route::group([
 // homework
 /******************************************************************************/
 Route::resource('todos','homework\TodoController');
+Route::resource('users','homework\UserController');

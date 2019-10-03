@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Supplier extends Model
 {
     protected $fillable = [
-        'name', 'acronym', 'slug',
+        'name', 'acronym', 'slug','phone', 'address', 'email','tax_code'
     ];
     /**
 	* Hàm này dùng để lấy sản phẩm thuộc về nhà cung cấp này

@@ -4,8 +4,8 @@ namespace nhstore\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use nhstore\Http\Controllers\Controller;
-use nhstore\Color;
-class ColorController extends Controller
+use nhstore\Supplier;
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,14 +35,17 @@ class ColorController extends Controller
      */
     public function store(Request $request)
     {
-      $request->validate([
-        'name'=>['required','string','unique:colors'],
-        'slug'=>['required','string','unique:colors'],
-        'acronym'=>['required','string','unique:colors'],
+     $request->validate([
+        'name'=>['required','string','unique:suppliers'],
+        'address'=>['required','string'],
+        'email'=>['required','string','unique:suppliers'],
+        'phone'=>['required','unique:suppliers'],
+        'slug'=>['required','string','unique:suppliers'],
+        'acronym'=>['required','string','unique:suppliers'],
     ]);
-      $color = Color::create($request->all());
-      return response()->json(['id'=>$color->id,'name'=>$color->name,'acronym'=>$color->acronym]);
-  }
+     $supplier = Supplier::create($request->all());
+     return response()->json(['id'=>$supplier->id,'name'=>$supplier->name,'acronym'=>$supplier->acronym]);
+ }
 
     /**
      * Display the specified resource.
