@@ -10,6 +10,9 @@ use nhstore\Country;
 use nhstore\Supplier;
 use nhstore\Size;
 use nhstore\Brand;
+use nhstore\Category;
+use nhstore\Tag;
+use nhstore\Image;
 class ProductController extends Controller
 {
     function __construct()
@@ -48,9 +51,9 @@ class ProductController extends Controller
                 return $product->supplier->name;
             })
             ->editColumn('action', function($product){
-               $btn = '<a href="javascript:;" class="edit btn btn-primary btn-sm">View</a>';
-               return $btn;
-           })
+             $btn = '<a href="javascript:;" class="edit btn btn-primary btn-sm">View</a>';
+             return $btn;
+         })
             ->rawColumns(['action','thumbnail'])
             ->make(true);
         }
@@ -60,6 +63,8 @@ class ProductController extends Controller
             'brands'=>Brand::all(),
             'colors'=>Color::all(),
             'suppliers'=>Supplier::all(),
+            'categories'=>Category::all(),
+            'tags'=>Tag::all(),
             'countries'=>Country::all()
         ]);
     }
@@ -79,8 +84,35 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $images = array_filter(explode(",",$request->images));
+        $tags = $request->tag_id;
+        $request->validate([
+            'slug'=>['required','string','unique:brands'],
+            'acronym'=>['required','string','unique:brands'],
+        ]);
+        //Thêm sản phẩm
+        $product = Product::create($request->except(['_token','images','tag_id']));
+        //Thêm ảnh sản phẩm
+        if(count($images)!=0){
+            foreach ($images as $image) {
+                Image::create([
+                    'product_id'=>$product->id,
+                    'src'=>$image,
+                    'user_id'=>$product->user_id,
+                ]);
+            }
+        };
+        //Thêm thẻ sản phẩm
+        if (count($tags)!=0) {
+           foreach ($tags as $tag) {
+            \DB::table('product_tags')->insert([
+                ['product_id' => $product->id,
+                'tag_id' => $tag]
+            ]);
+        }
     }
+    return response()->json(['msg'=>!empty($product)]);
+}
     /**
      * Display the specified resource.
      *

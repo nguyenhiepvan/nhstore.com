@@ -17,8 +17,7 @@ class CreateProductImagesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('product_id')->unsigned()->comment('id sản phẩm');
             $table->foreign('product_id')->references('id')->on('products');
-            $table->bigInteger('images_id')->unsigned()->comment('id ảnh');
-            $table->foreign('images_id')->references('id')->on('images');
+            $table->string('src');
             $table->timestamps();
         });
     }

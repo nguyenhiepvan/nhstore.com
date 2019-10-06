@@ -1,5 +1,5 @@
 {{-- modal add --}}
-<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-lg modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -8,12 +8,25 @@
 				</button>
 				<h2 class="modal-title" id="ModalTitle"><strong>Thêm mới sản phẩm</strong></h2>
 			</div style="overflow: auto;">
-			<form action="#" method="POST" role="form" id="addForm">
+			<form action="javascript:;" method="POST" role="form" id="productAddForm">
+				@csrf
+				<input type="hidden" name="user_id" value="{{Auth::user()->id}}">
 				<div class="modal-body">
 					<div class="box-body">
 						<div class="row">
 							<label for="name">Tên sản phẩm</label>
-							<input class="form-control input-lg" type="text" placeholder="Nhập tên sản phẩm" id="name" name="name">
+							<input class="form-control input-lg name" type="text" placeholder="Nhập tên sản phẩm" id="name" name="name" required>
+						</div>
+						<br>
+						<div class="row">
+							<label for="slug">Đường dẫn sản phẩm</label>
+							<input class="form-control input-lg slug" type="text" placeholder="Nhập đường dẫn sản phẩm" id="slug" name="slug" required>
+						</div>
+						<br>
+						<div class="row">
+							<label for="">Viết tắt</label>
+							<input type="text" class="form-control input-lg acronym" name="acronym"placeholder="Viết tắt" required>
+							<span class="error errors_acronym"></span>
 						</div>
 						<br>
 						<div class="row">
@@ -24,9 +37,9 @@
 										<i class="fa fa-picture-o"></i>Chọn ảnh
 									</a>
 								</span>
-								<input id="avatar" class="form-control" type="text" name="thumbnail" readonly>
+								<img id="preview-ava" style="margin-left: 15px;margin-top:15px;max-height:100px;">
+								<input id="avatar" class="form-control" type="text" name="thumbnail" readonly hidden required>
 							</div>
-							<img id="preview-ava" style="margin-top:15px;max-height:100px;">
 						</div>
 						<br>
 						<div class="row">
@@ -43,85 +56,110 @@
 							</div>
 						</div>
 						<br>
+						{{-- Chất liệu --}}
 						<div class="row">
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Chất liệu <button type="button" class="more" data-toggle="modal" data-target="#materialModal" title="Thêm chất liệu">
 										<i class="fa fa-plus-square-o more"></i>
 									</button></label>
-									<select class="form-control select2" id="materialsSelect" name="materials" data-placeholder="Chọn chất liệu"
+									<select required class="form-control select2" id="materialsSelect" name="material_id" data-placeholder="Chọn chất liệu"
 									style="width: 100%;">
+									<option></option>
 									@foreach ($materials as $masterial)
 									<option value="{{$masterial->id}}" data-acronym="{{$masterial->acronym}}">{{$masterial->name}}</option>
 									@endforeach
 								</select>
 							</div>
 						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<label>Màu sắc<button type="button" class="more" data-toggle="modal" data-target="#colorModal"  title="Thêm màu sắc"><i class="fa fa-plus-square-o more"></i></button></label>
-								<select name="colors" class="form-control select2" id="colorsSelect" data-placeholder="Chọn màu sắc"
-								style="width: 100%;">
-								@foreach ($colors as $color)
-								<option>{{$color->name}}</option>
-								@endforeach
-							</select>
+							{{-- <div class="col-md-4">
+								<div class="form-group">
+									<label>Màu sắc<button type="button" class="more" data-toggle="modal" data-target="#colorModal"  title="Thêm màu sắc"><i class="fa fa-plus-square-o more"></i></button></label>
+									<select name="colors" class="form-control select2" id="colorsSelect" data-placeholder="Chọn màu sắc"
+									style="width: 100%;">
+									@foreach ($colors as $color)
+									<option>{{$color->name}}</option>
+									@endforeach
+								</select>
+							</div> --}}
+							{{-- Thương hiệu --}}
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Thương hiệu<button type="button" class="more" data-toggle="modal" data-target="#brandModal" data-name="Thêm thương hiệu" title="Thêm thương hiệu"><i class="fa fa-plus-square-o more"></i></button></label>
+									<select required name="brand_id" id="brandsSelect" class="form-control select2" style="width: 100%;" data-placeholder="Chọn thương hiệu">
+										<option></option>
+										@foreach ($brands as $brand)
+										<option value="{{$brand->id}}">{{$brand->name}}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							{{-- Xuất xứ --}}
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Xuất xứ<button type="button" class="more" data-toggle="modal" data-target="#originModal" data-name="Thêm xuất xứ" title="Thêm xuất xứ"><i class="fa fa-plus-square-o more"></i></button></label>
+									<select required name="country_id" id="originsSelect" class="form-control select2" style="width: 100%;" data-placeholder="Chọn xuất xứ">
+										<option></option>
+										@foreach ($countries as $country)
+										<option value="{{$country->id}}">{{$country->name}}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							{{-- Nhà phân phối --}}
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Nhà phân phối<button type="button" class="more" data-toggle="modal" data-target="#supplierModal" data-name="Thêm nhà phân phối" title="Thêm nhà phân phối"><i class="fa fa-plus-square-o more"></i></button></label>
+									<select required name="supplier_id" id="suppliersSelect" class="form-control select2" style="width: 100%;" data-placeholder="Chọn nhà phân phối">
+										<option></option>
+										@foreach ($suppliers as $supplier)
+										<option value="{{$supplier->id}}" >{{$supplier->name}}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
 						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label>Thương hiệu<button type="button" class="more" data-toggle="modal" data-target="#brandModal" data-name="Thêm thương hiệu" title="Thêm thương hiệu"><i class="fa fa-plus-square-o more"></i></button></label>
-							<select name="brand" id="brandsSelect" class="form-control select2" style="width: 100%;" data-placeholder="Chọn thương hiệu">
-								@foreach ($brands as $brand)
-								<option>{{$brand->name}}</option>
-								@endforeach
-							</select>
+						<br>
+						<div class="row">
+							<div class="col-md-6">
+								<label>Danh mục<button type="button" class="more" data-toggle="modal" data-target="#categoryModal" data-name="Thêm danh mục" title="Thêm danh mục"><i class="fa fa-plus-square-o more"></i></button></label>
+								<select required name="category_id" id="categoriesSelect" class="form-control select2" style="width: 100%;" data-placeholder="Chọn danh mục">
+									<option></option>
+									@foreach ($categories as $category)
+									<option value="{{$category->id}}" >{{$category->name}}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="col-md-6">
+								<label>Thẻ<button type="button" class="more" data-toggle="modal" data-target="#tagModal" data-name="Thêm thẻ" title="Thêm thẻ"><i class="fa fa-plus-square-o more"></i></button></label>
+								<select name="tag_id[]" id="tagsSelect" class="form-control select2" style="width: 100%;" data-placeholder="Chọn thẻ" multiple="multiple">
+									<option></option>
+									@foreach ($tags as $tag)
+									<option value="{{$tag->id}}" >{{$tag->name}}</option>
+									@endforeach
+								</select>
+							</div>
 						</div>
+						<br>
+						<div class="row">
+							<label for="name">Mô tả sản phẩm</label>
+							<textarea id="description" name="description" class="form-control" placeholder="Nhập mô tả" required></textarea>
+						</div>
+						<br>
 					</div>
 				</div>
-				<br>
-				<div class="row">
-					<div class="col-md-4">
-						<div class="form-group">
-							<label>Xuất xứ<button type="button" class="more" data-toggle="modal" data-target="#originModal" data-name="Thêm xuất xứ" title="Thêm xuất xứ"><i class="fa fa-plus-square-o more"></i></button></label>
-							<select name="original" id="originsSelect" class="form-control select2" style="width: 100%;" data-placeholder="Chọn xuất xứ">
-								@foreach ($countries as $country)
-								<option>{{$country->name}}</option>
-								@endforeach
-							</select>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label>Nhà phân phối<button type="button" class="more" data-toggle="modal" data-target="#supplierModal" data-name="Thêm nhà phân phối" title="Thêm nhà phân phối"><i class="fa fa-plus-square-o more"></i></button></label>
-							<select name="supplier" id="suppliersSelect" class="form-control select2" style="width: 100%;" data-placeholder="Chọn nhà phân phối">
-								@foreach ($suppliers as $supplier)
-								<option>{{$supplier->name}}</option>
-								@endforeach
-							</select>
-						</div>
-					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+					<button type="submit" class="btn btn-primary save" >Lưu lại</button>
 				</div>
-				<br>
-				<div class="row">
-					<label for="name">Mô tả sản phẩm</label>
-					<textarea id="description" name="description" class="form-control" placeholder="Nhập mô tả" ></textarea>
-				</div>
-				<br>
-			</div>
+			</form>
 		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-			<button type="submit" class="btn btn-primary">Lưu lại</button>
-		</div>
-	</form>
-</div>
-</div>
+	</div>
 </div>
 {{-- ./modal add--}}
 {{-- more --}}
 {{-- material modal --}}
-<div class="modal fade" id="materialModal">
+<div class="modal fade" tabindex="-2" role="dialog" id="materialModal">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<!-- Modal Header -->
@@ -131,6 +169,7 @@
 			<!-- Modal body -->
 			<form action="javascript:;" method="POST" id="materialAddForm" class="form" role="form">
 				@csrf
+				<input type="hidden" name="user_id" value="{{Auth::user()->id}}">
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="">Tên chất liệu</label>
@@ -157,8 +196,93 @@
 		</div>
 	</div>
 </div>
+{{-- category modal --}}
+<div class="modal fade" tabindex="-2" role="dialog" id="categoryModal">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>Thêm mới danh mục</h4>
+			</div>
+			<!-- Modal body -->
+			<form action="javascript:;" method="POST" id="categoryAddForm" class="form" role="form">
+				@csrf
+				<input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="">Tên danh mục</label>
+						<input type="text" class="form-control name" name="name"placeholder="Tên danh mục" required>
+						<span class="error errors_name"></span>
+					</div>
+					<div class="form-group">
+						<label for="">Danh mục cha</label>
+						<select name="parent_id" id="parentSelect" class="form-control select2" style="width: 100%;" data-placeholder="Chọn danh mục">
+							<option></option>
+							@foreach ($categories as $category)
+							<option value="{{$category->id}}" >{{$category->name}}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="">Đường dẫn</label>
+						<input type="text" class="form-control slug" name="slug"placeholder="Đường dẫn" required>
+						<span class="error errors_slug"></span>
+					</div>
+					<div class="form-group">
+						<label for="">Viết tắt</label>
+						<input type="text" class="form-control acronym" name="acronym"placeholder="Viết tắt" required>
+						<span class="error errors_acronym"></span>
+					</div>
+				</div>
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+					<button type="submit" class="btn btn-danger save" >Lưu lại</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{{-- tag modal --}}
+<div class="modal fade" tabindex="-2" role="dialog" id="tagModal">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>Thêm mới thẻ</h4>
+			</div>
+			<!-- Modal body -->
+			<form action="javascript:;" method="POST" id="tagAddForm" class="form" role="form">
+				@csrf
+				<input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="">Tên thẻ</label>
+						<input type="text" class="form-control name" name="name"placeholder="Tên thẻ" required>
+						<span class="error errors_name"></span>
+					</div>
+					<div class="form-group">
+						<label for="">Đường dẫn</label>
+						<input type="text" class="form-control slug" name="slug"placeholder="Đường dẫn" required>
+						<span class="error errors_slug"></span>
+					</div>
+					<div class="form-group">
+						<label for="">Viết tắt</label>
+						<input type="text" class="form-control acronym" name="acronym"placeholder="Viết tắt" required>
+						<span class="error errors_acronym"></span>
+					</div>
+				</div>
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+					<button type="submit" class="btn btn-danger save" >Lưu lại</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 {{-- color modal --}}
-<div class="modal fade" id="colorModal">
+{{-- <div class="modal fade" id="colorModal">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<!-- Modal Header -->
@@ -168,6 +292,7 @@
 			<!-- Modal body -->
 			<form action="javascript:;" method="POST" id="colorAddForm" class="form" role="form">
 				@csrf
+				<input type="hidden" name="user_id" value="{{Auth::user()->id}}">
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="">Tên màu sắc</label>
@@ -193,9 +318,9 @@
 			</form>
 		</div>
 	</div>
-</div>
+</div> --}}
 {{-- original modal --}}
-<div class="modal fade" id="originModal">
+<div class="modal fade" tabindex="-2" role="dialog" id="originModal">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<!-- Modal Header -->
@@ -205,6 +330,7 @@
 			<!-- Modal body -->
 			<form action="javascript:;" method="POST" id="originAddForm" class="form" role="form">
 				@csrf
+				<input type="hidden" name="user_id" value="{{Auth::user()->id}}">
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="">Xuất xứ</label>
@@ -232,7 +358,7 @@
 	</div>
 </div>
 {{-- brand modal --}}
-<div class="modal fade" id="brandModal">
+<div class="modal fade" tabindex="-2" role="dialog" id="brandModal">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<!-- Modal Header -->
@@ -242,6 +368,7 @@
 			<!-- Modal body -->
 			<form action="javascript:;" method="POST" id="brandAddForm" class="form" role="form">
 				@csrf
+				<input type="hidden" name="user_id" value="{{Auth::user()->id}}">
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="">Thương hiệu</label>
@@ -269,7 +396,7 @@
 	</div>
 </div>
 {{-- supplier modal --}}
-<div class="modal fade" id="supplierModal">
+<div class="modal fade" tabindex="-2" role="dialog" id="supplierModal">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<!-- Modal Header -->
@@ -279,6 +406,7 @@
 			<!-- Modal body -->
 			<form action="javascript:;" method="POST" id="supplierAddForm" class="form" role="form">
 				@csrf
+				<input type="hidden" name="user_id" value="{{Auth::user()->id}}">
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="">Nhà phân phối</label>

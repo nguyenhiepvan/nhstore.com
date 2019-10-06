@@ -11,5 +11,14 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+ mix.js('resources/js/app.js', 'public/js')
+ .styles('resources/css/admin/app.css','public/css/app.css')
+ .styles('resources/css/admin/animate.css','public/css/animate.css')
+ .styles('resources/css/admin/card.css','public/css/card.css')
+ .styles('resources/css/admin/login.css','public/css/login.css')
+ .js('resources/js/admin/particle.js','public/js');
+ /******************************************************************************/
+// Quản lý sản phẩm
+/******************************************************************************/
+mix.js('resources/js/admin/productList.js','public/js')
+.styles('resources/css/admin/productList.css','public/css/productList.css');

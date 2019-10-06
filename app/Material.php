@@ -8,6 +8,6 @@ class Material extends Model
 {
     //
     protected $fillable = [
-        'name', 'acronym', 'slug',
+        'name', 'acronym', 'slug','user_id',
     ];
 }

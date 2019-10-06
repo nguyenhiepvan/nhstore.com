@@ -1,0 +1,60 @@
+.modal {
+	overflow-y: auto !important;
+}
+.table{
+	width: 100% !important;
+}
+.modal-xl{
+	max-width: 1140px !important;
+}
+#ModalTitle{
+	text-align: center;
+}
+#images, #avatar{
+	display: none;
+}
+#lfm{
+	border: none;
+	width: 55px;
+}
+#add-icon{
+	width: 30px;
+	height: 30px
+}
+div.show-image {
+	position: relative;
+	float:left;
+	margin:5px;
+}
+div.show-image:hover button
+{
+	display: block;
+}
+div.show-image button {
+	position:absolute;
+	top:0;
+	left:0;
+	display:none;
+}
+.fa-close, .more{
+	margin-left: 5px;
+	color: red;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+	background-color: #3c8dbc;
+	border-color: #367fa9;
+}
+.form-control{
+	border-radius: 15px !important;
+}
+input.select2-search__field {
+	width: 100% !important;
+}
+.more{
+	border: none;
+	background-color: white;
+}
+.modal-header{
+	text-align: center;
+	font-size: large;
+}
