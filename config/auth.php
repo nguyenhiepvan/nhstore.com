@@ -68,7 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => nhstore\User::class,
+            'model' => nhstore\Models\User::class,
             'table' => 'users',
         ],
 

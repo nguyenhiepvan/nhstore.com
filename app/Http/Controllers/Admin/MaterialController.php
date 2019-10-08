@@ -4,7 +4,7 @@ namespace nhstore\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use nhstore\Http\Controllers\Controller;
-use nhstore\Material;
+use nhstore\Models\Material;
 class MaterialController extends Controller
 {
     /**

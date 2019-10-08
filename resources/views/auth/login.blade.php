@@ -1,4 +1,4 @@
-@extends('layouts.admin.app')
+@extends('backend.layouts.admin.app')
 @section('css')
 
 @endsection
@@ -135,11 +135,11 @@
     </div>
     <div class="inputGroup inputGroup4">
         <label id="rememberMe" for="remember">Ghi nhớ tài khoản
-         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-         <div class="indicator"></div>
-     </label>
- </div>
- <div class="inputGroup inputGroup3">
+           <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+           <div class="indicator"></div>
+       </label>
+   </div>
+   <div class="inputGroup inputGroup3">
     <button id="login">Đăng nhập</button>
 </div>
 @if (Route::has('password.request'))

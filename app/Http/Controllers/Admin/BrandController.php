@@ -4,7 +4,7 @@ namespace nhstore\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use nhstore\Http\Controllers\Controller;
-use nhstore\Brand;
+use nhstore\Models\Brand;
 class BrandController extends Controller
 {
     /**

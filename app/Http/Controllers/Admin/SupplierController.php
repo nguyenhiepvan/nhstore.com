@@ -4,7 +4,7 @@ namespace nhstore\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use nhstore\Http\Controllers\Controller;
-use nhstore\Supplier;
+use nhstore\Models\Supplier;
 class SupplierController extends Controller
 {
     /**

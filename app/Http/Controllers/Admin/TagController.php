@@ -4,7 +4,7 @@ namespace nhstore\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use nhstore\Http\Controllers\Controller;
-use nhstore\Tag;
+use nhstore\Models\Tag;
 class TagController extends Controller
 {
     /**

@@ -23,7 +23,7 @@ Route::group([
 	'middleware' => 'auth'
 ],function () {
     # code...
-	Route::view('/', 'admin.blank');
+	Route::view('/', 'backend.admin.blank');
 	/******************************************************************************/
 	//laravel file manager...
 	/******************************************************************************/
@@ -64,3 +64,7 @@ Route::group([
 /******************************************************************************/
 Route::resource('todos','homework\TodoController');
 Route::resource('users','homework\UserController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

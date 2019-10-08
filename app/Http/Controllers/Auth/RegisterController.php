@@ -2,7 +2,7 @@
 
 namespace nhstore\Http\Controllers\Auth;
 
-use nhstore\User;
+use nhstore\Models\User;
 use nhstore\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;

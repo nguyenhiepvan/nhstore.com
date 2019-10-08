@@ -4,7 +4,7 @@ namespace nhstore\Http\Controllers\Auth;
 
 use nhstore\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use nhstore\Models\User;
 class LoginController extends Controller
 {
     /*

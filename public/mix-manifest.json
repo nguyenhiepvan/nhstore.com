@@ -1,0 +1,12 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/categoriesList.js": "/js/categoriesList.js",
+    "/js/common.js": "/js/common.js",
+    "/js/particle.js": "/js/particle.js",
+    "/js/productsList.js": "/js/productsList.js",
+    "/css/app.css": "/css/app.css",
+    "/css/animate.css": "/css/animate.css",
+    "/css/card.css": "/css/card.css",
+    "/css/login.css": "/css/login.css",
+    "/css/productList.css": "/css/productList.css"
+}

@@ -3,16 +3,16 @@ namespace nhstore\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use nhstore\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
-use nhstore\Product;
-use nhstore\Material;
-use nhstore\Color;
-use nhstore\Country;
-use nhstore\Supplier;
-use nhstore\Size;
-use nhstore\Brand;
-use nhstore\Category;
-use nhstore\Tag;
-use nhstore\Image;
+use nhstore\Models\Product;
+use nhstore\Models\Material;
+use nhstore\Models\Color;
+use nhstore\Models\Country;
+use nhstore\Models\Supplier;
+use nhstore\Models\Size;
+use nhstore\Models\Brand;
+use nhstore\Models\Category;
+use nhstore\Models\Tag;
+use nhstore\Models\Image;
 class ProductController extends Controller
 {
     function __construct()
@@ -33,12 +33,13 @@ class ProductController extends Controller
             ->editColumn('name', function ($product)
             {
                 # code...
-                return $product->name;
+                return '<a href="javascript:;" data-id="'.$product->id.'" class="detail-product" title="Xem chi tiết">'.$product->name.'</a>';
             })
             ->editColumn('thumbnail',function ($product)
             {
                 # code...
-                return '<img src ="'.$product->thumbnail.'" style="max-height:100px;" title="'.$product->slug.'">';
+                $fancy = '<a data-fancybox="gallery" href="'.$product->thumbnail.'"><img src="'.$product->thumbnail.'" alt="" style="max-height:100px;" title="'.$product->slug.'"/></a>';
+                return $fancy;
             })
             ->editColumn('brand', function ($product)
             {
@@ -51,13 +52,14 @@ class ProductController extends Controller
                 return $product->supplier->name;
             })
             ->editColumn('action', function($product){
-             $btn = '<a href="javascript:;" class="edit btn btn-primary btn-sm">View</a>';
-             return $btn;
-         })
-            ->rawColumns(['action','thumbnail'])
+               $btn = '<a href="javascript:;" class="edit btn btn-warning btn-sm" title="Sửa thông tin"><i class="fa  fa-edit"></i></a>
+               <a href="javascript:;" class="delete btn btn-danger btn-sm" title="Xóa sản phẩm"><i class="fa  fa-trash"></i></a>';
+               return $btn;
+           })
+            ->rawColumns(['action','thumbnail','name'])
             ->make(true);
         }
-        return view('admin.productsList')
+        return view('backend.admin.productsList')
         ->with([
             'materials'=>Material::all(),
             'brands'=>Brand::all(),
@@ -104,7 +106,7 @@ class ProductController extends Controller
         };
         //Thêm thẻ sản phẩm
         if (count($tags)!=0) {
-           foreach ($tags as $tag) {
+         foreach ($tags as $tag) {
             \DB::table('product_tags')->insert([
                 ['product_id' => $product->id,
                 'tag_id' => $tag]
@@ -121,7 +123,9 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::find($id);
+        $images = $product->images;
+        return response()->json(['product'=>$product,'images'=>$images]);
     }
     /**
      * Show the form for editing the specified resource.

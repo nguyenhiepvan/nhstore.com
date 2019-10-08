@@ -4,7 +4,7 @@ namespace nhstore\Http\Controllers\Auth;
 
 use nhstore\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-
+use nhstore\Models\User;
 class ResetPasswordController extends Controller
 {
     /*
