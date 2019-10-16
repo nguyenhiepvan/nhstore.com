@@ -19,7 +19,8 @@ class CreatePricesTable extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->bigInteger('in_price')->comment('giá nhập');
             $table->bigInteger('out_price')->comment('giá bán');
-            $table->bigInteger('sale_price')->comment('giá khuyến mãi');
+            $table->bigInteger('general_price')->nullable()->comment('giá thị trường');
+            $table->bigInteger('sale_price')->comment('giá khuyến mãi')->nullable();
             $table->timestamps();
         });
     }

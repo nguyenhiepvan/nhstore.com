@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
+	protected $dates = ['deleted_at'];
 	protected $fillable = [
 		'name', 'acronym', 'slug','user_id'
 	];

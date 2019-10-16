@@ -1,0 +1,116 @@
+/* general style */
+
+#hero .preview {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+#hero .preview img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50px;
+    opacity: 0.5;
+}
+.preview .alt {
+    display: none;
+}
+#hero .flex-next .preview {
+    right: 0;
+    position: absolute;
+    left: auto;
+}
+#hero .flex-next .preview img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+#hero .flex-prev .preview img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+#hero .flex-direction-nav a.flex-next:before,
+#hero .flex-direction-nav a.flex-prev:before {
+    font-family: 'FontAwesome';
+    color: #fff;
+    text-align: center;
+    display: block;
+    line-height: 60px;
+    font-size: 18px;
+}
+#hero .flex-direction-nav a.flex-next:before {
+    content: "\f105";
+}
+#hero .flex-direction-nav a.flex-prev:before {
+    content: "\f104";
+}
+/* override flexslider default style */
+
+#hero .flexslider {
+    border: 0;
+    margin: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -o-border-radius: 0;
+    border-radius: 0;
+    overflow: hidden;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
+}
+#hero .flex-control-nav {
+    width: 100%;
+    position: absolute;
+    bottom: 20px;
+    text-align: center;
+    z-index: 900;
+}
+#hero .flex-control-paging li a {
+    background: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
+    border: 2px solid #fff;
+}
+#hero .flex-control-paging li a:hover,
+#hero .flex-control-paging li a.flex-active {
+    background-color: #fff;
+}
+#hero .flex-direction-nav {
+    height: auto;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+}
+#hero .flex-direction-nav a {
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+    opacity: 1;
+    top: 0;
+    border-radius: 50%;
+    background: #222;
+}
+#hero .flex-direction-nav a:hover {
+    background: #8a8f6a;
+}
+#hero .flex-direction-nav .flex-prev {
+    left: 30px;
+}
+#hero .flex-direction-nav .flex-next {
+    right: 30px;
+}

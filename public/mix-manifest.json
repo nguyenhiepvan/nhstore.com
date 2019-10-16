@@ -2,6 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/js/categoriesList.js": "/js/categoriesList.js",
     "/js/common.js": "/js/common.js",
+    "/js/formatCurrency.js": "/js/formatCurrency.js",
     "/js/particle.js": "/js/particle.js",
     "/js/productsList.js": "/js/productsList.js",
     "/css/app.css": "/css/app.css",

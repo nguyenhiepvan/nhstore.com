@@ -1,4 +1,3 @@
-
 {{-- danh sách sản phẩm --}}
 <div class="card box-body">
 	{{-- card-header --}}
@@ -21,7 +20,7 @@
 						<tr>
 							<th>Stt</th>
 							<th>Tên sản phẩm</th>
-							<th>Ảnh sản phẩm</th>
+							<th>Người tạo</th>
 							<th>Thương hiệu</th>
 							<th>Nhà cung cấp</th>
 							<th>#</th>
@@ -31,7 +30,7 @@
 						<tr>
 							<th>Stt</th>
 							<th>Tên sản phẩm</th>
-							<th>Ảnh sản phẩm</th>
+							<th>Người tạo</th>
 							<th>Thương hiệu</th>
 							<th>Nhà cung cấp</th>
 							<th>#</th>

@@ -1,6 +1,15 @@
-.modal {
-	overflow-y: auto !important;
+h6{
+	color: red;
+	font-style: italic;
 }
+em{
+	color: red;
+}
+/*.modal { overflow: auto !important; }*/
+/*.modal
+{
+	overflow: scroll !important;
+}*/
 .table{
 	width: 100% !important;
 }
@@ -38,7 +47,7 @@ div.show-image button {
 }
 .fa-close, .more{
 	margin-left: 5px;
-	color: red;
+	color: #f39c12;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
 	background-color: #3c8dbc;

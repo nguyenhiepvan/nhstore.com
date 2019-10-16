@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/dist/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/dist/css/style.css') }}" rel="stylesheet">
     <link href="{{mix('/css/login.css')}}" rel="stylesheet">
     <style type="text/css">
        .copyright {

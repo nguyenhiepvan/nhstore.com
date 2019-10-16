@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+	protected $dates = ['deleted_at'];
 	protected $fillable = [
 		'name', 'acronym', 'slug','material_id', 'brand_id', 'country_id','supplier_id', 'description', 'thumbnail','user_id','category_id'
 	];
@@ -29,7 +30,25 @@ class Product extends Model
 		return $this->belongsToMany('nhstore\Models\Size','product_sizes','product_id','size_id');
 	}
 	/**
-	* Hàm này dùng để ảnh của sản phẩm
+	* Hàm này dùng để màu sắc sản phẩm
+	*
+	* @return \Illuminate\Http\Response
+	*/
+	public function colors()
+	{
+		return $this->belongsToMany('nhstore\Models\Color','product_colors','product_id','color_id');
+	}
+	/**
+	* Hàm này dùng để lấy giá của sản phẩm
+	*
+	* @return \Illuminate\Http\Response
+	*/
+	public function prices()
+	{
+		return $this->hasMany('nhstore\Models\Price');
+	}
+	/**
+	* Hàm này dùng để lấy ảnh của sản phẩm
 	*
 	* @return \Illuminate\Http\Response
 	*/

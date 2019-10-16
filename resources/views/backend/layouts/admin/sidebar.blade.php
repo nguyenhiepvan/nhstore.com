@@ -5,7 +5,7 @@
 		<!-- Sidebar user panel -->
 		<div class="user-panel">
 			<div class="pull-left image">
-				<img src="{{asset('assets/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+				<img src="{{asset('assets/backend/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
 			</div>
 			<div class="pull-left info">
 				<p>{{Auth::guard('web')->user()->name}}</p>
@@ -29,7 +29,7 @@
 			<li class="header">MAIN NAVIGATION</li>
 			<li class="treeview">
 				<a href="#">
-					<img src="{{asset('assets/dist/img/icons/iconsdashboard.png')}}" class="icons"> <span>Dashboard</span>
+					<img src="{{asset('assets/backend/dist/img/icons/iconsdashboard.png')}}" class="icons"> <span>Dashboard</span>
 					<span class="pull-right-container">
 						<i class="fa fa-angle-left pull-right"></i>
 					</span>
@@ -47,7 +47,7 @@
 			</li>
 			<li class="treeview">
 				<a href="#">
-					<img src="{{asset('assets/dist/img/icons/iconssuit.png')}}" class="icons">
+					<img src="{{asset('assets/backend/dist/img/icons/iconssuit.png')}}" class="icons">
 					<span>Sản phẩm</span>
 					<span class="pull-right-container">
 						<i class="fa fa-angle-left pull-right"></i>
@@ -56,32 +56,32 @@
 				<ul class="treeview-menu">
 					<li>
 						<a href="{{ route('admin.products.index') }}">
-							<img src="{{asset('assets/dist/img/icons/iconsproducts.png')}}" class="icons">Sản phẩm
+							<img src="{{asset('assets/backend/dist/img/icons/iconsproducts.png')}}" class="icons">Sản phẩm
 						</a>
 					</li>
 					<li>
 						<a href="{{ route('admin.categories.index') }}">
-							<img src="{{asset('assets/dist/img/icons/category.png')}}" class="icons">Danh mục
+							<img src="{{asset('assets/backend/dist/img/icons/category.png')}}" class="icons">Danh mục
 						</a>
 					</li>
 					<li>
 						<a href="#">
-							<img src="{{asset('assets/dist/img/icons/iconstrademark.png')}}" class="icons">Thương hiệu
+							<img src="{{asset('assets/backend/dist/img/icons/iconstrademark.png')}}" class="icons">Thương hiệu
 						</a>
 					</li>
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconssewing.png')}}" class="icons"></i>Chất liệu
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconssewing.png')}}" class="icons"></i>Chất liệu
 						</a>
 					</li>
 					<li>
-						<a href=".#"><img src="{{asset('assets/dist/img/icons/iconssupplier.png')}}" class="icons">Nhà phẩn phối
+						<a href=".#"><img src="{{asset('assets/backend/dist/img/icons/iconssupplier.png')}}" class="icons">Nhà phẩn phối
 						</a>
 					</li>
 				</ul>
 			</li>
 			<li class="treeview">
 				<a href="#">
-					<img src="{{asset('assets/dist/img/icons/iconsbill_.png')}}" class="icons">
+					<img src="{{asset('assets/backend/dist/img/icons/iconsbill_.png')}}" class="icons">
 					<span>Đơn hàng</span>
 					<span class="pull-right-container">
 						<i class="fa fa-angle-left pull-right"></i>
@@ -89,18 +89,18 @@
 				</a>
 				<ul class="treeview-menu">
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
 						</a>
 					</li>
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
 						</a>
 					</li>
 				</ul>
 			</li>
 			<li class="treeview">
 				<a href="#">
-					<img src="{{asset('assets/dist/img/icons/iconsreceipt.png')}}" class="icons">
+					<img src="{{asset('assets/backend/dist/img/icons/iconsreceipt.png')}}" class="icons">
 					<span>Hóa đơn</span>
 					<span class="pull-right-container">
 						<i class="fa fa-angle-left pull-right"></i>
@@ -108,18 +108,18 @@
 				</a>
 				<ul class="treeview-menu">
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
 						</a>
 					</li>
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
 						</a>
 					</li>
 				</ul>
 			</li>
 			<li class="treeview">
 				<a href="#">
-					<img src="{{asset('assets/dist/img/icons/iconscommunication.png')}}" class="icons">
+					<img src="{{asset('assets/backend/dist/img/icons/iconscommunication.png')}}" class="icons">
 					<span>Khách hàng</span>
 					<span class="pull-right-container">
 						<i class="fa fa-angle-left pull-right"></i>
@@ -127,18 +127,18 @@
 				</a>
 				<ul class="treeview-menu">
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
 						</a>
 					</li>
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
 						</a>
 					</li>
 				</ul>
 			</li>
 			<li class="treeview">
 				<a href="#">
-					<img src="{{asset('assets/dist/img/icons/iconsaccount.png')}}" class="icons">
+					<img src="{{asset('assets/backend/dist/img/icons/iconsaccount.png')}}" class="icons">
 					<span>Tài khoản</span>
 					<span class="pull-right-container">
 						<i class="fa fa-angle-left pull-right"></i>
@@ -146,18 +146,18 @@
 				</a>
 				<ul class="treeview-menu">
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
 						</a>
 					</li>
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
 						</a>
 					</li>
 				</ul>
 			</li>
 			<li class="treeview">
 				<a href="#">
-					<img src="{{asset('assets/dist/img/icons/iconswebsite.png')}}" class="icons">
+					<img src="{{asset('assets/backend/dist/img/icons/iconswebsite.png')}}" class="icons">
 					<span>Website</span>
 					<span class="pull-right-container">
 						<i class="fa fa-angle-left pull-right"></i>
@@ -165,18 +165,18 @@
 				</a>
 				<ul class="treeview-menu">
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
 						</a>
 					</li>
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
 						</a>
 					</li>
 				</ul>
 			</li>
 			<li class="treeview">
 				<a href="#">
-					<img src="{{asset('assets/dist/img/icons/iconsblogging.png')}}" class="icons">
+					<img src="{{asset('assets/backend/dist/img/icons/iconsblogging.png')}}" class="icons">
 					<span>Blog</span>
 					<span class="pull-right-container">
 						<i class="fa fa-angle-left pull-right"></i>
@@ -184,18 +184,18 @@
 				</a>
 				<ul class="treeview-menu">
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
 						</a>
 					</li>
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
 						</a>
 					</li>
 				</ul>
 			</li>
 			<li class="treeview">
 				<a href="#">
-					<img src="{{asset('assets/dist/img/icons/iconsresume.png')}}" class="icons">
+					<img src="{{asset('assets/backend/dist/img/icons/iconsresume.png')}}" class="icons">
 					<span>Trang cá nhân</span>
 					<span class="pull-right-container">
 						<i class="fa fa-angle-left pull-right"></i>
@@ -203,11 +203,11 @@
 				</a>
 				<ul class="treeview-menu">
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
 						</a>
 					</li>
 					<li>
-						<a href="#"><img src="{{asset('assets/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
 						</a>
 					</li>
 				</ul>

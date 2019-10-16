@@ -19,7 +19,8 @@ const mix = require('laravel-mix');
  .styles('resources/assets/css/admin/productList.css','public/css/productList.css');
  /******************************************************************************/
  mix.js('resources/assets/js/admin/productsList.js','public/js')
- mix.js('resources/assets/js/admin/categoriesList.js','public/js')
- mix.js('resources/assets/js/admin/common.js','public/js')
+ .js('resources/assets/js/admin/categoriesList.js','public/js')
+ .js('resources/assets/js/admin/common.js','public/js')
  .js('resources/assets/js/admin/particle.js','public/js')
+ .js('resources/assets/js/formatCurrency.js', 'public/js')
  .js('resources/assets/js/app.js', 'public/js');

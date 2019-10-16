@@ -8,18 +8,18 @@
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<link rel="icon" type="image/png" href="/favi.png" />
 	<!-- Bootstrap 3.3.7 -->
-	<link rel="stylesheet" href="{{asset('assets/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/backend/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="{{asset('assets/bower_components/font-awesome/css/font-awesome.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/backend/bower_components/font-awesome/css/font-awesome.min.css')}}">
 	<!-- Ionicons -->
-	<link rel="stylesheet" href="{{asset('assets/bower_components/Ionicons/css/ionicons.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/backend/bower_components/Ionicons/css/ionicons.min.css')}}">
 	<!-- Theme style -->
-	<link rel="stylesheet" href="{{asset('assets/dist/css/AdminLTE.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/backend/dist/css/AdminLTE.min.css')}}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
   	folder instead of downloading all of them to reduce the load. -->
-  	<link rel="stylesheet" href="{{asset('assets/dist/css/skins/_all-skins.min.css')}}">
+  	<link rel="stylesheet" href="{{asset('assets/backend/dist/css/skins/_all-skins.min.css')}}">
   	<link rel="stylesheet" href="{{mix('/css/animate.css')}}">
-  	<link rel="stylesheet" href="{{ asset('assets/fancybox/fancybox.min.css') }}">
+  	<link rel="stylesheet" href="{{ asset('assets/backend/fancybox/fancybox.min.css') }}">
   	<!-- Google Font -->
   	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   	<style type="text/css">
@@ -32,6 +32,7 @@
   		}
   	</style>
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" type="text/css" media="screen" />
+  	<meta name="csrf-token" content="{{ csrf_token() }}">
   	@yield('css')
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
@@ -49,21 +50,21 @@
 	</div>
 	<!-- ./wrapper -->
 	<!-- jQuery 3 -->
-	<script src="{{asset('assets/bower_components/jquery/dist/jquery.min.js')}}"></script>
+	<script src="{{asset('assets/backend/bower_components/jquery/dist/jquery.min.js')}}"></script>
 	<!-- Bootstrap 3.3.7 -->
-	<script src="{{asset('assets/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+	<script src="{{asset('assets/backend/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 	<!-- SlimScroll -->
-	<script src="{{asset('assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
+	<script src="{{asset('assets/backend/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
 	<!-- FastClick -->
-	<script src="{{asset('assets/bower_components/fastclick/lib/fastclick.js')}}"></script>
+	<script src="{{asset('assets/backend/bower_components/fastclick/lib/fastclick.js')}}"></script>
 	<!-- AdminLTE App -->
-	<script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
+	<script src="{{asset('assets/backend/dist/js/adminlte.min.js')}}"></script>
 	<!-- AdminLTE for demo purposes -->
-	<script src="{{asset('assets/dist/js/demo.js')}}"></script>
+	<script src="{{asset('assets/backend/dist/js/demo.js')}}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 	<!-- Add fancyBox -->
-	<script type="text/javascript" src="{{ asset('assets/fancybox/fancybox.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('assets/backend/fancybox/fancybox.min.js') }}"></script>
 	<script>
 		$(document).ready(function () {
 			$('.sidebar-menu').tree()

@@ -164,6 +164,7 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -229,6 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

@@ -52,16 +52,37 @@ $(document).ready(function () {
  		$('.slug').val(slug);
  		$('.acronym').val(acronym);
  	});
+   $(document).on('input','.more-name',function () {
+      let name = $(this).val();
+      let slug = ChangeToSlug(name);
+      let acronym = acr(name);
+      $('.more-slug').val(slug);
+      $('.more-acronym').val(acronym);
+   });
+   //Hàm này dùng để thay đổi switchery
+   function setSwitchery(switchElement, checkedBool) {
+        if (checkedBool && !switchElement.checked) { // switch on if not on
+         $(switchElement).trigger('click').attr("checked", "checked");
+        } else if (!checkedBool && switchElement.checked) { // switch off if not off
+         $(switchElement).trigger('click').removeAttr("checked");
+      }
+   }
  	// Hàm này dùng để reset form khi đóng modal
-      $(document).on('hidden.bs.modal','.modal',function () {
-         $('.form').trigger("reset");
-         $('.error').empty();
-         $('.slug').val('');
-         $('.acronym').val('');
-         $('.select2').val(null).trigger('change');
+   $(document).on('hidden.bs.modal','.more-item',function () {
+      $('.more-form').trigger("reset");
+      $('.error').empty();
+      $('.more-slug').val('');
+      $('.more-acronym').val('');
+      $('.more-select').val(null).trigger('change');
    });
  	// hàm này dùng để reset error khi bấm submit mới
  	$(document).on('click','.save',function () {
  		$('.error').empty();
  	});
- })
+   //set up csrf
+   $.ajaxSetup({
+      headers: {
+         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+   });
+})

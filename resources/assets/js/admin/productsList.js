@@ -7,13 +7,36 @@ $(document).ready(function () {
     columns: [
     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
     {data: 'name', name: 'name'},
-    {data: 'thumbnail', name: 'thumbnail'},
-    {data: 'brand', name: 'brand'},
-    {data: 'supplier', name: 'supplier'},
+    {data: 'user', name: 'user'},
+    {data: 'created_at', name: 'created_at'},
+    {data: 'status', name: 'status'},
     {data: 'action', name: 'action', orderable: false, searchable: false},
     ],
-    "oLanguage": { "sUrl": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Vietnamese.json" }
-  });
+    "oLanguage": {
+      "sProcessing":   "Đang xử lý...",
+      "sLengthMenu":   "Xem _MENU_ mục",
+      "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+      "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+      "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+      "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+      "sInfoPostFix":  "",
+      "sSearch":       "Tìm:",
+      "sUrl":          "",
+      "oPaginate": {
+        "sFirst":    "Đầu",
+        "sPrevious": "Trước",
+        "sNext":     "Tiếp",
+        "sLast":     "Cuối"
+      }
+    },
+    fnDrawCallback:function (oSettings) {
+          // Đoạn này dùng để set up checkbox
+          let elems = Array.prototype.slice.call(document.querySelectorAll('.product-show'));
+          elems.forEach(function(html) {
+            let switchery = new Switchery(html,  { size: 'big' });
+          });
+        }
+      });
    // ckeditor
    let options ={
     filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
@@ -42,7 +65,7 @@ $(document).ready(function () {
           window.SetUrl = function (url, file_path) {
                 // parent.document.getElementById(field_name).value = url;
                 let target_input = parent.document.getElementById(localStorage.getItem('target_input'));
-                target_input.value += url+",";
+                target_input.value += url+";";
             //set or change the preview image src
             $('#holder').append('<div class="show-image"><button type="button" title="Loại bỏ" class="remove-img" data-target="javascript:;"><i class="fa fa-close"></i></button><div><img src="'+url+'" style="margin-top:15px;max-height:100px;"></div></div>');
           };
@@ -82,7 +105,7 @@ $(document).ready(function () {
    $(document).on('click','.remove-img',function () {
     let value = $('#images').val();
     let src = $(this).parent().find('img').attr('src');
-    value = value.replace(src +',', "");
+    value = value.replace(src +';', "");
     $('#images').val(value);
     $(this).parent().find('img').remove();
     $(this).remove();
@@ -167,7 +190,6 @@ $(document).ready(function () {
     processData:false,
     success: function (res) {
       $('#tagModal').modal('hide');
-      $('.form').trigger("reset");
       $('.error').empty();
       Swal.fire({
         position: 'center',
@@ -189,39 +211,69 @@ $(document).ready(function () {
   });
 });
  // Hàm này dùng để tạo ra màu sắc mới
-//
-// $(document).on('submit','#colorAddForm',function () {
-//   let form = $(this)[0];
-//   let formData = new FormData(form);
-//   $.ajax({
-//     url:'/admin/colors'',
-//   data: formData,
-//   type: 'post',
-//   contentType:false,
-//   processData:false,
-//   success: function (res) {
-//     $('#colorModal').modal('hide');
-//     $('.form').trigger("reset");
-//     $('.error').empty();
-//     Swal.fire({
-//       position: 'center',
-//       type: 'success',
-//       title: 'Đã thêm màu sắc',
-//       showConfirmButton: false,
-//       timer: 1000
-//     });
-//     $('#colorsSelect').append('<option data-acroym="'+res.acronym+'" value="'+res.id+'">'+res.name+'</option>');
-//     $('#colorsSelect').select2();
-//   },
-//   error: function(xhr, status, errors)
-//   {
-//     $.each(xhr.responseJSON.errors, function (key, item)
-//     {
-//       $(".errors_"+key).append("<p class='text-red'>"+item+"</p>")
-//     });
-//   }
-// });
-// });
+ $(document).on('submit','#colorAddForm',function () {
+  let form = $(this)[0];
+  let formData = new FormData(form);
+  $.ajax({
+    url:'/admin/colors',
+    data: formData,
+    type: 'post',
+    contentType:false,
+    processData:false,
+    success: function (res) {
+      $('#colorModal').modal('hide');
+      $('.error').empty();
+      Swal.fire({
+        position: 'center',
+        type: 'success',
+        title: 'Đã thêm màu sắc',
+        showConfirmButton: false,
+        timer: 1000
+      });
+      $('#colorsSelect').append('<option data-acroym="'+res.acronym+'" value="'+res.id+'">'+res.name+'</option>');
+      $('#colorsSelect').select2();
+    },
+    error: function(xhr, status, errors)
+    {
+      $.each(xhr.responseJSON.errors, function (key, item)
+      {
+        $(".errors_"+key).append("<p class='text-red'>"+item+"</p>")
+      });
+    }
+  });
+});
+// Hàm này dùng để tạo ra kích thước
+$(document).on('submit','#sizeAddForm',function () {
+  let form = $(this)[0];
+  let formData = new FormData(form);
+  $.ajax({
+    url:'/admin/sizes',
+    data: formData,
+    type: 'post',
+    contentType:false,
+    processData:false,
+    success: function (res) {
+      $('#sizeModal').modal('hide');
+      $('.error').empty();
+      Swal.fire({
+        position: 'center',
+        type: 'success',
+        title: 'Đã thêm kích thước',
+        showConfirmButton: false,
+        timer: 1000
+      });
+      $('#sizesSelect').append('<option data-acroym="'+res.acronym+'" value="'+res.id+'">'+res.name+'</option>');
+      $('#sizesSelect').select2();
+    },
+    error: function(xhr, status, errors)
+    {
+      $.each(xhr.responseJSON.errors, function (key, item)
+      {
+        $(".errors_"+key).append("<p class='text-red'>"+item+"</p>")
+      });
+    }
+  });
+});
  // Hàm này dùng để tạo ra xuất xứ mới
  $(document).on('submit','#originAddForm',function () {
   let form = $(this)[0];
@@ -234,7 +286,6 @@ $(document).ready(function () {
     processData:false,
     success: function (res) {
       $('#originModal').modal('hide');
-      $('.form').trigger("reset");
       $('.error').empty();
       Swal.fire({
         position: 'center',
@@ -267,7 +318,6 @@ $(document).ready(function () {
     processData:false,
     success: function (res) {
       $('#brandModal').modal('hide');
-      $('.form').trigger("reset");
       $('.error').empty();
       Swal.fire({
         position: 'center',
@@ -300,7 +350,6 @@ $(document).ready(function () {
     processData:false,
     success: function (res) {
       $('#supplierModal').modal('hide');
-      $('.form').trigger("reset");
       $('.error').empty();
       Swal.fire({
         position: 'center',
@@ -369,4 +418,63 @@ $(document).ready(function () {
     });
  //fanybox xem ảnh
  // $(".fancybox").fancybox();
+ //Hàm này dùng để scroll modal khi nhiều modal mở:
+ $(document).on('hidden.bs.modal', '.modal', function () {
+  $('.modal:visible').length && $(document.body).addClass('modal-open');
+});
+ // Hàm này dùng để format giá tiền nhập vào:
+ $("input[data-type='currency']").on({
+  keyup: function() {
+    formatCurrency($(this));
+  },
+  blur: function() {
+    formatCurrency($(this), "blur");
+  }
+});
+ function formatNumber(n) {
+  // format number 1000000 to 1,234,567
+  return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
+function formatCurrency(input, blur) {
+  // appends $ to value, validates decimal side
+  // and puts cursor back in right position.
+  // get input value
+  var input_val = input.val();
+  // don't validate empty input
+  if (input_val === "") { return; }
+  // original length
+  var original_len = input_val.length;
+  // initial caret position
+  var caret_pos = input.prop("selectionStart");
+  // check for decimal
+  if (input_val.indexOf(".") >= 0) {
+    // get position of first decimal
+    // this prevents multiple decimals from
+    // being entered
+    var decimal_pos = input_val.indexOf(".");
+    // split number by decimal point
+    var left_side = input_val.substring(0, decimal_pos);
+    var right_side = input_val.substring(decimal_pos);
+    // add commas to left side of number
+    left_side = formatNumber(left_side);
+    // validate right side
+    right_side = formatNumber(right_side);
+    // Limit decimal to only 2 digits
+    right_side = right_side.substring(0, 2);
+    // join number by .
+    input_val = left_side + "." + right_side;
+  } else {
+    // no decimal entered
+    // add commas to number
+    // remove all non-digits
+    input_val = formatNumber(input_val);
+    input_val = input_val;
+  }
+  // send updated string to input
+  input.val(input_val);
+  // put caret back in the right position
+  var updated_len = input_val.length;
+  caret_pos = updated_len - original_len + caret_pos;
+  input[0].setSelectionRange(caret_pos, caret_pos);
+}
 });
