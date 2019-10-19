@@ -18,7 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('thumbnail')->comment('Ảnh sản phẩm');
             $table->string('name')->comment('tên sản phẩm');
             $table->string('slug')->comment('đường dẫn sản phẩm');
-            $table->mediumText('description')->comment('mô tả sản phẩm');
+            $table->mediumText('description')->nullable()->comment('mô tả sản phẩm');
+            $table->mediumText('overview')->nullable()->comment('tổng quan sản phẩm');
             $table->bigInteger('material_id')->unsigned()->comment('chất liệu sản phẩm');
             $table->bigInteger('category_id')->unsigned()->comment('danh mục sản phẩm');
             $table->bigInteger('brand_id')->unsigned()->comment('thương hiệu sản phẩm');

@@ -13,12 +13,17 @@ class UsersTableSeeder extends Seeder
     {
         //
     	$fake = \Faker\Factory::create();
-    	for ($i=0; $i < 20; $i++) {
-    		\DB::table('users')->insert([
-    			'name' => $fake->name,
-    			'email' => $fake->email,
-    			'password'=> bcrypt('12345678')
-    		]);
-    	}
-    }
+        \DB::table('users')->insert([
+            'name' => 'Nguyễn Văn Hiệp',
+            'email' => 'supperadmin@gmail.com',
+            'password'=> bcrypt('12345678')
+        ]);
+        for ($i=0; $i < 20; $i++) {
+          \DB::table('users')->insert([
+             'name' => $fake->name,
+             'email' => $fake->email,
+             'password'=> bcrypt('12345678')
+         ]);
+      }
+  }
 }

@@ -29,7 +29,6 @@ class ProductController extends Controller
 		// dd($products);
 		return view('fontend.products')->with([
 			'products'=>$products,
-			'categories'=>$this->get_categories(),
 			'sizes'=>Size::all(),
 			'colors'=>Color::all(),
 			'materials'=>Material::all(),
@@ -57,33 +56,6 @@ class ProductController extends Controller
 			'countries'=>Country::all(),
 			'brands'=>Brand::all(),
 		]);
-	}
-	/******************************************************************************/
-	// Hàm này dùng để in danh mục
-	/******************************************************************************/
-	public function get_categories($parent = null)
-	{
-		$html = '<ul class="categories">';
-		$categories = Category::where([
-			['status',true],
-			['parent_id',$parent],
-			['deleted_at',null]
-		]
-	)->get();
-		// dd($categories);
-		foreach ($categories as $category) {
-			$current_id = $category->id;
-			$html .= '<li><a href="#">'.$category->name.'</a><span>'.(isset($category->products)?$category->products->count():0).'</span>
-			';
-			if(empty($category->child))
-			{
-				// dd('aaaaaaa');
-				$html .= $this->get_categories($current_id);
-			}
-			$html .= '</li>';
-		}
-		$html .= '</ul>';
-		return $html;
 	}
 	/******************************************************************************/
 	// Hàm này dùng để xem chi tiết sản phẩm

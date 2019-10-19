@@ -25,6 +25,14 @@
   <link rel="stylesheet" href="{{asset('assets/fontend/css/elegant-icons.css')}}">
   <link rel="stylesheet" href="{{asset('assets/fontend/css/magnific-popup.css')}}">
   <link rel="stylesheet" href="{{asset('assets/fontend/css/flexslider.css')}}">
+  <style type="text/css">
+    .title{
+      overflow: hidden;
+    }
+    .is-ios * {
+      cursor: pointer;
+    }
+  </style>
   @yield('css')
 </head>
 <body>
@@ -64,6 +72,11 @@
   <script src="{{asset('assets/fontend/js/vendors/jquery.flexslider-min.js')}}"></script>
   <script src="{{asset('assets/fontend/js/vendors/flexslider-init.js')}}"></script>
   <script src="{{asset('assets/fontend/js/vendors/smoothscroll.js')}}"></script>
+  <script type="text/javascript">
+    if (gravdept.isIos()) {
+      document.querySelector('html').classList.add('is-ios');
+    }
+  </script>
   @yield('script')
 </body>
 </html>

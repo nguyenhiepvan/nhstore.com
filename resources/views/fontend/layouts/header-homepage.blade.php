@@ -54,6 +54,46 @@
           <ul class="nav navbar-nav nav-links">
             <li><a href="{{ route('homepage') }}">Trang chủ</a>
             </li>
+            <li class="dropdown classic-dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down"></i></a>
+              <ul class="dropdown-menu">
+                <li class="submenu dropdown">
+                  <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Product Details</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="product-detail-01.html">Product Details 01</a>
+                    </li>
+                    <li><a href="product-detail-02.html">Product Details 02</a>
+                    </li>
+                  </ul>
+                  <!-- /dropdown-menu -->
+                </li>
+                <!-- /submenu -->
+                <li class="dropdown classic-dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down"></i></a>
+                  <ul class="dropdown-menu">
+                    <li class="submenu dropdown">
+                      <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Product Details</a>
+                      <ul class="dropdown-menu">
+                        <li><a href="product-detail-01.html">Product Details 01</a>
+                        </li>
+                        <li><a href="product-detail-02.html">Product Details 02</a>
+                        </li>
+                      </ul>
+                      <!-- /dropdown-menu -->
+                    </li>
+                    <!-- /submenu -->
+                    <li><a href="contact.html">contact</a>
+                    </li>
+                    <li><a href="404.html">404 Error page</a>
+                    </li>
+
+                  </ul>
+                  <!-- /dropdown-menu -->
+                </li>
+                <li><a href="404.html">404 Error page</a>
+                </li>
+
+              </ul>
+              <!-- /dropdown-menu -->
+            </li>
             <!-- /dropdown -->
             <li><a href="{{ route('cart') }}">Giỏ hàng</a>
             </li>

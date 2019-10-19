@@ -122,16 +122,6 @@
 					<!-- /product-search -->
 				</div>
 				<!-- /sidebar-search -->
-
-				<div class="product-categories padding-vertical-5">
-					<h4>Danh mục sản phẩm</h4>
-					<div class="product-categories-list">
-						{!!$categories!!}
-					</div>
-					<!-- /product-categories-list-->
-				</div>
-				<!-- /product-categories-->
-
 				<div class="filter-price padding-vertical-5">
 					<h4>Lọc theo mức giá (X1000)</h4>
 					<div class="slider-range padding-top-50 padding-bottom-20">
@@ -162,7 +152,7 @@
 						</span>
 						<span>
 							<span class="item">{{$country->name}}</span><span class="quantity">09</span>
-						</span>
+						</span><br>
 						@endforeach
 					</div>
 					<!-- /country-list-->
@@ -177,7 +167,7 @@
 						</span>
 						<span>
 							<span class="item">{{$brand->name}}</span><span class="quantity">09</span>
-						</span>
+						</span><br>
 						@endforeach
 					</div>
 					<!-- /brand-list -->
@@ -365,7 +355,7 @@
 						</div>
 						<!-- /product-rate -->
 						<div class="product-title">
-							<p><a href="#">{{$product->name}}</a>
+							<p style="height: 40px;" class="title"><a href="#">{{$product->name}}</a>
 							</p>
 						</div>
 						<!-- /product-title -->

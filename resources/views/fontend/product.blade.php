@@ -90,7 +90,7 @@
                             </div>
                             <!-- /product-reviews -->
                             <div class="product-small-detail padding-vertical-35">
-                                <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui luptatum zzril delenit augue duis dolore te feugait nulla facilisi. </p>
+                               {!!$product->overview!!}
                             </div>
                             <!-- /product-small-detail-->
                             <div class="product-price padding-bottom-50">
@@ -139,37 +139,36 @@
                             			</div>
                             			<!-- /product-quantity -->
                             			<div class="product-cart margin-left-30">
-                            				<a href="#">
-                            					<p>+ Thêm vào giỏ hàng</p>
-                            				</a>
-                            				<div class="product-icons">
-                            					<ul>
-                            						<li><a href="#" title="Yêu thích"><i class="icon_heart_alt"></i></a>
-                            						</li>
-                            						<li class="icon-bg-color"><a href="#" title="So sánh"><i
-                            							class="fa fa-sliders"></i></a>
-                            						</li>
-                            					</ul>
-                            				</div>
-                            				<!-- /product-icons -->
-                            			</div>
-                            			<!-- /product-cart -->
-                            			<div class="social-share padding-vertical-30">
-                            				<p>Share:</p>
-                            				<div class="share">
-                            					<a href="#"><i class="fa fa-facebook"></i>
-                            					</a>
-                            					<a href="#"><i class="fa fa-twitter"></i>
-                            					</a>
-                            					<a href="#"><i class="fa fa-dribbble"></i>
-                            					</a>
-                            					<a href="#"><i class="fa fa-linkedin"></i>
-                            					</a>
-                            				</div>
-                            				<!-- /share -->
-                            			</div>
-                            			<!-- /social-share -->
-                                     <div class="product-category-tag">
+                                            <a href="#">
+                                                <p>+ Thêm vào giỏ</p>
+                                            </a>
+                                            <div class="product-icons">
+                                                <ul>
+                                                    <li><a href="#" title="yêu thích"><i class="icon_heart_alt"></i></a>
+                                                    </li>
+                                                    <li class="icon-bg-color"><a href="#" title="So sánh"><i class="fa fa-sliders"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- /product-icons -->
+                                        </div>
+                                        <!-- /product-cart -->
+                                        <div class="social-share padding-vertical-30">
+                                            <p>Share:</p>
+                                            <div class="share">
+                                               <a href="#"><i class="fa fa-facebook"></i>
+                                               </a>
+                                               <a href="#"><i class="fa fa-twitter"></i>
+                                               </a>
+                                               <a href="#"><i class="fa fa-dribbble"></i>
+                                               </a>
+                                               <a href="#"><i class="fa fa-linkedin"></i>
+                                               </a>
+                                           </div>
+                                           <!-- /share -->
+                                       </div>
+                                       <!-- /social-share -->
+                                       <div class="product-category-tag">
                                         <div class="p-categories">
                                             <p>Thẻ:</p>
                                             <ul>
@@ -205,15 +204,15 @@
     <!-- Product Detail End -->
     <!-- Tabs Begin -->
     <div class="container padding-bottom-100">
-     <div class="row">
-      <div class="col-md-12">
-       <div class="tabs">
-        <ul class="tab-links text-center">
-         <li class="active">
-          <a href="#tab1">
-           <span>Mô tả sản phẩm</span>
-       </a>
-   </li>
+       <div class="row">
+          <div class="col-md-12">
+             <div class="tabs">
+                <ul class="tab-links text-center">
+                   <li class="active">
+                      <a href="#tab1">
+                         <span>Mô tả sản phẩm</span>
+                     </a>
+                 </li>
         					{{-- <li class="">
         						<a href="#tab2">
         							<span>Additional Information</span>

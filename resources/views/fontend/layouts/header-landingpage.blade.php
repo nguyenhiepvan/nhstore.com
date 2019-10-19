@@ -2,7 +2,7 @@
         <header class="header absolute bg-white">
           <div class="container">
             <div id="nav-bar" class="side-nav toggled">
-              <a class="sidebar-toggle" href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i>Chức năng</a>
+              <a class="sidebar-toggle" href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
               <!-- /sidebar-toggle -->
               <nav class="sidebar-inner sidebar-nav">
                 <div class="close-btn text-center padding-vertical-50">
@@ -16,6 +16,10 @@
                   <li><a href="{{ route('cart') }}">Giỏ hàng</a>
                   </li>
                   <li><a href="{{ route('products') }}">Sản phẩm</a>
+                  </li>
+                  <li class="level-dropdown"><a href="#">Danh mục sản phẩm</a>
+                    {!!$categories!!}
+                    <!-- /sub-menu -->
                   </li>
                   <li><a href="{{ route('contact') }}">Liên hệ</a>
                   </li>
@@ -112,7 +116,7 @@
               </div>
               <!-- /side-cart -->
               <div class="nav-logo text-center">
-                <a class="logo-wrapper" href="#">
+                <a class="logo-wrapper" href="{{ route('homepage') }}">
                   <img class="logo" src="{{asset('assets/fontend/img/logo-dark.png')}}" alt="">
                 </a>
                 <!-- /logo-wrapper -->
@@ -136,11 +140,6 @@
                         <button class="icon_close" id="close" type="reset"></button>
                       </form>
                       <!-- /form-->
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-bars"></i>
-                      </a>
                     </li>
                     <li>
                       <a href="#" class="side-cart-toggle">

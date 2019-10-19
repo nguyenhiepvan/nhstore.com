@@ -182,7 +182,7 @@
 					</div>
 					<!-- /product-rate -->
 					<div class="product-title">
-						<p><a href="{{ route('product',$product->slug) }}">{{$product->name}}</a>
+						<p style="height: 40px;" class="title"><a href="{{ route('product',$product->slug) }}">{{$product->name}}</a>
 						</p>
 					</div>
 					<!-- /product-title -->

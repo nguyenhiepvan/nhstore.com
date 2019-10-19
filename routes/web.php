@@ -15,6 +15,7 @@
 /******************************************************************************/
 Route::group([
 	'namespace'=>'Fontend',
+	'middleware'=>'categories',
 ],function ()
 {
 	Route::get('/', function() {
