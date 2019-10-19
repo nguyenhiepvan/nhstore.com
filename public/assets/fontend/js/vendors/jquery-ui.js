@@ -1798,10 +1798,10 @@ var slider = $.widget( "ui.slider", $.ui.mouse, {
 				step: step,
 				range: true,
 				animate: true,
-				values: [70, 170],
+				values: [100, 1000],
 				slide: function(e,ui){
-					$inputs.min.val( "£" + ui.values[ 0 ]);
-					$inputs.max.val("£" + ui.values[ 1 ]);
+					$inputs.min.val(parseInt(ui.values[ 0 ]).toLocaleString() +"đ");
+					$inputs.max.val(parseInt(ui.values[ 1 ]).toLocaleString() +"đ");
 					settings.onSlide(e,ui);
 				},
 				change: function(e,ui){

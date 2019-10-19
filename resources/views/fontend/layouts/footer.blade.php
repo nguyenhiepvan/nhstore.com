@@ -1,3 +1,5 @@
+<!-- Footer Begin -->
+
 <footer class="footer">
   <div class="container text-center">
     <div class="row">
@@ -65,8 +67,10 @@
   </div>
   <!-- /container -->
   <div class="copyright-info padding-vertical-30 text-center">
-    <p class="ft-desc">Copyright 2016 orise all rights reserved. Powered by <a href="#">KL-Webmedia</a>
+    <p class="ft-desc">Copyright 2019 nhstore all rights reserved. Powered by <a href="facebook.com/nguyenhiepvan.public">Nguyễn Hiệp</a>
     </p>
   </div>
   <!-- /copyrights-info -->
 </footer>
+
+        <!-- Footer End -->

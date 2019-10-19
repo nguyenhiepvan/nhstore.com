@@ -5,6 +5,9 @@
 @section('css')
 <link rel="stylesheet" href="{{asset('assets/fontend/css/jquery-ui.css')}}">
 @endsection
+@section('header')
+@include('fontend.layouts.header-landingpage')
+@endsection
 @section('content')
 <!-- Page Header Begins -->
 

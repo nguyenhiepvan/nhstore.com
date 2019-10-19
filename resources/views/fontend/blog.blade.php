@@ -5,9 +5,11 @@
 @section('css')
 <link rel="stylesheet" href="{{asset('assets/fontend/css/jquery-ui.css')}}">
 @endsection
+@section('header')
+@include('fontend.layouts.header-landingpage')
+@endsection
 @section('content')
 <!-- Breadcrumbs Begin -->
-
 <div class="container padding-top-100">
 	<div class="row margin-top-30">
 		<div class="col-md-12">

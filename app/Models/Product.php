@@ -1,9 +1,6 @@
 <?php
-
 namespace nhstore\Models;
-
 use Illuminate\Database\Eloquent\Model;
-
 class Product extends Model
 {
 	protected $dates = ['deleted_at'];
@@ -15,10 +12,9 @@ class Product extends Model
 	*
 	* @return \Illuminate\Http\Response
 	*/
-	public function tag()
+	public function tags()
 	{
-    	# code...
-		return $this->belongsToMany('nhstore\Models\Tag', 'product_tags', 'product_id', 'tag_id');
+		return $this->belongsToMany('nhstore\Models\Tag', 'product_tags', 'tag_id', 'product_id');
 	}
 	/**
 	* Hàm này dùng để kích cỡ sản phẩm
@@ -54,7 +50,6 @@ class Product extends Model
 	*/
 	public function images()
 	{
-    	# code...
 		return $this->hasMany('nhstore\Models\Image');
 	}
 	/**
@@ -64,7 +59,6 @@ class Product extends Model
 	*/
 	public function category()
 	{
-    	# code...
 		return $this->belongsTo('nhstore\Models\Category');
 	}
 	/**
@@ -74,7 +68,6 @@ class Product extends Model
 	*/
 	public function material()
 	{
-    	# code...
 		return $this->belongsTo('nhstore\Models\Material');
 	}
 	/**
@@ -84,7 +77,6 @@ class Product extends Model
 	*/
 	public function country()
 	{
-    	# code...
 		return $this->belongsTo('nhstore\Models\Country');
 	}
 	/**
@@ -94,7 +86,6 @@ class Product extends Model
 	*/
 	public function user()
 	{
-    	# code...
 		return $this->belongsTo('nhstore\Models\User');
 	}
 	/**
@@ -104,7 +95,6 @@ class Product extends Model
 	*/
 	public function brand()
 	{
-    	# code...
 		return $this->belongsTo('nhstore\Models\Brand');
 	}
 	/**
@@ -114,7 +104,6 @@ class Product extends Model
 	*/
 	public function supplier()
 	{
-		# code...
 		return $this->belongsTo('nhstore\Models\Supplier');
 	}
 }

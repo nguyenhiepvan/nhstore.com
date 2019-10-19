@@ -8,7 +8,7 @@ class Category extends Model
 {
 	protected $dates = ['deleted_at'];
 	protected $fillable = [
-		'name', 'acronym', 'slug','user_id','parent_id','status'
+		'name', 'acronym', 'slug','user_id','parent_id','status','cover'
 	];
 	/******************************************************************************/
     // Hàm này để lấy danh mục con

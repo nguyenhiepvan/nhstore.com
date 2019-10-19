@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="vi" class="no-js">
 <head>
   <!-- Basic Page Needs -->
   <meta charset="utf-8">
@@ -47,41 +47,9 @@
   <!-- Back To Top End -->
   <!-- Site Wrapper Begin -->
   <div class="wrapper">
-    <!-- Header Begin -->
-    @include('fontend.layouts.header')
-    <!-- header End -->
+    @yield('header')
     @yield('content')
-    <!-- Footer Begin -->
     @include('fontend.layouts.footer')
-    <!-- Footer End -->
-    <!-- Popup Newsletter Begin -->
-    <div class="modal popup-newsletter fade" id="newsletterModal">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon_close"></i>close</button>
-      <div id="newsletter-popup" class="block">
-        <div class="block_content">
-          <form method="post" target="_blank" class="subscription-form">
-            <div class="popup-title">
-              <h2>Get Our Email Letter</h2>
-            </div>
-            <!-- /popup-title -->
-            <div class="popup-text">Subscribe to the Orise mailing list to receive updates on new arrivals, special offers and other discount information.</div>
-            <!-- /popup-text -->
-            <input class="inputletter" id="newsletter-input-popup" type="text" name="email" value="" placeholder="Enter your mail..." required>
-            <button type="submit" class="btn-form">Subscribe!</button>
-            <!-- /btn-form -->
-          </form>
-          <!-- /form -->
-        </div>
-        <!-- /block_content -->
-        <div class="newsletter-popup-bottom">
-          <input id="checker" type="checkbox">
-          <label for="checker">Don't show this popup again</label>
-        </div>
-        <!-- /newsletter-popup-bottom -->
-      </div>
-      <!-- /newsletter-popup -->
-    </div>
-    <!-- Popup Newsletter End -->
   </div>
   <!-- Site Wrapper End -->
   <!--- Scripts -->

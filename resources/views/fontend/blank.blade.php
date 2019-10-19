@@ -4,6 +4,9 @@
 @endsection
 @section('css')
 @endsection
+@section('header')
+@include('fontend.layouts.header-landingpage')
+@endsection
 @section('content')
 @endsection
 @section('script')

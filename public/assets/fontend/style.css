@@ -4101,11 +4101,6 @@ blockquote p,
 /*
 ----------  Page Header ----------
 */
-
-.header-bg-parallax {
-    background: url(http://placehold.it/1864x1024) no-repeat center center fixed;
-    background-size: cover;
-}
 #page-header {
     position: relative;
     padding-top: 90px;
