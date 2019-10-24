@@ -36,9 +36,9 @@ class CountryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>['required','string','unique:countries'],
-            'slug'=>['required','string','unique:countries'],
-            'acronym'=>['required','string','unique:countries'],
+            'name'=>['required','max:255','unique:countries'],
+            'slug'=>['required','max:255','unique:countries'],
+            'acronym'=>['required','max:255','unique:countries'],
         ]);
         $country = Country::create($request->all());
         return response()->json(['id'=>$country->id,'name'=>$country->name,'acronym'=>$country->acronym]);

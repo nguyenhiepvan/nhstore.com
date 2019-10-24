@@ -36,9 +36,9 @@ class TagController extends Controller
     public function store(Request $request)
     {
       $request->validate([
-        'name'=>['required','string','unique:tags'],
-        'slug'=>['required','string','unique:tags'],
-        'acronym'=>['required','string','unique:tags'],
+        'name'=>['required','max:255','unique:tags'],
+        'slug'=>['required','max:255','unique:tags'],
+        'acronym'=>['required','max:255','unique:tags'],
     ]);
       $tag = Tag::create($request->all());
       return response()->json(['id'=>$tag->id,'name'=>$tag->name,'acronym'=>$tag->acronym]);

@@ -3,9 +3,6 @@
 	<div class="modal-lg modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
 				<h2 class="modal-title" id="ModalTitle"><strong>Thêm mới sản phẩm</strong></h2>
 			</div style="overflow: auto;">
 			<form action="javascript:;" method="POST" role="form" id="productAddForm">
@@ -14,10 +11,15 @@
 				<div class="modal-body">
 					{{-- Tên sản phẩm --}}
 					<div class="row">
-						<div class="box box-danger">
+						<div class="box collapsed-box  box-danger">
 							<div class="box-header with-border">
 								<h3 class="box-title">Tên sản phẩm</h3>
-								<h6 >Lưu ý: Mục có dấu <em>(*)</em> là bắt buộc</h6>
+								<h6 >(Lưu ý: Mục có dấu <em>(*)</em> là bắt buộc)</h6>
+								<div class="box-tools pull-right">
+									<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+									title="Collapse">
+									<i class="fa fa-plus"></i></button>
+								</div>
 							</div>
 							<div class="box-body">
 								<label for="name">Tên sản phẩm <em>(*)</em></label>
@@ -35,10 +37,15 @@
 					<br>
 					{{-- Ảnh sản phẩm --}}
 					<div class="row">
-						<div class="box box-success">
+						<div class="box collapsed-box box-success">
 							<div class="box-header with-border">
 								<h3 class="box-title">Ảnh sản phẩm</h3>
 								<h6 >Lưu ý: Mục có dấu <em>(*)</em> là bắt buộc</h6>
+								<div class="box-tools pull-right">
+									<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+									title="Collapse">
+									<i class="fa fa-plus"></i></button>
+								</div>
 							</div>
 							<div class="box-body">
 								<label>Ảnh hiển thị <em>(*)</em></label>
@@ -68,10 +75,15 @@
 					<br>
 					{{-- Thuộc tính sản phẩm --}}
 					<div class="row">
-						<div class="box box-warning">
+						<div class="box collapsed-box box-warning">
 							<div class="box-header with-border">
 								<h3 class="box-title">Thuộc tính sản phẩm</h3>
 								<h6 >Lưu ý: Mục có dấu <em>(*)</em> là bắt buộc</h6>
+								<div class="box-tools pull-right">
+									<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+									title="Collapse">
+									<i class="fa fa-plus"></i></button>
+								</div>
 							</div>
 							<div class="box-body">
 								{{-- chất liệu --}}
@@ -178,9 +190,14 @@
 								<br>
 								{{-- Giá sản phẩm --}}
 								<div class="row">
-									<div class="box box-primary">
+									<div class="box collapsed-box box-primary">
 										<div class="box-header with-border">
 											<h3 class="box-title">Giá sản phẩm</h3>
+											<div class="box-tools pull-right">
+												<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+												title="Collapse">
+												<i class="fa fa-plus"></i></button>
+											</div>
 										</div>
 										<div class="box-body">
 											<label for="in_price">Giá nhập (VNĐ)</label>
@@ -197,12 +214,20 @@
 								<br>
 								{{-- Mô tả sản phẩm --}}
 								<div class="row">
-									<div class="box box-info">
+									<div class="box collapsed-box box-info">
 										<div class="box-header with-border">
-											<h3 class="box-title">Mô tả sản phẩm</h3>
+											<h3 class="box-title">Thông tin sản phẩm</h3>
+											<div class="box-tools pull-right">
+												<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+												title="Collapse">
+												<i class="fa fa-plus"></i></button>
+											</div>
 										</div>
 										<div class="box-body">
-											<label for="name">Mô tả sản phẩm</label>
+											<label for="name">Giới thiệu sản phẩm</label>
+											<textarea id="overview" name="overview" class="form-control" placeholder="Giới thiệu sản phẩm"></textarea>
+											<br>
+											<label for="name">Thông tin sản phẩm</label>
 											<textarea id="description" name="description" class="form-control" placeholder="Nhập mô tả"></textarea>
 										</div>
 									</div>
@@ -558,43 +583,23 @@
 							<h2 class="modal-title" id="ModalTitle"><strong>Chi tiết sản phẩm</strong></h2>
 						</div>
 						<div class="modal-body">
-							<div class="col-md-12" id="product-info">
+							<div class="col-md-12" id="product-info" style="margin-top: 25px">
 								<div class="col-md-6" id="slides">
 								</div>
-								<div class="col-md-6" id="info">
-									<span id="product-name"></span>
-									<div class="box" id="product-color">
-										<div class="box-header">
-											<h3 class="box-title">Chọn màu:<span id="color-selected"></span></h3>
-										</div>
-										<div class="box-body">
-											<div class="color-box options">
-												<ul class="color-items" id="color-items">
-												</ul>
-											</div>
+								<div class="col-md-6" id="info" style="display: grid;">
+									<h3 id="product-name"></h3>
+									<div id="product-color">
+										<h5>Chọn màu:</h5><span id="color-selected"></span>
+										<div class="color-box options">
+											<ul class="color-items" id="color-items">
+											</ul>
 										</div>
 									</div>
-									<div class="box" id="product-color">
-										<div class="box-header">
-											<h3 class="box-title">Chọn size:<span id="color-selected"></span></h3>
-										</div>
-										<div class="box-body">
-											<div class="color-box options">
-												<ul class="color-items" id="size-items">
-												</ul>
-											</div>
-										</div>
-									</div>
-									<div class="box" id="product-quantity">
-										<div class="box-header">
-											<h3 class="box-title">Số lượng:100</h3>
-										</div>
-									</div>
-									<div class="box" id="product-color">
-										<div class="box-header">
-											<h3 class="box-title">Giá:</h3>
-											<p>Giá nhập:11111111</p>
-											<p>Giá bán:11111111</p>
+									<div id="product-size">
+										<h5>Chọn kích cỡ:</h5><span id="size-selected"></span>
+										<div class="color-box options">
+											<ul class="color-items" id="size-items">
+											</ul>
 										</div>
 									</div>
 								</div>
@@ -608,9 +613,9 @@
 							</div>
 							<div  id="product-description"></div>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+						</div>
 					</div>
 				</div>
 			</div>

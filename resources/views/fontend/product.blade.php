@@ -90,129 +90,129 @@
                             </div>
                             <!-- /product-reviews -->
                             <div class="product-small-detail padding-vertical-35">
-                               {!!$product->overview!!}
+                             {!!$product->overview!!}
+                         </div>
+                         <!-- /product-small-detail-->
+                         <div class="product-price padding-bottom-50">
+                           <span style="color:red">{{number_format($product->prices[0]->out_price)}} đ</span><br>
+                           <span style="font-size: 12px;color: #b3b3b3;">Tiết kiệm:
+                              <span style="color:red;">
+                                 {{round( (1-($product->prices[0]->out_price)/($product->prices[0]->general_price))*100, 1, PHP_ROUND_HALF_UP)}}%</span>( {{number_format($product->prices[0]->general_price-$product->prices[0]->out_price)}} đ )</span><br>
+                                 <span style="font-size: 12px;color: #b3b3b3;">
+                                    Giá thị trường: {{number_format($product->prices[0]->general_price)}} đ
+                                </span>
                             </div>
-                            <!-- /product-small-detail-->
-                            <div class="product-price padding-bottom-50">
-                            	<span style="color:red">{{number_format($product->prices[0]->out_price)}} đ</span><br>
-                            	<span style="font-size: 12px;color: #b3b3b3;">Tiết kiệm:
-                            		<span style="color:red;">
-                            			{{round( (1-($product->prices[0]->out_price)/($product->prices[0]->general_price))*100, 1, PHP_ROUND_HALF_UP)}}%</span>( {{number_format($product->prices[0]->general_price-$product->prices[0]->out_price)}} đ )</span><br>
-                            			<span style="font-size: 12px;color: #b3b3b3;">
-                            				Giá thị trường: {{number_format($product->prices[0]->general_price)}} đ
-                            			</span>
-                            		</div>
-                            		<!-- /product-price -->
-                            		<div class="product-list-actions padding-top-40 padding-bottom-25">
-                            			<form class="padding-bottom-25">
-                            				<div class="form-group">
-                            					<label for="p_size">Kích thước *</label>
-                            					<select name="p_size" id="p_size" class="form-control">
-                            						<option value="">- Chọn kích thước -</option>
-                            						@foreach ($product->sizes as $size)
-                            						<option value="{{$size->id}}">{{$size->name}}</option>
-                            						@endforeach
-                            					</select>
-                            					<!-- /form-control -->
-                            				</div>
-                            				<!-- /form-group -->
-                            				<div class="form-group">
-                            					<label for="p_color">Màu sắc *</label>
-                            					<select name="p_color" id="p_color" class="form-control">
-                            						<option value="">- Chọn màu sắc -</option>
-                            						@foreach ($product->colors as $color)
-                            						<option value="{{$color->id}}">{{$color->name}}</option>
-                            						@endforeach
-                            					</select>
-                            					<!-- /form-control -->
-                            				</div>
-                            				<!-- /form-group -->
-                            			</form>
-                            			<!-- /form -->
-                            			<div class="product-quantity">
-                            				<div class="quantity">
-                            					<input type="button" value="-" class="minus">
-                            					<input type="text" value="02" class="quantity-number">
-                            					<input type="button" value="+" class="plus">
-                            				</div>
-                            				<!-- /quantity -->
-                            			</div>
-                            			<!-- /product-quantity -->
-                            			<div class="product-cart margin-left-30">
-                                            <a href="#">
-                                                <p>+ Thêm vào giỏ</p>
-                                            </a>
-                                            <div class="product-icons">
-                                                <ul>
-                                                    <li><a href="#" title="yêu thích"><i class="icon_heart_alt"></i></a>
-                                                    </li>
-                                                    <li class="icon-bg-color"><a href="#" title="So sánh"><i class="fa fa-sliders"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <!-- /product-icons -->
-                                        </div>
-                                        <!-- /product-cart -->
-                                        <div class="social-share padding-vertical-30">
-                                            <p>Share:</p>
-                                            <div class="share">
-                                               <a href="#"><i class="fa fa-facebook"></i>
-                                               </a>
-                                               <a href="#"><i class="fa fa-twitter"></i>
-                                               </a>
-                                               <a href="#"><i class="fa fa-dribbble"></i>
-                                               </a>
-                                               <a href="#"><i class="fa fa-linkedin"></i>
-                                               </a>
-                                           </div>
-                                           <!-- /share -->
-                                       </div>
-                                       <!-- /social-share -->
-                                       <div class="product-category-tag">
-                                        <div class="p-categories">
-                                            <p>Thẻ:</p>
-                                            <ul>
-                                                @foreach ($product->tags as $tag)
-                                                <li><a href="#">#{{$tag->name}}</a></li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                        <!-- /p-categories -->
-
-                                        <div class="p-tags padding-top-15">
-                                            <p>Danh mục:</p>
-                                            <a href="#">{{$product->category->name}}</a>
-                                        </div>
-                                        <!-- /p-tags -->
-                                    </div>
-                                    <!-- /product-category-tag -->
-                                </div>
-                                <!-- /product-list-actions -->
-                            </div>
-                            <!-- /product-details -->
-                        </div>
-                        <!-- /column -->
+                            <!-- /product-price -->
+                            <div class="product-list-actions padding-top-40 padding-bottom-25">
+                             <form class="padding-bottom-25">
+                                <div class="form-group">
+                                   <label for="p_size">Kích thước *</label>
+                                   <select name="p_size" id="p_size" class="form-control">
+                                      <option value="">- Chọn kích thước -</option>
+                                      @foreach ($product->sizes as $size)
+                                      <option value="{{$size->id}}">{{$size->name}}</option>
+                                      @endforeach
+                                  </select>
+                                  <!-- /form-control -->
+                              </div>
+                              <!-- /form-group -->
+                              <div class="form-group">
+                               <label for="p_color">Màu sắc *</label>
+                               <select name="p_color" id="p_color" class="form-control">
+                                  <option value="">- Chọn màu sắc -</option>
+                                  @foreach ($product->colors as $color)
+                                  <option value="{{$color->id}}">{{$color->name}}</option>
+                                  @endforeach
+                              </select>
+                              <!-- /form-control -->
+                          </div>
+                          <!-- /form-group -->
+                      </form>
+                      <!-- /form -->
+                      <div class="product-quantity">
+                        <div class="quantity">
+                           <input type="button" value="-" class="minus">
+                           <input type="text" value="02" class="quantity-number">
+                           <input type="button" value="+" class="plus">
+                       </div>
+                       <!-- /quantity -->
+                   </div>
+                   <!-- /product-quantity -->
+                   <div class="product-cart margin-left-30">
+                    <a href="#">
+                        <p>+ Thêm vào giỏ</p>
+                    </a>
+                    <div class="product-icons">
+                        <ul>
+                            <li><a href="#" title="yêu thích"><i class="icon_heart_alt"></i></a>
+                            </li>
+                            <li class="icon-bg-color"><a href="#" title="So sánh"><i class="fa fa-sliders"></i></a>
+                            </li>
+                        </ul>
                     </div>
-                    <!-- /product -->
+                    <!-- /product-icons -->
                 </div>
-                <!-- /column -->
-            </div>
-            <!-- /row -->
-        </div>
-        <!-- /container -->
-    </div>
-    <!-- Product Detail End -->
-    <!-- Tabs Begin -->
-    <div class="container padding-bottom-100">
-       <div class="row">
-          <div class="col-md-12">
-             <div class="tabs">
-                <ul class="tab-links text-center">
-                   <li class="active">
-                      <a href="#tab1">
-                         <span>Mô tả sản phẩm</span>
+                <!-- /product-cart -->
+                <div class="social-share padding-vertical-30">
+                    <p>Share:</p>
+                    <div class="share">
+                     <a href="#"><i class="fa fa-facebook"></i>
                      </a>
-                 </li>
+                     <a href="#"><i class="fa fa-twitter"></i>
+                     </a>
+                     <a href="#"><i class="fa fa-dribbble"></i>
+                     </a>
+                     <a href="#"><i class="fa fa-linkedin"></i>
+                     </a>
+                 </div>
+                 <!-- /share -->
+             </div>
+             <!-- /social-share -->
+             <div class="product-category-tag">
+                <div class="p-categories">
+                    <p>Thẻ:</p>
+                    <ul>
+                        @foreach ($product->tags as $tag)
+                        <li><a href="#">#{{$tag->name}}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+                <!-- /p-categories -->
+
+                <div class="p-tags padding-top-15">
+                    <p>Danh mục:</p>
+                    <a href="{{ route('get-products-by-category',$product->category->slug) }}">{{$product->category->name}}</a>
+                </div>
+                <!-- /p-tags -->
+            </div>
+            <!-- /product-category-tag -->
+        </div>
+        <!-- /product-list-actions -->
+    </div>
+    <!-- /product-details -->
+</div>
+<!-- /column -->
+</div>
+<!-- /product -->
+</div>
+<!-- /column -->
+</div>
+<!-- /row -->
+</div>
+<!-- /container -->
+</div>
+<!-- Product Detail End -->
+<!-- Tabs Begin -->
+<div class="container padding-bottom-100">
+ <div class="row">
+  <div class="col-md-12">
+   <div class="tabs">
+    <ul class="tab-links text-center">
+     <li class="active">
+      <a href="#tab1">
+       <span>Mô tả sản phẩm</span>
+   </a>
+</li>
         					{{-- <li class="">
         						<a href="#tab2">
         							<span>Additional Information</span>

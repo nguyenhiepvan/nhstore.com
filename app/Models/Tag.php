@@ -18,6 +18,6 @@ class Tag extends Model
 	public function tag()
 	{
     	# code...
-		return $this->belongsToMany('App\Product', 'product_tags', 'tag_id', 'product_id');
+		return $this->belongsToMany('nhstore\Models\Product', 'product_tags', 'tag_id', 'product_id');
 	}
 }

@@ -18,6 +18,6 @@ class Supplier extends Model
     public function products()
     {
     	# code...
-    	return $this->hasMany('nhstore\Product');
+    	return $this->hasMany('nhstore\Models\Product');
     }
 }

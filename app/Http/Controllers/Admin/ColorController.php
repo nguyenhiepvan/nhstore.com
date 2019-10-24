@@ -36,9 +36,9 @@ class ColorController extends Controller
     public function store(Request $request)
     {
       $request->validate([
-        'name'=>['required','string','unique:colors'],
-        'slug'=>['required','string','unique:colors'],
-        'acronym'=>['required','string','unique:colors'],
+        'name'=>['required','max:255','unique:colors'],
+        'slug'=>['required','max:255','unique:colors'],
+        'acronym'=>['required','max:255','unique:colors'],
     ]);
       $color = Color::create($request->all());
       return response()->json(['id'=>$color->id,'name'=>$color->name,'acronym'=>$color->acronym]);

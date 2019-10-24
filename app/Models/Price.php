@@ -14,9 +14,23 @@ class Price extends Model
     	'size_id',
     	'in_price',
         'general_price',
-    	'out_price',
-    	'sale_price',
-    	'status',
+        'out_price',
+        'sale_price',
+        'status',
         'quantity',
     ];
+    // Hàm này dùng để lấy thông tin sản phẩm
+    public function product()
+    {
+        return $this->belongsTo('nhstore\Models\Product');
+    }
+    /**
+    * Hàm này dùng để lấy ảnh của sản phẩm
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function images()
+    {
+        return $this->hasMany('nhstore\Models\Image','product_id','product_id');
+    }
 }

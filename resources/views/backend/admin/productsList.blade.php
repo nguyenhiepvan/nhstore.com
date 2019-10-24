@@ -180,7 +180,7 @@
       type:'GET',
       success: function (res) {
         $('#slides').append(res.slides);
-        $('#product-name').html('<h3><strong>'+res.product['name']+'</strong></h3>');
+        $('#product-name').text(res.product['name']);
         $('#product-description').html(res.product['description']);
         $.each(res.colors, function( index, value ) {
           $('#color-items').append('<li><a type="button" href="javascript:;" class="color">'+value['name']+'</a></li>');

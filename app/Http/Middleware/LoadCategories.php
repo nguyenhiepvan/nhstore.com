@@ -33,7 +33,7 @@ class LoadCategories
             $html = ' <ul class="submenu text-left">';
             foreach ($categories as $category) {
                 $current_id = $category->id;
-                $html .= '<li><a href="#">'.$category->name.'</a><span>'.(isset($category->products)?$category->products->count():0).'</span>
+                $html .= '<li><a href="/products/category='.$category->slug.'">'.$category->name.'</a>
                 ';
                 if(empty($category->child))
                 {

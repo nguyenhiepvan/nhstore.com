@@ -50,17 +50,17 @@ class ProductController extends Controller
             })
             ->editColumn('status', function ($product)
             {
-               if ($product->status) {
+             if ($product->status) {
                 return '<input type="checkbox" data-id="'.$product->id.'" name="status" class="js-switch product-show" checked>';
             } else {
                 return '<input type="checkbox" data-id="'.$product->id.'" name="status" class="js-switch product-show">';
             }
         })
             ->editColumn('action', function($product){
-               $btn = '<a href="javascript:;" class="edit btn btn-warning btn-sm" title="Sửa thông tin"><i class="fa  fa-edit"></i></a>
-               <a href="javascript:;" class="delete btn btn-danger btn-sm" title="Xóa sản phẩm"><i class="fa  fa-trash"></i></a>';
-               return $btn;
-           })
+             $btn = '<a href="javascript:;" class="edit btn btn-warning btn-sm" title="Sửa thông tin"><i class="fa  fa-edit"></i></a>
+             <a href="javascript:;" class="delete btn btn-danger btn-sm" title="Xóa sản phẩm"><i class="fa  fa-trash"></i></a>';
+             return $btn;
+         })
             ->rawColumns(['action','name','status'])
             ->make(true);
         }
@@ -86,8 +86,8 @@ class ProductController extends Controller
     {
         $images = array_filter(explode(";",$request->images));
         $request->validate([
-            'slug'=>['required','string','unique:products'],
-            'acronym'=>['required','string','unique:products'],
+            'slug'=>['required','max:255','unique:products'],
+            'acronym'=>['required','max:255','unique:products'],
         ]);
         //Thêm sản phẩm
         $product = Product::create($request->except(['_token','images','tag_id','color_id','size_id','thumbnail']));
@@ -137,8 +137,8 @@ class ProductController extends Controller
         ]);
         //Thêm thẻ sản phẩm
         if (!empty($request->tag_id)) {
-         $tags = $request->tag_id;
-         foreach ($tags as $tag) {
+           $tags = $request->tag_id;
+           foreach ($tags as $tag) {
             \DB::table('product_tags')->insert([
                 'product_id' => $product->id,
                 'tag_id' => $tag
@@ -157,8 +157,8 @@ class ProductController extends Controller
     }
                 //Thêm kích thước sản phẩm
     if (!empty($request->size_id)) {
-       $sizes = $request->size_id;
-       foreach ($sizes as $size) {
+     $sizes = $request->size_id;
+     foreach ($sizes as $size) {
         \DB::table('product_sizes')->insert([
             'product_id' => $product->id,
             'size_id' => $size
@@ -176,19 +176,36 @@ return response()->json(['msg'=>!empty($product)]);
     public function show($id)
     {
         $product = Product::with(['images','prices','colors','sizes'])->find($id);
-        $images = $product->images;
+        $prices = $product->prices->where('color_id',null)->where('size_id',null)->first();
+        $quantities = $product->prices->sum('quantity');
+        $colors = $product->colors;
+        $sizes = $product->sizes;
+        return response()->json([
+            'product'=>$product,
+            'prices'=>$prices,
+            'colors'=>$colors,
+            'sizes'=>$sizes,
+            'quantities'=>$quantities,
+            'slides'=>$this->make_slide($product->images)
+        ]);
+    }
+    /******************************************************************************/
+    // Hàm này dùng để tạo slide
+    /******************************************************************************/
+    public function make_slide($images)
+    {
         $ols = '<ol class="carousel-indicators">
         <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>';
         $items ='<div class="item active">
-        <a data-fancybox="gallery" href="'.$product->thumbnail.'"><img src="'.$product->thumbnail.'"/></a>
+        <a data-fancybox="gallery" href="'.$images->where('is_thumbnail',true)->first()['470X610'].'"><img src="'.$images->where('is_thumbnail',true)->first()['470X610'].'"/></a>
         </div>';
-        foreach ($images as $key => $image) {
+        foreach ($images->where('is_thumbnail',false) as $key => $image) {
             $ols .='<li data-target="#carousel-example-generic" data-slide-to="'.($key+1).'" class=" more-item"></li>';
-            $items .='<div class="item more-item"><a data-fancybox="gallery" href="'.$image->src.'"><img src="'.$image->src.'"></a></div>';
+            $items .='<div class="item more-item"><a data-fancybox="gallery" href="'.$image['470X610'].'"><img src="'.$image['470X610'].'"></a></div>';
         }
         $ols .= '</ol>';
         $slides = '
-        <div class="box box-solid">
+        <div>
         <div class="box-body">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         '.$ols.'
@@ -204,19 +221,7 @@ return response()->json(['msg'=>!empty($product)]);
         </div>
         </div>
         </div>';
-        $prices = $product->prices->where('color_id',null)->where('size_id',null)->first();
-        // dd($prices);
-        $quantities = $product->prices->sum('quantity');
-        $colors = $product->colors;
-        $sizes = $product->sizes;
-        return response()->json([
-            'product'=>$product,
-            'prices'=>$prices,
-            'colors'=>$colors,
-            'sizes'=>$sizes,
-            'quantities'=>$quantities,
-            'slides'=>$slides
-        ]);
+        return $slides;
     }
     /**
      * Show the form for editing the specified resource.

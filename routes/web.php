@@ -15,31 +15,33 @@
 /******************************************************************************/
 Route::group([
 	'namespace'=>'Fontend',
-	'middleware'=>'categories',
 ],function ()
 {
 	Route::get('/', function() {
 		return view('fontend.homepage');
 	})->name('homepage');
-	Route::get('/products','ProductController@index')->name('products');
-	Route::get('/products-full-width','ProductController@index_fullwidth')->name('products-full-width');
-	Route::get('/products/category={slug}', 'ProductController@getProductsByCategory')->name('get-products-by-category');
-	Route::get('/product/{slug}', 'ProductController@show')->name('product');
-	Route::get('/cart', function() {
-		return view('fontend.cart');
-	})->name('cart');
-	Route::get('/checkout', function() {
-		return view('fontend.checkout');
-	})->name('checkout');
-	Route::get('/contact', function() {
-		return view('fontend.contact');
-	})->name('contact');
-	Route::get('/blogs', function() {
-		return view('fontend.blogs');
-	})->name('blogs');
-	Route::get('/blog', function() {
-		return view('fontend.blog');
-	})->name('blog');
+	Route::group(['middleware'=>'categories'],function ()
+	{
+		Route::get('/products','ProductController@index')->name('products');
+		Route::get('/products-full-width','ProductController@index_fullwidth')->name('products-full-width');
+		Route::get('/products/category={slug}', 'ProductController@getProductsByCategory')->name('get-products-by-category');
+		Route::get('/product/{slug}', 'ProductController@show')->name('product');
+		Route::get('/cart', function() {
+			return view('fontend.cart');
+		})->name('cart');
+		Route::get('/checkout', function() {
+			return view('fontend.checkout');
+		})->name('checkout');
+		Route::get('/contact', function() {
+			return view('fontend.contact');
+		})->name('contact');
+		Route::get('/blogs', function() {
+			return view('fontend.blogs');
+		})->name('blogs');
+		Route::get('/blog', function() {
+			return view('fontend.blog');
+		})->name('blog');
+	});
 });
 /******************************************************************************/
 //admin

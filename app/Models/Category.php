@@ -36,7 +36,11 @@ class Category extends Model
 	/******************************************************************************/
 	public function products()
 	{
-		return $this->hasMany('nhstore\Models\Product');
+		return $this->hasMany('nhstore\Models\Product')->where([
+			['status',1],
+			['deleted_at',null],
+		])->with(['prices','category'])
+		->latest('created_at');
 	}
 
 }

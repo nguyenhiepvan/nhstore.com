@@ -36,9 +36,9 @@ class MaterialController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>['required','string','unique:materials'],
-            'slug'=>['required','string','unique:materials'],
-            'acronym'=>['required','string','unique:materials'],
+            'name'=>['required','max:255','unique:materials'],
+            'slug'=>['required','max:255','unique:materials'],
+            'acronym'=>['required','max:255','unique:materials'],
         ]);
         $material = Material::create($request->all());
         return response()->json(['id'=>$material->id,'name'=>$material->name,'acronym'=>$material->acronym]);

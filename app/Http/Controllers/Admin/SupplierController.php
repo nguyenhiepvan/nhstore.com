@@ -36,12 +36,12 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
      $request->validate([
-        'name'=>['required','string','unique:suppliers'],
-        'address'=>['required','string'],
-        'email'=>['required','string','unique:suppliers'],
+        'name'=>['required','max:255','unique:suppliers'],
+        'address'=>['required','max:255'],
+        'email'=>['required','max:255','unique:suppliers'],
         'phone'=>['required','unique:suppliers'],
-        'slug'=>['required','string','unique:suppliers'],
-        'acronym'=>['required','string','unique:suppliers'],
+        'slug'=>['required','max:255','unique:suppliers'],
+        'acronym'=>['required','max:255','unique:suppliers'],
     ]);
      $supplier = Supplier::create($request->all());
      return response()->json(['id'=>$supplier->id,'name'=>$supplier->name,'acronym'=>$supplier->acronym]);

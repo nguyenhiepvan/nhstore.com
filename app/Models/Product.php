@@ -106,4 +106,17 @@ class Product extends Model
 	{
 		return $this->belongsTo('nhstore\Models\Supplier');
 	}
+	/**
+	* Hàm này dùng để lấy lượt xem sản phẩm
+	*
+	* @return \Illuminate\Http\Response
+	*/
+	public function view_counts()
+	{
+		return $this->hasMany('nhstore\Models\View_count');
+	}
+	// public function latest_record()
+	// {
+	// 	return $this->hasOne('nhstore\Models\View_count')->latest();
+	// }
 }

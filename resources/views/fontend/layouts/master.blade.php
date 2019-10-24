@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- Mobile Specific Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
   <!-- Page Title -->
   @yield('title')
   <!-- Favicon -->
@@ -32,6 +33,13 @@
     .is-ios * {
       cursor: pointer;
     }
+    .submenu {
+      overflow: auto;
+      position: relative;
+    }
+    .loader{
+      text-align: center;
+    }
   </style>
   @yield('css')
 </head>
@@ -43,7 +51,10 @@
     <div class="rect3"></div>
     <div class="rect4"></div>
     <div class="rect5"></div>
-    <p>orise</p>
+    <div class="rect6"></div>
+    <div class="rect7"></div>
+    <div class="rect8"></div>
+    <p>N H</p>
   </div>
   <!-- Loader End -->
   <!-- Back To Top Begin -->
@@ -73,9 +84,11 @@
   <script src="{{asset('assets/fontend/js/vendors/flexslider-init.js')}}"></script>
   <script src="{{asset('assets/fontend/js/vendors/smoothscroll.js')}}"></script>
   <script type="text/javascript">
-    if (gravdept.isIos()) {
-      document.querySelector('html').classList.add('is-ios');
-    }
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
   </script>
   @yield('script')
 </body>

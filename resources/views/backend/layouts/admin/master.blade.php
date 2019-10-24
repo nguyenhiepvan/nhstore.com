@@ -30,6 +30,11 @@
   		q {
   			font-style: italic;
   		}
+  		.modal-content  {
+  			-webkit-border-radius: 40px !important;
+  			-moz-border-radius: 0px !important;
+  			border-radius: 40px !important;
+  		}
   	</style>
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" type="text/css" media="screen" />
   	<meta name="csrf-token" content="{{ csrf_token() }}">
