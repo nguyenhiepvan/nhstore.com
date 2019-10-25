@@ -18,6 +18,7 @@ class CreateCountriesTable extends Migration
             $table->string('name');
             $table->string('acronym')->comment('viết tắt');
             $table->string('slug')->comment('đường dẫn');
+             $table->softDeletes();
             $table->timestamps();
         });
     }

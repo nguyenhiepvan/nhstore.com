@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use nhstore\Models\Product;
-use nhstore\Models\Photo;
+use nhstore\Models\Image;
 use nhstore\Models\Size;
 use nhstore\Models\Color;
 use nhstore\Models\Price;
@@ -35,7 +35,7 @@ class ProductsTableSeeder extends Seeder
     			'user_id'=>$fake->numberBetween($min = 1, $max = 20),
     		]);
     		//fake image
-        Photo::create([
+        Image::create([
           'product_id'=>$product->id,
           '242x314'=>$fake->imageUrl($width=242, $height=314,'fashion'),
           '255x311'=>$fake->imageUrl($width=255, $height=311,'fashion'),
@@ -47,7 +47,7 @@ class ProductsTableSeeder extends Seeder
           'is_thumbnail'=>true,
         ]);
         for ($j=0; $j < 3; $j++) {
-         Photo::create([
+         Image::create([
           'product_id'=>$product->id,
           '470x610'=>$fake->imageUrl($width =470, $height=610, 'fashion'),
           'user_id'=>$product->user_id,

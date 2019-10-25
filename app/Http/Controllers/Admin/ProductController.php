@@ -14,8 +14,9 @@ use nhstore\Models\Price;
 use nhstore\Models\Category;
 use nhstore\Models\Tag;
 use nhstore\Models\Image;
+use Illuminate\Support\Facades\Storage;
 use DebugBar\StandardDebugBar;
-use Intervention\Image\ImageManager;
+use Intervention\Image\ImageManagerStatic as Photo;
 class ProductController extends Controller
 {
     function __construct()
@@ -30,7 +31,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $products = Product::with(['user'])->where('status',true)->whereNull('deleted_at')->get();
+            $products = Product::with(['user'])->where('status',true)->whereNull('deleted_at')->orderBy('created_at','DESC')->get();
             return Datatables::of($products)
             ->addIndexColumn()
             ->editColumn('name', function ($product)
@@ -50,15 +51,15 @@ class ProductController extends Controller
             })
             ->editColumn('status', function ($product)
             {
-             if ($product->status) {
+               if ($product->status) {
                 return '<input type="checkbox" data-id="'.$product->id.'" name="status" class="js-switch product-show" checked>';
             } else {
                 return '<input type="checkbox" data-id="'.$product->id.'" name="status" class="js-switch product-show">';
             }
         })
             ->editColumn('action', function($product){
-             $btn = '<a href="javascript:;" class="edit btn btn-warning btn-sm" title="Sửa thông tin"><i class="fa  fa-edit"></i></a>
-             <a href="javascript:;" class="delete btn btn-danger btn-sm" title="Xóa sản phẩm"><i class="fa  fa-trash"></i></a>';
+             $btn = '<a href="javascript:;" data-id="'.$product->id.'" class="edit btn btn-warning btn-sm" title="Sửa thông tin"><i class="fa  fa-edit"></i></a>
+             <a href="javascript:;" data-id="'.$product->id.'" class="delete btn btn-danger btn-sm" title="Xóa sản phẩm"><i class="fa  fa-trash"></i></a>';
              return $btn;
          })
             ->rawColumns(['action','name','status'])
@@ -66,14 +67,14 @@ class ProductController extends Controller
         }
         return view('backend.admin.productsList')
         ->with([
-            'materials'=>Material::all(),
-            'brands'=>Brand::all(),
-            'colors'=>Color::all(),
-            'suppliers'=>Supplier::all(),
-            'categories'=>Category::all(),
-            'tags'=>Tag::all(),
-            'sizes'=>Size::all(),
-            'countries'=>Country::all()
+            'materials'=>Material::whereNull('deleted_at')->get(),
+            'brands'=>Brand::whereNull('deleted_at')->get(),
+            'colors'=>Color::whereNull('deleted_at')->get(),
+            'suppliers'=>Supplier::whereNull('deleted_at')->where('status',true)->get(),
+            'categories'=>Category::whereNull('deleted_at')->where('status',true)->get(),
+            'tags'=>Tag::whereNull('deleted_at')->get(),
+            'sizes'=>Size::whereNull('deleted_at')->get(),
+            'countries'=>Country::whereNull('deleted_at')->get()
         ]);
     }
     /**
@@ -85,45 +86,61 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $images = array_filter(explode(";",$request->images));
+        $tags=array_filter($request->tag_id);
+        $colors=array_filter($request->color_id);
+        $sizes=array_filter($request->size_id);
         $request->validate([
             'slug'=>['required','max:255','unique:products'],
             'acronym'=>['required','max:255','unique:products'],
+            'thumbnail'=>['required','max:255',],
+            'material_id'=>['required'],
+            'brand_id'=>['required'],
+            'country_id'=>['required'],
+            'supplier_id'=>['required'],
+            'category_id'=>['required'],
         ]);
         //Thêm sản phẩm
         $product = Product::create($request->except(['_token','images','tag_id','color_id','size_id','thumbnail']));
         //Thêm ảnh sản phẩm
-        $img = Image::make($request->thumbnail);
-        $img->resize(242, 314);
-        $img->save('public/photos/product/'.$product->slug.'_242x314.jpg');
-        $img->resize(255, 311);
-        $img->save('public/photos/product/'.$product->slug.'_255x311.jpg');
-        $img->resize(263, 341);
-        $img->save('public/photos/product/'.$product->slug.'_263x341.jpg');
-        $img->resize(75, 75);
-        $img->save('public/photos/product/'.$product->slug.'_75x75.jpg');
-        $img->resize(394, 511);
-        $img->save('public/photos/product/'.$product->slug.'_394x511.jpg');
-        $img->resize(470, 610);
-        $img->save('public/photos/product/'.$product->slug.'_470x610.jpg');
+        Photo::configure(array('driver' => 'imagick'));
+        $time = now()->timestamp;
+        $img = Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
+        ->resize(242, 314)
+        ->save('photos/product/'.$time.'_242X314.jpg');
+        $img = Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
+        ->resize(255, 311)
+        ->save('photos/product/'.$time.'_255X311.jpg');
+        $img = Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
+        ->resize(263, 341)
+        ->save('photos/product/'.$time.'_263X341.jpg');
+        $img = Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
+        ->resize(75, 75)
+        ->save('photos/product/'.$time.'_75X75.jpg');
+        $img = Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
+        ->resize(394, 511)
+        ->save('photos/product/'.$time.'_394X511.jpg');
+        $img = Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
+        ->resize(470, 610)
+        ->save('photos/product/'.$time.'_470X610.jpg');
         Image::create([
             'product_id'=>$product->id,
-            '242x314'=>'/photos/product/'.$product->slug.'_242x314.jpg',
-            '255x311'=>'/photos/product/'.$product->slug.'_255x311.jpg',
-            '263x341'=>'/photos/product/'.$product->slug.'_263x341.jpg',
-            '75x75'=>'/photos/product/'.$product->slug.'_75x75.jpg',
-            '394x511'=>'/photos/product/'.$product->slug.'_394x511.jpg',
-            '470x610'=>'/photos/product/'.$product->slug.'_470x610.jpg',
+            '242X314'=>'/photos/product/'.$time.'_242X314.jpg',
+            '255X311'=>'/photos/product/'.$time.'_255X311.jpg',
+            '263X341'=>'/photos/product/'.$time.'_263X341.jpg',
+            '75X75'=>'/photos/product/'.$time.'_75X75.jpg',
+            '394X511'=>'/photos/product/'.$time.'_394X511.jpg',
+            '470X610'=>'/photos/product/'.$time.'_470X610.jpg',
             'user_id'=>$product->user_id,
             'is_thumbnail'=>true,
         ]);
         if(!empty($images)){
             foreach ($images as $key => $image) {
-                $img = Image::make($image);
-                $img->resize(470, 610);
-                $img->save('public/photos/product/'.$product->slug.$key.'_470x610.jpg');
+                $img = Photo::make(public_path(parse_url($image, PHP_URL_PATH)))
+                ->resize(470, 610)
+                ->save('photos/product/'.($time+1+$key).'_470X610.jpg');
                 Image::create([
                     'product_id'=>$product->id,
-                    '470x610'=>'/photos/product/'.$product->slug.$key.'_470x610.jpg',
+                    '470X610'=>'/photos/product/'.($time+1+$key).'_470X610.jpg',
                     'user_id'=>$product->user_id,
                 ]);
             }
@@ -136,36 +153,33 @@ class ProductController extends Controller
             'general_price' => !empty($request->general_price)?intval(str_replace(',', '', $request->general_price)):0,
         ]);
         //Thêm thẻ sản phẩm
-        if (!empty($request->tag_id)) {
-           $tags = $request->tag_id;
-           foreach ($tags as $tag) {
-            \DB::table('product_tags')->insert([
+        if (!empty($tags)) {
+            foreach ($tags as $tag) {
+                \DB::table('product_tags')->insert([
+                    'product_id' => $product->id,
+                    'tag_id' => $tag
+                ]);
+            }
+        }
+                //Thêm màu sản phẩm
+        if (!empty($colors)) {
+            foreach ($colors as $color) {
+                \DB::table('product_colors')->insert([
+                    'product_id' => $product->id,
+                    'color_id' => $color
+                ]);
+            }
+        }
+                    //Thêm kích thước sản phẩm
+        if (!empty($sizes)) {
+           foreach ($sizes as $size) {
+            \DB::table('product_sizes')->insert([
                 'product_id' => $product->id,
-                'tag_id' => $tag
+                'size_id' => $size
             ]);
         }
     }
-            //Thêm màu sản phẩm
-    if (!empty($request->color_id)) {
-        $colors = $request->color_id;
-        foreach ($colors as $color) {
-            \DB::table('product_colors')->insert([
-                'product_id' => $product->id,
-                'color_id' => $color
-            ]);
-        }
-    }
-                //Thêm kích thước sản phẩm
-    if (!empty($request->size_id)) {
-     $sizes = $request->size_id;
-     foreach ($sizes as $size) {
-        \DB::table('product_sizes')->insert([
-            'product_id' => $product->id,
-            'size_id' => $size
-        ]);
-    }
-}
-return response()->json(['msg'=>!empty($product)]);
+    return response()->json(['msg'=>!empty($product)]);
 }
     /**
      * Display the specified resource.
@@ -231,7 +245,15 @@ return response()->json(['msg'=>!empty($product)]);
      */
     public function edit($id)
     {
-        //
+        $product = Product::with(['images','colors','tags','sizes','prices'])->find($id);
+        return response()->json([
+            'product'=>$product,
+            'images'=>$product->images->where('is_thumbnail',false),
+            'thumbnail'=>$product->images->where('is_thumbnail',true),
+            'tags'=>$product->tags,
+            'sizes'=>$product->sizes,
+            'prices'=>$product->prices,
+        ]);
     }
     /**
      * Update the specified resource in storage.

@@ -21,6 +21,7 @@ class CreateSuppliersTable extends Migration
             $table->string('phone')->comment('số điện thoại');
             $table->string('address')->comment('địa chỉ');
             $table->string('tax_code')->nullable()->comment('mã số thuế');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

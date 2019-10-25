@@ -19,6 +19,7 @@ class CreateColorsTable extends Migration
             $table->string('acronym')->comment('viết tắt');
             $table->string('slug')->comment('đường dẫn');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

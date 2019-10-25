@@ -56,6 +56,7 @@
 </style>
 @endsection
 @section('content')
+{{-- {{dd(url()->current())}} --}}
 {{-- Content Wrapper. Contains page content --}}
 <div class="content-wrapper">
   {{-- Content Header (Page header) --}}
@@ -191,6 +192,17 @@
       }
     });
     $('#detailProduct').modal('show');
+  })
+</script>
+<script type="text/javascript">
+  $(document).on('click','.edit',function () {
+    $.ajax({
+     url:'/admin/products'+$(this).data('id'),
+     type: 'GET',
+     success: function (res) {
+       
+     }
+   })
   })
 </script>
 @endsection
