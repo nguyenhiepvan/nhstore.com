@@ -15,10 +15,11 @@ class CreateProductColorsTable extends Migration
     {
         Schema::create('product_colors', function (Blueprint $table) {
             $table->bigIncrements('id');
-             $table->bigInteger('color_id')->unsigned()->comment('màu sắc');
+            $table->bigInteger('color_id')->unsigned()->comment('màu sắc');
             $table->bigInteger('product_id')->unsigned()->comment('sản phẩm');
             $table->foreign('color_id')->references('id')->on('colors');
             $table->foreign('product_id')->references('id')->on('products');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

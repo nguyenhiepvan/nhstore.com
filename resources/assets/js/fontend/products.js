@@ -114,4 +114,48 @@ $(document).ready(function () {
 	$(document).on('click','#2col',function () {
 		window.location.href = add_filter('style','2col');
 	});
+	// Hàm này dùng để thêm bộ lọc --}}
+	function add_filter(option,value) {
+    //Lấy url hiện tại
+    let url = window.location.href;
+    //tách url thành mảng
+    let arr = url.split('/');
+    //Lọc phần tử null hoặc trống khỏi mảng
+    arr = arr.filter(function (el) {
+    	return el != null && el != '';
+    });
+    //kiểm tra xem url có bộ lọc nào hay chưa
+    if(arr[arr.length-1] == 'products'){
+      //Nếu chưa có thì cộng cuỗi
+      url += '/?'+option+'='+value;
+  }else{
+      //có bộ lọc và đã có sort
+      if (url.indexOf(option+'=')!=-1)
+      {
+      	arr = arr[arr.length-1].split('&');
+      	$.each(arr, function( index, value_ ) {
+      		if(value_.indexOf(option+'=')!=-1){
+      			if (index == 0) {
+      				url = url.replace(value_, '?'+option+'='+value);
+      			} else {
+      				url = url.replace(value_, option+'='+value);
+      			}
+      			return false;
+      		}
+      	});
+      }
+      //có bộ lọc và không có sort
+      else{
+      	arr = arr[arr.length-1].split('&');
+      	$.each(arr, function( index, value_ ) {
+      		if(value_.indexOf('page=')!=-1){
+      			url = url.replace(value_, 'products/?');
+      			return false;
+      		}
+      	});
+      	url += '&'+option+'='+value;
+      }
+  }
+  return url;
+}
 });

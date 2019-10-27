@@ -19,6 +19,7 @@ class CreateProductTagsTable extends Migration
             $table->bigInteger('product_id')->unsigned()->comment('sản phẩm');
             $table->foreign('tag_id')->references('id')->on('tags');
             $table->foreign('product_id')->references('id')->on('products');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -19,6 +19,7 @@ class CreateProductSizesTable extends Migration
             $table->bigInteger('product_id')->unsigned()->comment('sản phẩm');
             $table->foreign('size_id')->references('id')->on('sizes');
             $table->foreign('product_id')->references('id')->on('products');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

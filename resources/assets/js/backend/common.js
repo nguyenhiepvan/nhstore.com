@@ -41,6 +41,7 @@ $(document).ready(function () {
       		//Xóa các ký tự gạch ngang ở đầu và cuối
       		slug = '@' + slug + '@';
       		slug = slug.replace(/\@\-|\-\@|\@/gi, '');
+            slug = slug.replace(/\s/g,'');
       		//In slug ra textbox có id “slug”
       		return slug;
       	}
@@ -59,14 +60,6 @@ $(document).ready(function () {
       $('.more-slug').val(slug);
       $('.more-acronym').val(acronym);
    });
-   //Hàm này dùng để thay đổi switchery
-   function setSwitchery(switchElement, checkedBool) {
-        if (checkedBool && !switchElement.checked) { // switch on if not on
-         $(switchElement).trigger('click').attr("checked", "checked");
-        } else if (!checkedBool && switchElement.checked) { // switch off if not off
-         $(switchElement).trigger('click').removeAttr("checked");
-      }
-   }
  	// Hàm này dùng để reset form khi đóng modal
    $(document).on('hidden.bs.modal','.more-item',function () {
       $('.more-form').trigger("reset");

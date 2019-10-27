@@ -5,7 +5,7 @@ class Product extends Model
 {
 	protected $dates = ['deleted_at'];
 	protected $fillable = [
-		'name', 'acronym', 'slug','material_id', 'brand_id', 'country_id','supplier_id', 'description','user_id','category_id','overview',
+		'name','status', 'acronym', 'slug','material_id', 'brand_id', 'country_id','supplier_id', 'description','user_id','category_id','overview','deleted_at'
 	];
 	/**
 	* Hàm này dùng để lấy thẻ của sản phẩm
