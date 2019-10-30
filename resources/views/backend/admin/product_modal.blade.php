@@ -64,7 +64,7 @@
 								<br>
 								<label for="images">Ảnh sản phẩm</label>
 								<div>
-									<span class="holder"></span>
+									<span id="holder"></span>
 									<div style="clear: both;">
 										<a id="lfm" data-input="images" class="btn " title="Thêm ảnh">
 											<img src="{{ asset('assets/backend/dist/img/icons/add-image.png') }}" class="icons" id="add-icon">
@@ -484,7 +484,7 @@
 													</div>
 													<div class="box-body">
 														<label for="name">Giới thiệu sản phẩm</label>
-														<textarea id="overview-edit" name="overview" class="form-control" placeholder="Giới thiệu sản phẩm"></textarea>
+														<textarea id="overview-edit" name="overview-edit" class="form-control" placeholder="Giới thiệu sản phẩm"></textarea>
 														<br>
 														<label for="name">Thông tin sản phẩm</label>
 														<textarea id="description-edit" name="description-edit" class="form-control" placeholder="Nhập mô tả"></textarea>
@@ -874,5 +874,74 @@
 			</div>
 		</div>
 	</div>
+</div>
+</div>
+{{-- Thêm vào kho hàng --}}
+<div class="modal fade more-item" id="warehouseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-lg modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title" id="ModalTitle"><strong>Thêm sản phẩm vào kho hàng</strong></h2>
+				<h6 >(Lưu ý: Mục có dấu <em>(*)</em> là bắt buộc)</h6>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Sản phẩm <em>(*)</em>
+							<span class="error errors_product_id"></span>
+						</label>
+						<select required class="form-control select2" id="productsSelect" name="product_id" data-placeholder="Chọn sản phẩm"
+						style="width: 100%;">
+						<option></option>
+						@foreach ($products as $product)
+						<option value="{{$product->id}}">{{$product->name}}</option>
+						@endforeach
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Màu sắc <em>(*)</em><button type="button" class="more" data-toggle="modal" data-target="#colorModal" data-name="Thêm màu sắc" title="Thêm màu sắc"><i class="fa fa-plus-square-o more"></i></button></label>
+					<select required name="color_id" id="colorsSelect" class="form-control select2" style="width: 100%;" data-placeholder="Chọn màu sắc" >
+						<option></option>
+						@foreach ($colors as $color)
+						<option value="{{$color->id}}" >{{$color->name}}</option>
+						@endforeach
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Kích thước <em>(*)</em><button type="button" class="more" data-toggle="modal" data-target="#sizeModal" data-name="Thêm kích thước" title="Thêm kích thước"><i class="fa fa-plus-square-o more"></i></button></label>
+					<select required name="size_id" id="sizesSelect" class="form-control select2" style="width: 100%;" data-placeholder="Chọn kích thước">
+						<option></option>
+						@foreach ($sizes as $size)
+						<option value="{{$size->id}}" >{{$size->name}}</option>
+						@endforeach
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="in_price">Số lượng</label>
+					<input class="form-control input-lg" type="number" value="0" min="0" name="in_price">
+				</div>
+				<div class="form-group">
+					<label for="in_price">Giá nhập (VNĐ)</label>
+					<input class="form-control input-lg" type="text" value="0" data-type="currency" placeholder="1,000,000" name="in_price">
+				</div>
+				<div class="form-group">
+					<label for="general_price">Giá thị trường (VNĐ)</label>
+					<input class="form-control input-lg" type="text" value="0" data-type="currency" placeholder="1,000,000" name="general_price">
+				</div>
+				<div class="form-group">
+					<label for="in_price">Giá bán (VNĐ)</label>
+					<input class="form-control input-lg" type="text" value="0" data-type="currency" placeholder="1,000,000" name="out_price">
+				</div>
+				<div class="form-group">
+					<label for="in_price">Giá khuyến mãi (VNĐ)</label>
+					<input class="form-control input-lg" type="text" value="0" data-type="currency" placeholder="1,000,000" name="out_price">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-danger save" >Lưu lại</button>
+			</div>
+		</form>
+	</div>
+</div>
 </div>
 </div>

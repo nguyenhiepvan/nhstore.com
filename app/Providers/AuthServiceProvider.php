@@ -14,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'nhstore\Model' => 'nhstore\Policies\ModelPolicy',
+        'nhstore\Models\Product' => 'nhstore\Policies\ProductPolicy',
     ];
 
     /**

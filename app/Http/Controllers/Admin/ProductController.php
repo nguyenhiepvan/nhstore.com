@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use DebugBar\StandardDebugBar;
 use Intervention\Image\ImageManagerStatic as Photo;
 use File;
+use Auth;
 use nhstore\Models\Product;
 use nhstore\Models\Material;
 use nhstore\Models\Color;
@@ -32,7 +33,7 @@ class ProductController extends Controller
 public function index(Request $request)
 {
     if ($request->ajax()) {
-        $products = Product::with(['user'])->where('status',true)->whereNull('deleted_at')->orderBy('created_at','DESC')->get();
+        $products = Product::with(['user'])->whereNull('deleted_at')->orderBy('created_at','DESC')->get();
         return Datatables::of($products)
         ->addIndexColumn()
         ->editColumn('name', function ($product)
@@ -41,7 +42,6 @@ public function index(Request $request)
         })
         ->editColumn('user',function ($product)
         {
-// $fancy = '<a data-fancybox="gallery" href="'.$product->thumbnail.'"><img src="'.$product->thumbnail.'" alt="" style="max-height:100px;" title="'.$product->slug.'"/></a>';
             return $product->user->name;
         })
         ->editColumn('created_at', function ($product)
@@ -51,14 +51,18 @@ public function index(Request $request)
         ->editColumn('status', function ($product)
         {
             if ($product->status) {
-                return '<input type="checkbox" data-id="'.$product->id.'" name="status" class="js-switch product-show" checked>';
+                return '<input title="Hiển thị" type="checkbox" data-id="'.$product->id.'" name="status" class="js-switch product-show" checked>';
             } else {
-                return '<input type="checkbox" data-id="'.$product->id.'" name="status" class="js-switch product-show">';
+                return '<input title="Ẩn" type="checkbox" data-id="'.$product->id.'" name="status" class="js-switch product-show">';
             }
         })
         ->editColumn('action', function($product){
-            $btn = '<a href="javascript:;" data-id="'.$product->id.'" class="edit btn btn-warning btn-sm" title="Sửa thông tin"><i class="fa  fa-edit"></i></a>
-            <a href="javascript:;" data-id="'.$product->id.'" class="delete btn btn-danger btn-sm" title="Xóa sản phẩm"><i class="fa  fa-trash"></i></a>';
+            $btn = '';
+            if(Auth::user()->can('update',$product)){
+                $btn .= '<a href="javascript:;" data-id="'.$product->id.'" class="edit btn btn-warning btn-sm" title="Sửa thông tin"><i class="fa  fa-edit"></i></a> ';
+            } if(Auth::user()->can('delete',$product)){
+                $btn .= '<a href="javascript:;" data-id="'.$product->id.'" class="delete btn btn-danger btn-sm" title="Xóa sản phẩm"><i class="fa  fa-trash"></i></a>';
+            }
             return $btn;
         })
         ->rawColumns(['action','name','status'])
@@ -66,6 +70,7 @@ public function index(Request $request)
     }
     return view('backend.admin.productsList')
     ->with([
+        'products'=>Product::whereNull('deleted_at')->where('status',true)->get(),
         'materials'=>Material::whereNull('deleted_at')->get(),
         'brands'=>Brand::whereNull('deleted_at')->get(),
         'colors'=>Color::whereNull('deleted_at')->get(),
@@ -84,7 +89,8 @@ public function index(Request $request)
 */
 public function store(Request $request)
 {
-    $request->validate([
+    if(Auth::user()->can('create')){
+     $request->validate([
         'slug'=>['required','max:255','unique:products'],
         'acronym'=>['required','max:255','unique:products'],
         'thumbnail'=>['required','max:255',],
@@ -95,9 +101,10 @@ public function store(Request $request)
         'category_id'=>['required'],
     ]);
 //Thêm sản phẩm
-    $product = Product::create($request->except(['_token','images','tag_id','color_id','size_id','thumbnail']));
-    $this->addAttribute($request,$product->id,$product->user_id);
-    return response()->json(['msg'=>!empty($product)]);
+     $product = Product::create($request->except(['_token','images','tag_id','color_id','size_id','thumbnail']));
+     $this->addAttribute($request,$product->id,$product->user_id);
+     return response()->json(['msg'=>!empty($product)]);
+ }
 }
 /**
 * Display the specified resource.
@@ -176,6 +183,7 @@ public function show(Request $request,$id)
         'general_price'=>number_format($general_price),
         'sale_price'=>number_format($sale_price),
     ]);
+    // return redirect()->route('admin.products.index');
 }
 $quantities = $product->prices->sum('quantity');
 $colors = $product->colors;
@@ -275,81 +283,84 @@ public function update(Request $request, $id)
         'thumbnail'=>['max:255'],
     ]);
     $product = Product::with(['images','prices'])->find($id);
+    if(Auth::user()->can('update',$product)){
 //Nếu thay đổi trạng thái hiển thị của sản phẩm
-    if (isset($request->status)) {
+        if (isset($request->status)) {
 // dd(($request->status == '0')?0:1);
-        dd($product->update(['status'=>($request->status == '0')?0:1]));
-    }
+            $product->update(['status'=>($request->status == '0')?0:1]);
+            $product->price->update(['status'=>($request->status == '0')?0:1]);
+        }
 //Nếu thay đổi thông tin sản phẩm
-    if(isset($request->name)||isset($request->slug)||isset($request->acronym)||isset($request->name)||isset($request->material_id)||isset($request->country_id)||isset($request->supplier_id)||isset($request->category_id)){
-        $product->update($request->except(['_token','_method','images','tag_id','color_id','size_id','thumbnail','description-edit']));
-    }
+        if(isset($request->name)||isset($request->slug)||isset($request->acronym)||isset($request->name)||isset($request->material_id)||isset($request->country_id)||isset($request->supplier_id)||isset($request->category_id)){
+            $product->update($request->except(['_token','_method','images','tag_id','color_id','size_id','thumbnail','description-edit']));
+        }
 //Nếu thay đổi thumbnail
-    if(isset($request->thumbnail)){
-        $thumbnail = $product->images->where('is_thumbnail',true);
-        if(File::exists($thumbnail['242X314'])) {
-            File::delete($thumbnail['242X314']);
+        if(isset($request->thumbnail)){
+            $thumbnail = $product->images->where('is_thumbnail',true);
+            if(File::exists($thumbnail['242X314'])) {
+                File::delete($thumbnail['242X314']);
+            }
+            if(File::exists($thumbnail['255X311'])) {
+                File::delete($thumbnail['255X311']);
+            }
+            if(File::exists($thumbnail['263X341'])) {
+                File::delete($thumbnail['263X341']);
+            }
+            if(File::exists($thumbnail['75X75'])) {
+                File::delete($thumbnail['75X75']);
+            }
+            if(File::exists($thumbnail['394X511'])) {
+                File::delete($thumbnail['394X511']);
+            }
+            if(File::exists($thumbnail['470X610'])) {
+                File::delete($thumbnail['470X610']);
+            }
+            $thumbnail->each->delete();
         }
-        if(File::exists($thumbnail['255X311'])) {
-            File::delete($thumbnail['255X311']);
-        }
-        if(File::exists($thumbnail['263X341'])) {
-            File::delete($thumbnail['263X341']);
-        }
-        if(File::exists($thumbnail['75X75'])) {
-            File::delete($thumbnail['75X75']);
-        }
-        if(File::exists($thumbnail['394X511'])) {
-            File::delete($thumbnail['394X511']);
-        }
-        if(File::exists($thumbnail['470X610'])) {
-            File::delete($thumbnail['470X610']);
-        }
-        $thumbnail->each->delete();
-    }
 //Nếu thay đổi ảnh
 // Phiên bản này đang xóa toàn bộ ảnh và thêm mới lại
-    if (isset($request->images)) {
-        $images = $product->images->where('is_thumbnail',false);
-        foreach ($images as $image) {
-            if(File::exists($image['242X314'])) {
-                File::delete($image['242X314']);
+        if (isset($request->images)) {
+            $images = $product->images->where('is_thumbnail',false);
+            foreach ($images as $image) {
+                if(File::exists($image['242X314'])) {
+                    File::delete($image['242X314']);
+                }
+                if(File::exists($image['255X311'])) {
+                    File::delete($image['255X311']);
+                }
+                if(File::exists($image['263X341'])) {
+                    File::delete($image['263X341']);
+                }
+                if(File::exists($image['75X75'])) {
+                    File::delete($image['75X75']);
+                }
+                if(File::exists($image['394X511'])) {
+                    File::delete($image['394X511']);
+                }
+                if(File::exists($image['470X610'])) {
+                    File::delete($image['470X610']);
+                }
             }
-            if(File::exists($image['255X311'])) {
-                File::delete($image['255X311']);
-            }
-            if(File::exists($image['263X341'])) {
-                File::delete($image['263X341']);
-            }
-            if(File::exists($image['75X75'])) {
-                File::delete($image['75X75']);
-            }
-            if(File::exists($image['394X511'])) {
-                File::delete($image['394X511']);
-            }
-            if(File::exists($image['470X610'])) {
-                File::delete($image['470X610']);
-            }
+            $images->each->delete();
         }
-        $images->each->delete();
-    }
 //Nếu thay đổi thẻ
-    if (isset($request->tag_id)) {
-        \DB::table('product_tags')->where('product_id',$id)->delete();
-    }
+        if (isset($request->tag_id)) {
+            \DB::table('product_tags')->where('product_id',$id)->delete();
+        }
 //Nếu thay đổi màu sắc
-    if (isset($request->color_id)) {
-        \DB::table('product_colors')->where('product_id',$id)->delete();
-    }
+        if (isset($request->color_id)) {
+            \DB::table('product_colors')->where('product_id',$id)->delete();
+        }
 //Nếu thay đổi kích thước
-    if (isset($request->size_id)) {
-        \DB::table('product_sizes')->where('product_id',$id)->delete();
-    }
+        if (isset($request->size_id)) {
+            \DB::table('product_sizes')->where('product_id',$id)->delete();
+        }
 //Nếu thay đổi giá
-    if (isset($request->in_price)  && isset($request->out_price) && isset($request->general_price)) {
-        $product->prices->where('size_id',NULL)->where('color_id',NULL)->delete();
+        if (isset($request->in_price)  && isset($request->out_price) && isset($request->general_price)) {
+            $product->prices->where('size_id',NULL)->where('color_id',NULL)->delete();
+        }
+        $this->addAttribute($request,$product->id,$product->user_id);
     }
-    $this->addAttribute($request,$product->id,$product->user_id);
 }
 /******************************************************************************/
 // Hàm này dùng để thêm thuộc tính của sản phẩm

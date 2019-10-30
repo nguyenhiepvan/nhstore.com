@@ -30,7 +30,7 @@ class CreateProductsTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('country_id')->references('id')->on('countries');
             $table->foreign('supplier_id')->references('id')->on('suppliers');
-            $table->boolean('status')->default(true)->comment('trạng thái hiển thị của sản phẩm');
+            $table->boolean('status')->default(false)->comment('trạng thái hiển thị của sản phẩm');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
         });

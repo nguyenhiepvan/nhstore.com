@@ -1,4 +1,14 @@
 $(document).ready(function () {
+   //Chèn link khi click
+   $(document).on('click','#products',function () {
+    window.history.pushState("object or string", "Title", '/admin/products');
+  });
+   $(document).on('click','#warehouse',function () {
+    window.history.pushState("object or string", "Title", '/admin/warehouse');
+  });
+   $(document).on('click','#trash',function () {
+    window.history.pushState("object or string", "Title", '/admin/trash');
+  });
 	// Dựng search select
 	$('.select2').select2();
 	// Hàm này dùng để tạo ký tự viết tắt
@@ -41,7 +51,7 @@ $(document).ready(function () {
       		//Xóa các ký tự gạch ngang ở đầu và cuối
       		slug = '@' + slug + '@';
       		slug = slug.replace(/\@\-|\-\@|\@/gi, '');
-            slug = slug.replace(/\s/g,'');
+          slug = slug.replace(/\s/g,'');
       		//In slug ra textbox có id “slug”
       		return slug;
       	}
@@ -54,28 +64,28 @@ $(document).ready(function () {
  		$('.acronym').val(acronym);
  	});
    $(document).on('input','.more-name',function () {
-      let name = $(this).val();
-      let slug = ChangeToSlug(name);
-      let acronym = acr(name);
-      $('.more-slug').val(slug);
-      $('.more-acronym').val(acronym);
-   });
+    let name = $(this).val();
+    let slug = ChangeToSlug(name);
+    let acronym = acr(name);
+    $('.more-slug').val(slug);
+    $('.more-acronym').val(acronym);
+  });
  	// Hàm này dùng để reset form khi đóng modal
    $(document).on('hidden.bs.modal','.more-item',function () {
-      $('.more-form').trigger("reset");
-      $('.error').empty();
-      $('.more-slug').val('');
-      $('.more-acronym').val('');
-      $('.more-select').val(null).trigger('change');
-   });
+    $('.more-form').trigger("reset");
+    $('.error').empty();
+    $('.more-slug').val('');
+    $('.more-acronym').val('');
+    $('.more-select').val(null).trigger('change');
+  });
  	// hàm này dùng để reset error khi bấm submit mới
  	$(document).on('click','.save',function () {
  		$('.error').empty();
  	});
    //set up csrf
    $.ajaxSetup({
-      headers: {
-         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-   });
-})
+    headers: {
+     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+   }
+ });
+ })

@@ -24,6 +24,16 @@ class Price extends Model
     {
         return $this->belongsTo('nhstore\Models\Product');
     }
+     // Hàm này dùng để lấy thông tin màu sắc
+    public function color()
+    {
+        return $this->belongsTo('nhstore\Models\Color');
+    }
+     // Hàm này dùng để lấy thông tin kích thước
+    public function size()
+    {
+        return $this->belongsTo('nhstore\Models\Size');
+    }
     /**
     * Hàm này dùng để lấy ảnh của sản phẩm
     *

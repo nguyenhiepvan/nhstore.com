@@ -9,7 +9,7 @@ var productsTable = $('#product-table').DataTable({
   {data: 'name', name: 'name'},
   {data: 'user', name: 'user'},
   {data: 'created_at', name: 'created_at'},
-  {data: 'status', name: 'status'},
+  {data: 'status', name: 'status', searchable: false},
   {data: 'action', name: 'action', orderable: false, searchable: false},
   ],
   "oLanguage": {
@@ -37,6 +37,70 @@ elems.forEach(function(html) {
 });
 }
 });
+//Kho hàng
+var warehouseTable = $('#warehouse-table').DataTable({
+  processing: true,
+  serverSide: true,
+  ajax: "/admin/warehouse",
+  columns: [
+  {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+  {data: 'name', name: 'name'},
+  {data: 'color', name: 'color'},
+  {data: 'size', name: 'size'},
+  {data: 'quantity', name: 'quantity'},
+  {data: 'in_price', name: 'in_price'},
+  {data: 'out_price', name: 'out_price'},
+  {data: 'sale_price', name: 'sale_price'},
+    // {data: 'status', name: 'status', orderable: false, searchable: false},
+    ],
+    "oLanguage": {
+      "sProcessing":   "Đang xử lý...",
+      "sLengthMenu":   "Xem _MENU_ mục",
+      "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+      "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+      "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+      "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+      "sInfoPostFix":  "",
+      "sSearch":       "Tìm:",
+      "sUrl":          "",
+      "oPaginate": {
+        "sFirst":    "Đầu",
+        "sPrevious": "Trước",
+        "sNext":     "Tiếp",
+        "sLast":     "Cuối"
+      }
+    },
+  });
+//Thùng rác
+var trashTable = $('#trash-table').DataTable({
+  processing: true,
+  serverSide: true,
+  ajax: "/admin/trash",
+  columns: [
+  {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+  {data: 'name', name: 'name'},
+  {data: 'user', name: 'user'},
+  {data: 'deleted_at', name: 'deleted_at'},
+  {data: 'action', name: 'action', orderable: false, searchable: false},
+  ],
+  "oLanguage": {
+    "sProcessing":   "Đang xử lý...",
+    "sLengthMenu":   "Xem _MENU_ mục",
+    "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+    "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+    "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+    "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+    "sInfoPostFix":  "",
+    "sSearch":       "Tìm:",
+    "sUrl":          "",
+    "oPaginate": {
+      "sFirst":    "Đầu",
+      "sPrevious": "Trước",
+      "sNext":     "Tiếp",
+      "sLast":     "Cuối"
+    }
+  },
+});
 // ckeditor
 let options ={
   filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
@@ -47,6 +111,66 @@ let options ={
 };
 CKEDITOR.replace('description',options);
 CKEDITOR.replace('description-edit',options);
+CKEDITOR.replace('overview' ,{
+      // Define the toolbar groups as it is a more accessible solution.
+      toolbarGroups: [{
+        "name": "basicstyles",
+        "groups": ["basicstyles"]
+      },
+      {
+        "name": "links",
+        "groups": ["links"]
+      },
+      {
+        "name": "paragraph",
+        "groups": ["list", "blocks"]
+      },
+      {
+        "name": "document",
+        "groups": ["mode"]
+      },
+      {
+        "name": "insert",
+        "groups": ["insert"]
+      },
+      {
+        "name": "styles",
+        "groups": ["styles"]
+      }
+      ],
+      // Remove the redundant buttons from toolbar groups defined above.
+      removeButtons: 'About,Image,Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar'
+    });
+CKEDITOR.replace('overview-edit' ,{
+      // Define the toolbar groups as it is a more accessible solution.
+      toolbarGroups: [{
+        "name": "basicstyles",
+        "groups": ["basicstyles"]
+      },
+      {
+        "name": "links",
+        "groups": ["links"]
+      },
+      {
+        "name": "paragraph",
+        "groups": ["list", "blocks"]
+      },
+      {
+        "name": "document",
+        "groups": ["mode"]
+      },
+      {
+        "name": "insert",
+        "groups": ["insert"]
+      },
+      {
+        "name": "styles",
+        "groups": ["styles"]
+      }
+      ],
+      // Remove the redundant buttons from toolbar groups defined above.
+      removeButtons: 'About,Image,Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar'
+    });
 CKEDITOR.editorConfig=function( config ){ config.resize_enabled=false;};
 // ảnh sản phẩm
 $.fn.filemanager = function(type, options) {
@@ -69,6 +193,7 @@ let target_input = parent.document.getElementById(localStorage.getItem('target_i
 target_input.value += url+";";
 //set or change the preview image src
 $('#holder').append('<div class="show-image"><button type="button" title="Loại bỏ" class="remove-img" data-target="javascript:;"><i class="fa fa-close"></i></button><div><img src="'+url+'" style="margin-top:15px;max-height:100px;"></div></div>');
+//Dùng khi sửa thông tin sản phẩm
 $('#holder-edit').append('<div class="show-image"><button type="button" title="Loại bỏ" class="remove-img" data-target="javascript:;"><i class="fa fa-close"></i></button><div><img src="'+url+'" style="margin-top:15px;max-height:100px;"></div></div>');
 };
 //Dùng khi sửa thông tin sản phẩm
@@ -545,8 +670,8 @@ $(document).on('click','.edit',function () {
       $('#general_price').val(res.general_price);
       $('#out_price').val(res.out_price);
       $('#in_price').val(res.in_price);
-      $('#overview-edit').val(res.product['overview']);
       CKEDITOR.instances['description-edit'].setData(res.product['description']);
+      CKEDITOR.instances['overview-edit'].setData(res.product['overview']);
       $('#productEditForm').data('id',id);
       $('#btn-edit').prop('disabled', true);
       $('#lfm-edit').filemanager('image');
@@ -781,11 +906,19 @@ productsTable.on('change',".js-switch",function(e){
   let status = $(this).prop('checked') === true ? 1 : 0;
   let id = $(this).data('id');
   let confirm_title,confirm_text,success_title,success_text,confirmButtonText;
-  confirm_title = 'Ẩn sản phẩm này';
-  confirm_text = 'Sản phẩm này sẽ bị ẩn trên hệ thông.';
-  success_title = 'Đã ẩn!';
-  success_text = 'Sản phẩm đã bị ẩn';
-  confirmButtonText = 'Xác nhận ẩn!';
+  if(status == 1){
+    confirm_title = 'Hiện sản phẩm này';
+    confirm_text = 'Sản phẩm này sẽ hiển thị trên hệ thống.';
+    success_title = 'Đã hiện!';
+    success_text = 'Sản phẩm đã hiện';
+    confirmButtonText = 'Xác nhận!';
+  }else{
+    confirm_title = 'Ẩn sản phẩm này';
+    confirm_text = 'Sản phẩm này sẽ bị ẩn trên hệ thông.';
+    success_title = 'Đã ẩn!';
+    success_text = 'Sản phẩm đã bị ẩn';
+    confirmButtonText = 'Xác nhận!';
+  }
   Swal.fire({
     title: confirm_title,
     text: confirm_text,
@@ -846,7 +979,7 @@ if (checkedBool && !switchElement.checked) { // switch on if not on
     success: function (res) {
       window.history.pushState("object or string", "Title", '/admin/products/'+id);
       $('#slides').append(res.slides);
-      $('#product-overview').text(res.product['overview']);
+      $('#product-overview').html(res.product['overview']);
       $('#product-name').text(res.product['name']);
       $('#product-description').html(res.product['description']);
       $.each(res.colors, function( index, value ) {
@@ -881,8 +1014,64 @@ $(document).on('hidden.bs.modal','#detailProduct',function () {
  $('#color-items').empty();
  $('#size-items').empty();
 });
- // Hàm này dùng để thêm bộ lọc --}}
- function add_filter(option,value) {
+ //Xem theo màu
+ $(document).on('click','ul#color-items > li a',function(){
+  let id = $(this).data('id');
+  $('#color-selected').text($(this).text());
+  $('ul#color-items > li a').removeClass('active');
+  $(this).addClass('active');
+  let url = add_filter('color',id);
+  $.ajax({
+    url: url,
+    type:'GET',
+    success: function (res) {
+      window.history.pushState("object or string", "Title", url);
+      if(res.quantities != 0){
+       $('#detail_quantity').text(res.quantities);
+     }else{
+      $('#detail_quantity').text("Tạm hết hàng");
+    }
+    $('#detail_in_price').text(res.in_price);
+    $('#detail_out_price').text(res.out_price);
+    $('#detail_general_price').text(res.general_price);
+    if(res.sale_price != 0){
+      $('#detail_sale_price').text(res.sale_price);
+    }else{
+      $('#detail_sale_price').text('Đang cập nhật');
+    }
+  }
+});
+})
+  //Xem theo kích thước
+  $(document).on('click','ul#size-items > li a',function(){
+    let id = $(this).data('id');
+    $('#size-selected').text($(this).text());
+    $('ul#size-items > li a').removeClass('active');
+    $(this).addClass('active');
+    let url = add_filter('size',id);
+    $.ajax({
+      url: url,
+      type:'GET',
+      success: function (res) {
+       window.history.pushState("object or string", "Title", url);
+       if(res.quantities != 0){
+         $('#detail_quantity').text(res.quantities);
+       }else{
+        $('#detail_quantity').text("Tạm hết hàng");
+      }
+      $('#detail_in_price').text(res.in_price);
+      $('#detail_out_price').text(res.out_price);
+      $('#detail_general_price').text(res.general_price);
+      if(res.sale_price != 0){
+        $('#detail_sale_price').text(res.sale_price);
+      }else{
+        $('#detail_sale_price').text('Đang cập nhật');
+      }
+    }
+  });
+  });
+  // Hàm này dùng để thêm bộ lọc
+  function add_filter(option,value) {
     //Lấy url hiện tại
     let url = window.location.href;
     //tách url thành mảng
@@ -892,7 +1081,7 @@ $(document).on('hidden.bs.modal','#detailProduct',function () {
       return el != null && el != '';
     });
     //kiểm tra xem url có bộ lọc nào hay chưa
-    if(arr[arr.length-1] == 'products'){
+    if(url.indexOf('?') == -1){
       //Nếu chưa có thì cộng cuỗi
       url += '/?'+option+'='+value;
     }else{

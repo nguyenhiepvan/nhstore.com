@@ -108,11 +108,11 @@
 				</a>
 				<ul class="treeview-menu">
 					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/invoice.png')}}" class="icons">Hóa đơn nhập
 						</a>
 					</li>
 					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/bill.png')}}" class="icons">Hóa đơn xuất
 						</a>
 					</li>
 				</ul>
