@@ -78,6 +78,8 @@ Route::group([
 	// Quản lý thẻ
 	Route::resource('tags','TagController');
 	// Quản lý hóa đơn nhập
+	Route::get('in-receipts','ReceiptController@index')->name('in-receipts.index');
+	// Route::get('out-receipts','ReceiptController')->name('out-receipts.index');
 });
 //end admin
 // homework

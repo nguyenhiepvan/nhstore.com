@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('phone',11)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('is_admin')->default('false');
+            $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->boolean('is_actived')->default(false)->comment('tình trạng hoạt động của tài khoản: 1: hoạt động, 0: không, mặc định là 0');
             $table->timestamps();

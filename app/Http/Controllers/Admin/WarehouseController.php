@@ -68,7 +68,7 @@ class WarehouseController extends Controller
          ->rawColumns(['name'])
          ->make(true);
      }
-     return view('backend.admin.productsList')
+     return view('backend.admin.products.productsList')
      ->with([
         'products'=>Product::whereNull('deleted_at')->where('status',true)->get(),
         'materials'=>Material::whereNull('deleted_at')->get(),

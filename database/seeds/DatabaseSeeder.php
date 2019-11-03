@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ColorsTableSeeder::class);
         $this->call(SizesTableSeeder::class);
         $this->call(ProductsTableSeeder::class);
+        $this->call(ReceiptsTableSeeder::class);
     }
 }

@@ -48,7 +48,7 @@ class TrashController extends Controller
             ->rawColumns(['action','name','status'])
             ->make(true);
         }
-        return view('backend.admin.productsList')
+        return view('backend.admin.products.productsList')
         ->with([
             'products'=>Product::whereNull('deleted_at')->where('status',true)->get(),
             'materials'=>Material::whereNull('deleted_at')->get(),

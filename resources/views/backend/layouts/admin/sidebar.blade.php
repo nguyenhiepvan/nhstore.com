@@ -45,6 +45,7 @@
 					</li>
 				</ul>
 			</li>
+			{{-- Sản phẩm --}}
 			<li class="treeview">
 				<a href="#">
 					<img src="{{asset('assets/backend/dist/img/icons/iconssuit.png')}}" class="icons">
@@ -60,8 +61,13 @@
 						</a>
 					</li>
 					<li>
-						<a href="{{ route('admin.categories.index') }}">
-							<img src="{{asset('assets/backend/dist/img/icons/category.png')}}" class="icons">Danh mục
+						<a href="{{ route('admin.warehouse.index') }}">
+							<img src="{{asset('assets/backend/dist/img/icons/iconsproducts.png')}}" class="icons">Kho hàng
+						</a>
+					</li>
+					<li>
+						<a href="{{ route('admin.trash.index') }}">
+							<img src="{{asset('assets/backend/dist/img/icons/iconsproducts.png')}}" class="icons">Sản phẩm đã xóa
 						</a>
 					</li>
 					<li>
@@ -73,8 +79,33 @@
 						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconssewing.png')}}" class="icons"></i>Chất liệu
 						</a>
 					</li>
+				</ul>
+			</li>
+			<li>
+				<a href=".#"><img src="{{asset('assets/backend/dist/img/icons/iconssupplier.png')}}" class="icons">Nhà phẩn phối
+				</a>
+			</li>
+			{{-- Danh mục --}}
+			<li class="treeview">
+				<a href="{{ route('admin.categories.index') }}">
+					<img src="{{asset('assets/backend/dist/img/icons/category.png')}}" class="icons">
+					<span>Danh mục</span>
+					<span class="pull-right-container">
+						<i class="fa fa-angle-left pull-right"></i>
+					</span>
+				</a>
+				<ul class="treeview-menu">
 					<li>
-						<a href=".#"><img src="{{asset('assets/backend/dist/img/icons/iconssupplier.png')}}" class="icons">Nhà phẩn phối
+						<a href="{{ route('admin.categories.index') }}">
+							<img src="{{asset('assets/backend/dist/img/icons/category.png')}}" class="icons">Danh mục
+						</a>
+					</li>
+					<li>
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Danh mục đã xóa
+						</a>
+					</li>
+					<li>
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Danh mục đã ẩn
 						</a>
 					</li>
 				</ul>
@@ -108,7 +139,7 @@
 				</a>
 				<ul class="treeview-menu">
 					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/invoice.png')}}" class="icons">Hóa đơn nhập
+						<a href="{{ route('admin.in-receipts.index') }}"><img src="{{asset('assets/backend/dist/img/icons/invoice.png')}}" class="icons">Hóa đơn nhập
 						</a>
 					</li>
 					<li>

@@ -68,7 +68,7 @@ public function index(Request $request)
         ->rawColumns(['action','name','status'])
         ->make(true);
     }
-    return view('backend.admin.productsList')
+    return view('backend.admin.products.productsList')
     ->with([
         'products'=>Product::whereNull('deleted_at')->where('status',true)->get(),
         'materials'=>Material::whereNull('deleted_at')->get(),
@@ -89,22 +89,23 @@ public function index(Request $request)
 */
 public function store(Request $request)
 {
-    if(Auth::user()->can('create')){
-     $request->validate([
-        'slug'=>['required','max:255','unique:products'],
-        'acronym'=>['required','max:255','unique:products'],
-        'thumbnail'=>['required','max:255',],
-        'material_id'=>['required'],
-        'brand_id'=>['required'],
-        'country_id'=>['required'],
-        'supplier_id'=>['required'],
-        'category_id'=>['required'],
-    ]);
+    // if(Auth::user()->can('create')){
+   $request->validate([
+    'slug'=>['required','max:255','unique:products'],
+    'acronym'=>['required','max:255','unique:products'],
+    'thumbnail'=>['required','max:255',],
+    'material_id'=>['required'],
+    'brand_id'=>['required'],
+    'country_id'=>['required'],
+    'supplier_id'=>['required'],
+    'category_id'=>['required'],
+]);
 //Thêm sản phẩm
-     $product = Product::create($request->except(['_token','images','tag_id','color_id','size_id','thumbnail']));
-     $this->addAttribute($request,$product->id,$product->user_id);
-     return response()->json(['msg'=>!empty($product)]);
- }
+   $product = Product::create($request->except(['_token','images','tag_id','color_id','size_id','thumbnail']));
+   $this->addAttribute($request,$product->id,$product->user_id);
+   \Session::flash('status', 'Thêm mới thành công!');
+   return response()->json(['msg'=>!empty($product)]);
+ // }
 }
 /**
 * Display the specified resource.
@@ -124,9 +125,9 @@ public function show(Request $request,$id)
         ['size_id'=>NULL],
     ])->first();
     if (isset($request->color)||isset($request->size)) {
-       $color = $request->color;
-       $size = $request->size;
-       if (isset($color) && isset($size)) {
+     $color = $request->color;
+     $size = $request->size;
+     if (isset($color) && isset($size)) {
         $price = $prices->where('color_id',$color)->where('size_id',$size)->first();
         if (isset($price)) {
             $quantities = $price->sum('quantity');

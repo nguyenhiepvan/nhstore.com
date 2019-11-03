@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReciptsTable extends Migration
+class CreateBillsTable extends Migration
 {
     /**
      * Bảng hóa đơn bán hàng (dành cho khách hàng)
@@ -13,7 +13,7 @@ class CreateReciptsTable extends Migration
      */
     public function up()
     {
-        Schema::create('recipts', function (Blueprint $table) {
+        Schema::create('bills', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->comment('mã hóa đơn');
             $table->string('customer_id')->comment('khách hàng');
@@ -35,6 +35,6 @@ class CreateReciptsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipts');
+        Schema::dropIfExists('bills');
     }
 }

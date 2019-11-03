@@ -562,6 +562,8 @@ Swal.fire({
   timer: 1000
 });
 productsTable.ajax.reload(null, false );
+warehouseTable.ajax.reload(null, false );
+ location.reload();
 },
 error: function(xhr, status, errors)
 {
@@ -889,6 +891,7 @@ $(document).on('click','.delete',function () {
         type: 'DELETE',
         success: function () {
           productsTable.ajax.reload(null, false );
+          trashTable.ajax.reload(null, false );
         }
       })
     }

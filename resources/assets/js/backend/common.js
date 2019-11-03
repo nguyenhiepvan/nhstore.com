@@ -11,6 +11,8 @@ $(document).ready(function () {
   });
 	// Dựng search select
 	$('.select2').select2();
+  $('#sizesSelect').select2();
+  $('#colorsSelect').select2();
 	// Hàm này dùng để tạo ký tự viết tắt
 	function acr(s){
 		let words, acronym, nextWord;

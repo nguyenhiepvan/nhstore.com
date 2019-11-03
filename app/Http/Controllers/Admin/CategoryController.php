@@ -55,7 +55,7 @@ class CategoryController extends Controller
             ->rawColumns(['action','status'])
             ->make(true);
         }
-        return view('backend.admin.categoryList')->with('categories',Category::where('status',true)->get());
+        return view('backend.admin.categories.categoryList')->with('categories',Category::where('status',true)->get());
     }
     /**
      * Display a listing of the resource.
@@ -99,7 +99,7 @@ class CategoryController extends Controller
             ->rawColumns(['status'])
             ->make(true);
         }
-        return view('backend.admin.categoryList')->with('categories',Category::where('status',false)->get());
+        return view('backend.admin.categories.categoryList')->with('categories',Category::where('status',false)->get());
     }
     /**
      * Display a listing of the resource.
