@@ -78,11 +78,7 @@ Route::group([
 	// Quản lý thẻ
 	Route::resource('tags','TagController');
 	// Quản lý hóa đơn nhập
-	Route::get('in-receipts','ReceiptController@index')->name('in-receipts.index');
+	Route::resource('in-receipts','ReceiptController');
 	// Route::get('out-receipts','ReceiptController')->name('out-receipts.index');
 });
 //end admin
-// homework
-// Route::resource('todos','homework\TodoController');
-// Route::resource('users','homework\UserController');
-// Route::get('/home', 'HomeController@index')->name('home');

@@ -14,7 +14,7 @@
 <div id="hero">
 	<div class="flexslider">
 		<ul class="slides">
-			<li class="slide" data-background="http://placehold.it/1920x1056" data-thumbnail="http://placehold.it/1920x1056">
+			<li class="slide" data-background="{{ asset('assets/fontend/images/GQ-Selects-March-Hero.jpg') }}" data-thumbnail="{{ asset('assets/fontend/images/slider2.jpg') }}">
 				<div class="slider-caption fx-caption-2 text-center">
 					<h1 class="sl-big-heading-3">Life style that you need, Yo.</h1>
 					<p>Claritas est etiam processus dynamicus, qui sequitur mutatio-nem consuetudium lectorum.</p>
@@ -23,7 +23,7 @@
 				<!-- /slider-caption -->
 			</li>
 			<!-- /slide -->
-			<li class="slide" data-background="http://placehold.it/1920x1056" data-thumbnail="http://placehold.it/1920x1056">
+			<li class="slide" data-background="{{ asset('assets/fontend/images/slider2.jpg') }}" data-thumbnail="{{ asset('assets/fontend/images/javier-reyes-599328-unsplash.jpg') }}">
 				<div class="slider-caption fx-caption-2 text-left">
 					<h1 class="sl-big-heading-3">Creative theme Awesome.</h1>
 					<p>Claritas est etiam processus dynamicus, qui sequitur mutatio-nem consuetudium lectorum.</p>
@@ -32,7 +32,7 @@
 				<!-- /slider-caption -->
 			</li>
 			<!-- /slide -->
-			<li class="slide" data-background="http://placehold.it/1920x1056" data-thumbnail="http://placehold.it/1920x1056">
+			<li class="slide" data-background="{{ asset('assets/fontend/images/javier-reyes-599328-unsplash.jpg') }}" data-thumbnail="{{ asset('assets/fontend/images/GQ-Selects-March-Hero.jpg') }}">
 				<div class="slider-caption fx-caption-2 text-center">
 					<h1 class="sl-big-heading-3 padding-bottom-15">Amazing shop theme!</h1>
 					<p>Claritas est etiam processus dynamicus, qui sequitur mutatio-nem consuetudium lectorum.</p>

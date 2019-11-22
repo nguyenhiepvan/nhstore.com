@@ -13,18 +13,19 @@ class CreateReceiptProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('receipt_products', function (Blueprint $table) {
-           $table->bigIncrements('id');
-           $table->bigInteger('product_id')->unsigned()->comment('sản phẩm');
-           $table->bigInteger('color_id')->unsigned()->comment('Màu sắc');
-           $table->bigInteger('size_id')->unsigned()->comment('kích thước');
-           $table->bigInteger('quantitys')->comment('số lượng');
-           $table->bigInteger('price')->comment('đơn giá');
-           $table->foreign('product_id')->references('id')->on('products');
-           $table->foreign('color_id')->references('id')->on('colors');
-           $table->foreign('size_id')->references('id')->on('sizes');
-           $table->timestamps();
-       });
+      Schema::create('receipt_products', function (Blueprint $table) {
+       $table->bigIncrements('id');
+       $table->bigInteger('product_id')->unsigned()->comment('sản phẩm');
+       $table->bigInteger('color_id')->unsigned()->comment('Màu sắc');
+       $table->bigInteger('size_id')->unsigned()->comment('kích thước');
+       $table->bigInteger('quantitys')->comment('số lượng');
+       $table->bigInteger('price')->comment('đơn giá');
+       $table->foreign('product_id')->references('id')->on('products');
+       $table->foreign('color_id')->references('id')->on('colors');
+       $table->foreign('size_id')->references('id')->on('sizes');
+       $table->bigInteger('receipt_id')->unsigned()->comment('hóa đơn');
+       $table->foreign('receipt_id')->references('id')->on('receipts');
+     });
     }
 
     /**
@@ -34,6 +35,6 @@ class CreateReceiptProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('receipt_products');
+      Schema::dropIfExists('receipt_products');
     }
-}
+  }

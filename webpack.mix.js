@@ -23,6 +23,7 @@ const mix = require('laravel-mix');
  .js('resources/assets/js/formatCurrency.js', 'public/js')
  .js('resources/assets/js/app.js', 'public/js')
  .js('resources/assets/js/backend/productsList.js','public/js')
+ .js('resources/assets/js/backend/receipt.js','public/js')
  .js('resources/assets/js/backend/categoriesList.js','public/js')
  .js('resources/assets/js/backend/common.js','public/js')
  .js('resources/assets/js/backend/particle.js','public/js')

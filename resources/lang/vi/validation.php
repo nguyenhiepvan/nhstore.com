@@ -145,6 +145,8 @@ return [
     */
 
     'attributes' => [
+        'quantity.*'=>'Số lượng',
+        "in_price.*"=>'Giá đơn vị',
         'name' => 'tên',
         'username' => 'tên đăng nhập',
         'email' => 'email',

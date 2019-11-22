@@ -56,152 +56,141 @@
             {{-- /.card-header --}}
             {{-- card-body --}}
             <div class="card-body">
-             @if(Session::has('status'))
-             <div class="alert alert-success alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              <h4><i class="icon fa fa-check"></i> Thông báo!</h4>
-              {{Session::get('status')}}
+              <table id="product-table" class="table  table-striped table-bordered table-hover table-responsive ">
+                <thead>
+                  <tr>
+                    <th>Stt</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Người tạo</th>
+                    <th>Ngày tạo</th>
+                    <th>Hiển thị</th>
+                    <th>#</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Stt</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Người tạo</th>
+                    <th>Ngày tạo</th>
+                    <th>Hiển thị</th>
+                    <th>#</th>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
-            @endif
-            @can('create',nhstore\Models\Product::class)
-            <button class="btn btn-info btn-lg" title="Thêm mới" data-toggle="modal" data-target="#productModal"><i class="fa  fa-plus-circle"></i></button>
-            <br>
-            @endcan
-            <table id="product-table" class="table  table-striped table-bordered table-hover table-responsive ">
+            {{-- /.card-body --}}
+            {{-- card-footer --}}
+            <div class="card-footer">
+              <h3 class="card-title">Danh sách sản phẩm</h3>
+            </div>
+            {{-- /.card-footer --}}
+          </div>
+          {{-- /.danh sách sản phẩm --}}
+        </div>
+        <!-- /.tab-pane -->
+        <div class="tab-pane @if(Request::is('*/warehouse')) active @endif" id="tab_2">
+          {{-- danh sách sản phẩm --}}
+          <div class="card box-body">
+            {{-- card-header --}}
+            <div class="card-header">
+              <div class="alert alert-info alert-dismissible">
+                <h4><i class="icon fa fa-info"></i> Kho hàng</h4>
+                Danh sách sản phẩm trong kho
+              </div>
+            </div>
+            {{-- /.card-header --}}
+            {{-- card-body --}}
+            <div class="card-body">
+              <table id="warehouse-table" class="table  table-striped table-bordered table-hover table-responsive ">
+                <thead>
+                  <tr>
+                    <th>Stt</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Màu sắc</th>
+                    <th>Kích thước</th>
+                    <th>Số lượng</th>
+                    <th>Giá nhập</th>
+                    <th>Giá bán</th>
+                    <th>Giá khuyến mãi</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Stt</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Màu sắc</th>
+                    <th>Kích thước</th>
+                    <th>Số lượng</th>
+                    <th>Giá nhập</th>
+                    <th>Giá bán</th>
+                    <th>Giá khuyến mãi</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            {{-- /.card-body --}}
+            {{-- card-footer --}}
+            <div class="card-footer">
+              <h3 class="card-title">Kho hàng</h3>
+            </div>
+            {{-- /.card-footer --}}
+          </div>
+          {{-- /.danh sách sản phẩm --}}
+        </div>
+        <!-- /.tab-pane -->
+        <div class="tab-pane @if(Request::is('*/trash')) active @endif" id="tab_3">
+          {{-- danh sách sản phẩm đã xóa--}}
+          <div class="card box-body">
+            {{-- card-header --}}
+            <div class="card-header">
+              <div class="alert alert-danger alert-dismissible">
+                <h4><i class="icon fa fa-info"></i> Thùng rác</h4>
+                Danh sách sản phẩm đã xóa
+              </div>
+            </div>
+            {{-- /.card-header --}}
+            {{-- card-body --}}
+            <div class="card-body">
+             <button class="btn btn-danger btn-lg" title="Xóa toàn bộ"><i class="glyphicon glyphicon-trash"></i></button>
+             <br>
+             <table id="trash-table" class="table  table-striped table-bordered table-hover table-responsive ">
               <thead>
                 <tr>
                   <th>Stt</th>
                   <th>Tên sản phẩm</th>
                   <th>Người tạo</th>
-                  <th>Ngày tạo</th>
-                  <th>Hiển thị</th>
+                  <th>Ngày xóa</th>
                   <th>#</th>
                 </tr>
               </thead>
               <tfoot>
                 <tr>
-                  <th>Stt</th>
-                  <th>Tên sản phẩm</th>
-                  <th>Người tạo</th>
-                  <th>Ngày tạo</th>
-                  <th>Hiển thị</th>
-                  <th>#</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          {{-- /.card-body --}}
-          {{-- card-footer --}}
-          <div class="card-footer">
-            <h3 class="card-title">Danh sách sản phẩm</h3>
-          </div>
-          {{-- /.card-footer --}}
+                 <th>Stt</th>
+                 <th>Tên sản phẩm</th>
+                 <th>Người tạo</th>
+                 <th>Ngày xóa</th>
+                 <th>#</th>
+               </tr>
+             </tfoot>
+           </table>
+         </div>
+         {{-- /.card-body --}}
+         {{-- card-footer --}}
+         <div class="card-footer">
+          <h3 class="card-title">Thùng rác</h3>
         </div>
-        {{-- /.danh sách sản phẩm --}}
+        {{-- /.card-footer --}}
       </div>
-      <!-- /.tab-pane -->
-      <div class="tab-pane @if(Request::is('*/warehouse')) active @endif" id="tab_2">
-        {{-- danh sách sản phẩm --}}
-        <div class="card box-body">
-          {{-- card-header --}}
-          <div class="card-header">
-            <div class="alert alert-info alert-dismissible">
-              <h4><i class="icon fa fa-info"></i> Kho hàng</h4>
-              Danh sách sản phẩm trong kho
-            </div>
-          </div>
-          {{-- /.card-header --}}
-          {{-- card-body --}}
-          <div class="card-body">
-            <table id="warehouse-table" class="table  table-striped table-bordered table-hover table-responsive ">
-              <thead>
-                <tr>
-                  <th>Stt</th>
-                  <th>Tên sản phẩm</th>
-                  <th>Màu sắc</th>
-                  <th>Kích thước</th>
-                  <th>Số lượng</th>
-                  <th>Giá nhập</th>
-                  <th>Giá bán</th>
-                  <th>Giá khuyến mãi</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th>Stt</th>
-                  <th>Tên sản phẩm</th>
-                  <th>Màu sắc</th>
-                  <th>Kích thước</th>
-                  <th>Số lượng</th>
-                  <th>Giá nhập</th>
-                  <th>Giá bán</th>
-                  <th>Giá khuyến mãi</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          {{-- /.card-body --}}
-          {{-- card-footer --}}
-          <div class="card-footer">
-            <h3 class="card-title">Kho hàng</h3>
-          </div>
-          {{-- /.card-footer --}}
-        </div>
-        {{-- /.danh sách sản phẩm --}}
-      </div>
-      <!-- /.tab-pane -->
-      <div class="tab-pane @if(Request::is('*/trash')) active @endif" id="tab_3">
-        {{-- danh sách sản phẩm đã xóa--}}
-        <div class="card box-body">
-          {{-- card-header --}}
-          <div class="card-header">
-            <div class="alert alert-danger alert-dismissible">
-              <h4><i class="icon fa fa-info"></i> Thùng rác</h4>
-              Danh sách sản phẩm đã xóa
-            </div>
-          </div>
-          {{-- /.card-header --}}
-          {{-- card-body --}}
-          <div class="card-body">
-           <button class="btn btn-danger btn-lg" title="Xóa toàn bộ"><i class="glyphicon glyphicon-trash"></i></button>
-           <br>
-           <table id="trash-table" class="table  table-striped table-bordered table-hover table-responsive ">
-            <thead>
-              <tr>
-                <th>Stt</th>
-                <th>Tên sản phẩm</th>
-                <th>Người tạo</th>
-                <th>Ngày xóa</th>
-                <th>#</th>
-              </tr>
-            </thead>
-            <tfoot>
-              <tr>
-               <th>Stt</th>
-               <th>Tên sản phẩm</th>
-               <th>Người tạo</th>
-               <th>Ngày xóa</th>
-               <th>#</th>
-             </tr>
-           </tfoot>
-         </table>
-       </div>
-       {{-- /.card-body --}}
-       {{-- card-footer --}}
-       <div class="card-footer">
-        <h3 class="card-title">Thùng rác</h3>
-      </div>
-      {{-- /.card-footer --}}
+      {{-- /.danh sách sản phẩm --}}
     </div>
-    {{-- /.danh sách sản phẩm --}}
   </div>
-</div>
-<!-- /.tab-content -->
+  <!-- /.tab-content -->
 </div>
 <!-- nav-tabs-custom -->
 </section>
 {{-- /.content --}}
 </div>
 {{-- /.content-wrapper --}}
-@include('backend.admin.products.product_modal')
+@include('backend.admin.product_modal')
 @endsection
