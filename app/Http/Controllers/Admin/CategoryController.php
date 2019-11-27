@@ -158,10 +158,9 @@ class CategoryController extends Controller
         $request->validate([
             'name'=>['required','max:255','unique:categories'],
             'slug'=>['required','max:255','unique:categories'],
-            'acronym'=>['required','max:255','unique:categories'],
         ]);
         $category = Category::create($request->all());
-        return response()->json(['id'=>$category->id,'name'=>$category->name,'acronym'=>$category->acronym]);
+        return response()->json(['id'=>$category->id,'name'=>$category->name]);
     }
     /**
      * Display the specified resource.
@@ -185,7 +184,6 @@ class CategoryController extends Controller
         return response()->json([
             'name'=>$category->name,
             'slug'=>$category->slug,
-            'acronym'=>$category->acronym,
             'parent'=>isset($category->parent)?$category->parent->id:'-1',
         ]);
     }
@@ -201,7 +199,6 @@ class CategoryController extends Controller
         $request->validate([
             'name'=>['required','max:255','unique:categories'],
             'slug'=>['required','max:255','unique:categories'],
-            'acronym'=>['required','max:255','unique:categories'],
         ]);
         Category::where('id',$id)->update($request->except(['_method','_token']));
         //Nếu cập nhật trạng thái hiển thị

@@ -23,7 +23,7 @@ class ProductsTableSeeder extends Seeder
     		//fake product
     		$product = Product::create([
     			'name'=>$fake->unique()->sentence(3),
-    			'acronym'=>$fake->unique()->sentence(3),
+    			// 'acronym'=>$fake->unique()->sentence(3),
     			'slug'=>$fake->unique()->slug,
     			'description'=>$fake->text($maxNbChars = 1000)   ,
           'overview'=>$fake->text($maxNbChars = 255)   ,

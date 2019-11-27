@@ -26,110 +26,14 @@
 		<!-- /.search form -->
 		<!-- sidebar menu: : style can be found in sidebar.less -->
 		<ul class="sidebar-menu" data-widget="tree">
-			<li class="header">MAIN NAVIGATION</li>
-			<li class="treeview">
+			<li class="header">Quản trị hệ thống</li>
+			<li>
 				<a href="#">
 					<img src="{{asset('assets/backend/dist/img/icons/iconsdashboard.png')}}" class="icons"> <span>Dashboard</span>
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li>
-						<a href="#"><i class="fa fa-circle-o"></i> Dashboard v1
-						</a>
-					</li>
-					<li>
-						<a href="#"><i class="fa fa-circle-o"></i> Dashboard v2
-						</a>
-					</li>
-				</ul>
-			</li>
-			{{-- Sản phẩm --}}
-			<li class="treeview">
-				<a href="#">
-					<img src="{{asset('assets/backend/dist/img/icons/iconssuit.png')}}" class="icons">
-					<span>Sản phẩm</span>
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li>
-						<a href="{{ route('admin.products.index') }}">
-							<img src="{{asset('assets/backend/dist/img/icons/iconsproducts.png')}}" class="icons">Sản phẩm
-						</a>
-					</li>
-					<li>
-						<a href="{{ route('admin.warehouse.index') }}">
-							<img src="{{asset('assets/backend/dist/img/icons/iconsproducts.png')}}" class="icons">Kho hàng
-						</a>
-					</li>
-					<li>
-						<a href="{{ route('admin.trash.index') }}">
-							<img src="{{asset('assets/backend/dist/img/icons/iconsproducts.png')}}" class="icons">Sản phẩm đã xóa
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img src="{{asset('assets/backend/dist/img/icons/iconstrademark.png')}}" class="icons">Thương hiệu
-						</a>
-					</li>
-					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconssewing.png')}}" class="icons"></i>Chất liệu
-						</a>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<a href=".#"><img src="{{asset('assets/backend/dist/img/icons/iconssupplier.png')}}" class="icons">Nhà phẩn phối
 				</a>
 			</li>
-			{{-- Danh mục --}}
-			<li class="treeview">
-				<a href="{{ route('admin.categories.index') }}">
-					<img src="{{asset('assets/backend/dist/img/icons/category.png')}}" class="icons">
-					<span>Danh mục</span>
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li>
-						<a href="{{ route('admin.categories.index') }}">
-							<img src="{{asset('assets/backend/dist/img/icons/category.png')}}" class="icons">Danh mục
-						</a>
-					</li>
-					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Danh mục đã xóa
-						</a>
-					</li>
-					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Danh mục đã ẩn
-						</a>
-					</li>
-				</ul>
-			</li>
-			<li class="treeview">
-				<a href="#">
-					<img src="{{asset('assets/backend/dist/img/icons/iconsbill_.png')}}" class="icons">
-					<span>Đơn hàng</span>
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
-						</a>
-					</li>
-					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
-						</a>
-					</li>
-				</ul>
-			</li>
-			<li class="treeview">
+			{{-- Hóa đơn nhập xuất --}}
+			<li class="treeview @if(Request::is('*receipts')||Request::is('*receipts*')) active menu-open @endif">
 				<a href="#">
 					<img src="{{asset('assets/backend/dist/img/icons/iconsreceipt.png')}}" class="icons">
 					<span>Hóa đơn</span>
@@ -137,13 +41,54 @@
 						<i class="fa fa-angle-left pull-right"></i>
 					</span>
 				</a>
-				<ul class="treeview-menu">
-					<li>
+				<ul class="treeview-menu" @if(Request::is('*receipts')||Request::is('*receipts*')) style="display: block;" @endif>
+					<li @if(Request::is('*in-receipts')||Request::is('*in-receipts*')) class="active" @endif>
 						<a href="{{ route('admin.in-receipts.index') }}"><img src="{{asset('assets/backend/dist/img/icons/invoice.png')}}" class="icons">Hóa đơn nhập
 						</a>
 					</li>
 					<li>
 						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/bill.png')}}" class="icons">Hóa đơn xuất
+						</a>
+					</li>
+					<li>
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/bill.png')}}" class="icons">Đơn hàng
+						</a>
+					</li>
+				</ul>
+			</li>
+			{{-- Kho hàng --}}
+			<li class="treeview">
+				<a href="#">
+					<img src="{{asset('assets/backend/dist/img/icons/warehouse.png')}}" class="icons">
+					<span>Kho hàng</span>
+					<span class="pull-right-container">
+						<i class="fa fa-angle-left pull-right"></i>
+					</span>
+				</a>
+				<ul class="treeview-menu" @if(Request::is('*products')||Request::is('*products*')
+					||Request::is('*warehouse')||Request::is('*warehouse*')
+					) style="display: block;" @endif>
+					<li @if(Request::is('*products')||Request::is('*products*')) class="active" @endif>
+						<a href="{{ route('admin.products.index') }}">
+							<img src="{{asset('assets/backend/dist/img/icons/suit.png')}}" class="icons">Sản phẩm
+						</a>
+					</li>
+					<li @if(Request::is('*warehouse')||Request::is('*warehouse*')) class="active" @endif>
+						<a href="{{ route('admin.warehouse.index') }}">
+							<img src="{{asset('assets/backend/dist/img/icons/list.png')}}" class="icons">Kho hàng
+						</a>
+					</li>
+					<li @if(Request::is('*brand')||Request::is('*brand*')) class="active" @endif>
+						<a href="#">
+							<img src="{{asset('assets/backend/dist/img/icons/iconstrademark.png')}}" class="icons">Thương hiệu
+						</a>
+					</li>
+					<li @if(Request::is('*suppliers')||Request::is('*suppliers*')) class="active" @endif>
+						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconssewing.png')}}" class="icons"></i>Chất liệu
+						</a>
+					</li>
+					<li>
+						<a href=".#"><img src="{{asset('assets/backend/dist/img/icons/iconssupplier.png')}}" class="icons">Nhà phẩn phối
 						</a>
 					</li>
 				</ul>
@@ -196,52 +141,23 @@
 				</a>
 				<ul class="treeview-menu">
 					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
+						<a href="{{ route('admin.categories.index') }}">
+							<img src="{{asset('assets/backend/dist/img/icons/category.png')}}" class="icons">Danh mục
 						</a>
 					</li>
 					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
+						<a href="#">
+							<img src="{{asset('assets/backend/dist/img/icons/iconsblogging.png')}}" class="icons">
+							<span>Blog</span>
 						</a>
 					</li>
 				</ul>
 			</li>
-			<li class="treeview">
-				<a href="#">
-					<img src="{{asset('assets/backend/dist/img/icons/iconsblogging.png')}}" class="icons">
-					<span>Blog</span>
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
-						</a>
-					</li>
-					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
-						</a>
-					</li>
-				</ul>
-			</li>
-			<li class="treeview">
+			<li >
 				<a href="#">
 					<img src="{{asset('assets/backend/dist/img/icons/iconsresume.png')}}" class="icons">
 					<span>Trang cá nhân</span>
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
 				</a>
-				<ul class="treeview-menu">
-					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsbill.png')}}" class="icons">Đơn hàng
-						</a>
-					</li>
-					<li>
-						<a href="#"><img src="{{asset('assets/backend/dist/img/icons/iconsshipping.png')}}" class="icons">Đơn vị vận chuyển
-						</a>
-					</li>
-				</ul>
 			</li>
 		</ul>
 	</section>

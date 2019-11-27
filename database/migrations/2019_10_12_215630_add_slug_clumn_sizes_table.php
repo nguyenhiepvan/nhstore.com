@@ -16,7 +16,7 @@ class AddSlugClumnSizesTable extends Migration
         Schema::table('sizes', function (Blueprint $table) {
            $table->unsignedBigInteger('user_id');
            $table->foreign('user_id')->references('id')->on('users');
-           $table->string('acronym');
+           // $table->string('acronym');
            $table->string('slug');
        });
     }
@@ -30,7 +30,7 @@ class AddSlugClumnSizesTable extends Migration
     {
         Schema::table('sizes', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
-            $table->dropColumn(['user_id','acronym','slug']);
+            $table->dropColumn(['user_id','slug']);
         });
     }
 }

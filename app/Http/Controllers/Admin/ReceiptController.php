@@ -19,7 +19,7 @@ use nhstore\Models\Country;
 use nhstore\Models\Supplier;
 use nhstore\Models\Size;
 use nhstore\Models\Brand;
-use nhstore\Models\Price;
+use nhstore\Models\Warehouse;
 use nhstore\Models\Category;
 use nhstore\Models\Tag;
 use nhstore\Models\Image;
@@ -32,65 +32,38 @@ class ReceiptController extends Controller
      */
     public function index(Request $request)
     {
+        setlocale(LC_TIME, "vi_VN");
         if ($request->ajax()) {
             $receipts = Cache::remember('receipts', 3600, function() {
-                return Receipt::where('type',0)->orderBy('created_at','DESC')->get();
+                return Receipt::with('products')->where('type',0)->orderBy('created_at','DESC')->get();
             });
             return Datatables::of($receipts)
             ->addIndexColumn()
             ->editColumn('code',function ($receipt)
             {
-                return '<a class="detail-receipt" data-id="'.$receipt->id.'">'.$receipt->code.'</a>';
+                return '<a class="detail-receipt" href="javascript:;" data-id="'.$receipt->id.'">'.$receipt->code.'</a>';
             })
             ->editColumn('created_at',function ($receipt)
             {
-                return'<a title="'.date('g:i:s a, d-m-Y', strtotime($receipt->created_at)).'">'.date('F j, Y', strtotime($receipt->created_at)).'</a>';
+                return strftime("%H:%M:%S %A, %e %B, %Y",strtotime($receipt->created_at));
             })
             ->editColumn('user',function ($receipt)
             {
                 return $receipt->user->name;
             })
-            ->rawColumns(['code','created_at'])
+            ->editColumn('subtotal',function ($receipt)
+            { 
+                return number_format(\DB::table('receipt_products')->where('receipt_id',$receipt->id)->select(\DB::raw('Sum(quantities*price) AS "Amount"'))->first()->Amount);
+            })
+            ->editColumn('action',function ($receipt)
+            {
+                return '<center><a href="/admin/in-receipts/'.$receipt->id.'/edit " class="edit btn btn-warning btn-sm" title="Sửa hóa đơn"><i class="fa  fa-edit"></i></a>
+                <a href="javascript:;" data-id="'.$receipt->id.'" class="delete btn btn-danger btn-sm" title="Xóa hóa đơn"><i class="fa  fa-trash"></i></a></center>';
+            })
+            ->rawColumns(['code','created_at','action'])
             ->make(true);
         }
-        $products = Cache::remember('products', 3600, function() {
-            return Product::whereNull('deleted_at')->get();
-        });
-        $materials = Cache::remember('materials', 3600, function() {
-            return Material::whereNull('deleted_at')->get();
-        });
-        $brands = Cache::remember('brands', 3600, function() {
-         return Brand::whereNull('deleted_at')->get();
-     });
-        $colors = Cache::remember('suppliers', 3600, function() {
-         return Color::whereNull('deleted_at')->get();
-     });
-        $suppliers = Cache::remember('colors', 3600, function() {
-         return Supplier::whereNull('deleted_at')->where('status',true)->get();
-     });
-        $categories = Cache::remember('categories', 3600, function() {
-            return Category::whereNull('deleted_at')->where('status',true)->get();
-        });
-        $tags = Cache::remember('tags', 3600, function() {
-            return Tag::whereNull('deleted_at')->get();
-        });
-        $sizes = Cache::remember('sizes', 3600, function() {
-         return Size::whereNull('deleted_at')->get();
-     });
-        $countries = Cache::remember('countries', 3600, function() {
-         return Country::whereNull('deleted_at')->get();
-     });
-        return view('backend.admin.receipts.receipts')->with([
-            'products'=>$products,
-            'materials'=>$materials,
-            'brands'=>$brands,
-            'colors'=>$colors,
-            'suppliers'=>$suppliers,
-            'categories'=>$categories,
-            'tags'=>$tags,
-            'sizes'=>$sizes,
-            'countries'=>$countries
-        ]);
+        return view('backend.admin.receipts.receipts');
     }
 
     /**
@@ -100,15 +73,20 @@ class ReceiptController extends Controller
      */
     public function create(Request $request)
     {
+       $categories = Cache::remember('categories', 3600, function() {
+        return Category::whereNull('deleted_at')->where('status',true)->get();
+    });
+       if($request->ajax()){
+            //Hàm này dùng để thêm hàng vào hóa đơn
         $products = Cache::remember('products', 3600, function() {
             return Product::whereNull('deleted_at')->get();
         });
-        $colors = Cache::remember('suppliers', 3600, function() {
-            Color::whereNull('deleted_at')->get();
-        });
+        $colors = Cache::remember('colors', 3600, function() {
+         return Color::whereNull('deleted_at')->get();
+     });
         $sizes = Cache::remember('sizes', 3600, function() {
-            Size::whereNull('deleted_at')->get();
-        });
+         return Size::whereNull('deleted_at')->get();
+     });
         $options_product = '';
         foreach ($products as $product){
             $options_product .= '<option value="'.$product->id.'">'.$product->name.'</option>';
@@ -121,45 +99,52 @@ class ReceiptController extends Controller
         foreach ($sizes as $size){
             $options_size .= '<option value="'.$size->id.'">'.$size->name.'</option>';
         }
-        $row = '<tr>
-        <td >'.$request->index.'</td>
-        <td>
-        <select required class="form-control select2" name="product_id[]" data-placeholder="Chọn sản phẩm"
-        style="width: 100%;">
-        <option></option>
-        '.$options_product.'
-        </select>
-        <span class="error errors_product_id"></span>
-        </td>
-        <td>
-        <select required  name="color_id[]" class="form-control select2" style="width: 100%;" data-placeholder="Chọn màu sắc" >
-        <option></option>
-        '.$options_color.'
-        </select>
-        <span class="error errors_color_id"></span>
-        </td>
-        <td>
-        <select required name="size_id[]" class="form-control select2" style="width: 100%;" data-placeholder="Chọn kích thước">
-        <option></option>
-        '.$options_size.'
-        </select>
-        <span class="error errors_size_id"></span>
-        </td>
-        <td class="quantity">
-        <input class="form-control input-sm" type="number" value="0" min="0" name="quantity[]">
-        <span class="error errors_quantity"></span>
-        </td>
-        <td class="unit-price">
-        <input class="form-control input-sm" type="text" value="0" data-type="currency" placeholder="1,000,000" name="in_price[]">
-        <span class="error errors_in_price"></span>
-        </td>
-        <td class="sub-total"></td>
-        <td>
-        <a href="javascript:;" class="remove-row btn btn-danger btn-sm" title="Xóa dòng"k><i class="fa  fa-trash"></i></a>
-        </td>
-        </tr>';
-        return response()->json(['row'=>$row]);
+        $index = '<tr>
+        <td ><span class="demo">'.$request->index.'</span></td>';
+        $row =  Cache::remember('row', 3600, function() use ($index,$options_product,$options_color,$options_size) {
+            return '
+            <td>
+            <select required class="form-control productsSelect select2" name="product_id[]" data-placeholder="Chọn sản phẩm"
+            style="width: 100%;">
+            <option></option>
+            '.$options_product.'
+            </select>
+            <span class="error errors_product_id"></span>
+            </td>
+            <td>
+            <select required  name="color_id[]" class="form-control colorsSelect select2" style="width: 100%;" data-placeholder="Chọn màu sắc" >
+            <option></option>
+            '.$options_color.'
+            </select>
+            <span class="error errors_color_id"></span>
+            </td>
+            <td>
+            <select required name="size_id[]" class="form-control sizesSelect select2" style="width: 100%;" data-placeholder="Chọn kích thước">
+            <option></option>
+            '.$options_size.'
+            </select>
+            <span class="error errors_size_id"></span>
+            </td>
+            <td class="quantities">
+            <input class="form-control input-sm" type="number" value="0" min="0" name="quantities[]">
+            <span class="error errors_quantities"></span>
+            </td>
+            <td class="unit-price">
+            <input class="form-control input-sm" type="text" value="0" data-type="currency" placeholder="1,000,000" name="in_price[]">
+            <span class="error errors_in_price"></span>
+            </td>
+            <td class="sub-total"></td>
+            <td>
+            <a href="javascript:;" class="remove-row btn btn-danger btn-sm" title="Xóa dòng"k><i class="fa  fa-trash"></i></a>
+            </td>
+            </tr>';
+        });
+        return response()->json(['row'=>$index.$row]);
     }
+    return view('backend.admin.receipts.receipt_add')->with([
+        'categories'=>$categories,
+    ]);
+}
 
     /**
      * Store a newly created resource in storage.
@@ -170,27 +155,28 @@ class ReceiptController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            "code"    => "required|string|max:255|unique:receipts",
             "product_id"    => "required|array",
             "product_id.*"  => "required",
             "color_id"    => "required|array",
             "color_id.*"  => "required",
             "size_id"    => "required|array",
             "size_id.*"  => "required",
-            // "quantity"    => "required|array",
-            "quantity.*"  => "required|numeric|min:1",
+            // "quantities"    => "required|array",
+            "quantities.*"  => "required|numeric|min:1",
             // "in_price"    => "required|array",
             "in_price.*"  => "required|string",
         ]);
         $colors = $request->color_id;
         $sizes = $request->size_id;
-        $quantity = $request->quantity;
+        $quantities = $request->quantities;
         $in_price = $request->in_price;
         if ($request->type == 0) {
             //Tạo hóa đơn nhập
             $receipt = Receipt::create([
                 'type'=>0,
-                'code'=>now()->timestamp,
-                'user_id'=>Auth()->user()->id,
+                'code'=>$request->code,
+                'user_id'=>Auth::user()->id,
             ]);
             if (Cache::has('receipts')) {
                 $receipts = Cache::get('receipts');
@@ -206,7 +192,7 @@ class ReceiptController extends Controller
             $receipt = Receipt::create([
                 'type'=>1,
                 'code'=>now()->timestamp,
-                'user_id'=>Auth()->user()->id,
+                'user_id'=>Auth::user()->id,
             ]);
         }
         foreach ($request->product_id as $key => $product_id) {
@@ -217,30 +203,29 @@ class ReceiptController extends Controller
                 'color_id'=>$colors[$key],
                 'size_id'=>$sizes[$key],
                 'price'=>intval(str_replace(',', '', $in_price[$key])),
-                'quantitys'=>$quantity[$key],
+                'quantities'=>$quantities[$key],
             ]);
-            $temp = Price::where([
+            //Thêm sản phẩm vào kho hàng
+            $temp = Warehouse::where([
                 'product_id'=>$product_id,
                 'color_id'=>$colors[$key],
                 'size_id'=>$sizes[$key],
             ])->first();
             if(isset($temp)){
                 if($request->type == 0){
-                    $temp->in_price = intval(str_replace(',', '', $in_price[$key]));
-                    $temp->quantity += $quantity[$key];
+                    // $temp->in_price = intval(str_replace(',', '', $in_price[$key]));
+                    $temp->quantities += $quantities[$key];
                     $temp->save();
                 }else{
-                    $temp->quantity -= $quantity[$key];
+                    $temp->quantities -= $quantities[$key];
                     $temp->save();
                 }
             }else{
-                Price::create([
+                Warehouse::create([
                     'product_id'=>$product_id,
                     'color_id'=>$colors[$key],
                     'size_id'=>$sizes[$key],
-                    'in_price'=>intval(str_replace(',', '', $in_price[$key])),
-                    'out_price'=>0,
-                    'quantity'=>$quantity[$key],
+                    'quantities'=>$quantities[$key],
                 ]);
             }
         }
@@ -254,7 +239,34 @@ class ReceiptController extends Controller
      */
     public function show($id)
     {
-        //
+        $items = \DB::table('receipt_products')->where('receipt_id',$id)->get();
+        return Datatables::of($items)
+        ->addIndexColumn()
+        ->editColumn('name', function ($item)
+        {
+         return Product::find($item->product_id)->name;
+     })
+        ->editColumn('color', function ($item)
+        {
+         return Color::find($item->color_id)->name;
+     })
+        ->editColumn('size', function ($item)
+        {
+         return Size::find($item->size_id)->name;
+     })
+        ->editColumn('quantity', function ($item)
+        {
+         return $item->quantities;
+     })
+        ->editColumn('price', function ($item)
+        {
+         return number_format($item->price);
+     })
+        ->editColumn('subtotal', function ($item)
+        {
+         return number_format($item->quantities*$item->price);
+     })
+        ->make(true);
     }
 
     /**
@@ -263,10 +275,25 @@ class ReceiptController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request$request,$id)
     {
-        //
-    }
+        $categories = Cache::remember('categories', 3600, function() {
+            return Category::whereNull('deleted_at')->where('status',true)->get();
+        });
+        if(Cache::has('receipts')){
+            $receipt = Cache::get('receipts')->where('id',$id)->first();
+        }else{
+            $receipt = Receipt::find($id);
+        }
+        if($request->ajax()){
+           $items = \DB::table('receipt_products')->where('receipt_id',$id)->get();
+           return response()->json([ 'items'=>$items]);
+       }
+       return view('backend.admin.receipts.receipt_edit')->with([
+        'categories'=>$categories,
+        'code'=>$receipt->code,
+    ]);
+   }
 
     /**
      * Update the specified resource in storage.
@@ -277,7 +304,35 @@ class ReceiptController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request->all());
+        $request->validate([
+            "code"    => "required|string|max:255|unique:receipts,".$id,
+            "product_id"    => "required|array",
+            "product_id.*"  => "required",
+            "color_id"    => "required|array",
+            "color_id.*"  => "required",
+            "size_id"    => "required|array",
+            "size_id.*"  => "required",
+            "quantities.*"  => "required|numeric|min:1",
+            "in_price.*"  => "required|string",
+        ]);
+        if(Cache::has('receipts')){
+            $receipt = Cache::get('receipts')->where('id',$id)->first();
+        }else{
+            $receipt = Receipt::find($id);
+        }
+        $receipt->update(['code',$request->code]);
+        Cache::forget('receipts')->where('id',$id)->first();
+        $receipts = Cache::get('receipts');
+        $receipts->prepend($receipt);
+        Cache::put('receipts', $receipts, 3600);
+        $items = \DB::table('receipt_products')->where('receipt_id',$id);
+        $items_removed = $items->whereNotIn('product_id',$request->product_id)->whereNotIn('color_id',$request->color_id)->whereNotIn('size_id',$request->size_id)->get();
+        if(!empty($items_removed)){
+            foreach ($items_removed as $item) {
+                $item->delete();
+            }
+        }
     }
 
     /**

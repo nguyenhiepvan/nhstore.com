@@ -17,7 +17,7 @@ class AddUserIdTagsTable extends Migration
          $table->unsignedBigInteger('user_id');
          $table->foreign('user_id')->references('id')->on('users');
          $table->timestamp('deleted_at')->nullable();
-         $table->string('acronym');
+         // $table->string('acronym');
          $table->string('slug');
      });
     }
@@ -31,7 +31,7 @@ class AddUserIdTagsTable extends Migration
     {
         Schema::table('tags', function (Blueprint $table) {
           $table->dropForeign(['user_id']);
-          $table->dropColumn(['user_id','deleted_at','acronym','slug']);
+          $table->dropColumn(['user_id','deleted_at','slug']);
       });
     }
 }

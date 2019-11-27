@@ -15,7 +15,7 @@ class TagsTableSeeder extends Seeder
     	for ($i=0; $i < 20; $i++) {
     		Tag::create([
     			'name'=>$fake->unique()->country,
-    			'acronym'=>$fake->unique()->sentence(1),
+    			// 'acronym'=>$fake->unique()->sentence(1),
     			'slug'=>$fake->unique()->slug,
     			'user_id'=>$fake->numberBetween($min = 1, $max = 20),
     		]);

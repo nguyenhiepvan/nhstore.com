@@ -14,25 +14,25 @@ class ColorsTableSeeder extends Seeder
     	$fake = \Faker\Factory::create();
     	Color::create([
     		'name'=>'Xanh dương',
-    		'acronym'=>'xd',
+    		// 'acronym'=>'xd',
     		'slug'=>'xanh-duong',
     		'user_id'=>$fake->numberBetween($min = 1, $max = 20),
     	]);
     	Color::create([
     		'name'=>'Trắng tinh',
-    		'acronym'=>'tt',
+    		// 'acronym'=>'tt',
     		'slug'=>'trang-tinh',
     		'user_id'=>$fake->numberBetween($min = 1, $max = 20),
     	]);
     	Color::create([
     		'name'=>'Đỏ',
-    		'acronym'=>'do',
+    		// 'acronym'=>'do',
     		'slug'=>'do',
     		'user_id'=>$fake->numberBetween($min = 1, $max = 20),
     	]);
     	Color::create([
     		'name'=>'Tím',
-    		'acronym'=>'Tim',
+    		// 'acronym'=>'Tim',
     		'slug'=>'tim',
     		'user_id'=>$fake->numberBetween($min = 1, $max = 20),
     	]);

@@ -16,7 +16,7 @@ class AddUserIdColumnProductsTable extends Migration
         Schema::table('products', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('acronym');
+            // $table->string('acronym');
         });
     }
 
@@ -29,7 +29,7 @@ class AddUserIdColumnProductsTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
-            $table->dropColumn(['user_id','acronym']);
+            $table->dropColumn(['user_id']);
         });
     }
 }

@@ -15,7 +15,7 @@ class SuppliersTableSeeder extends Seeder
     	for ($i=0; $i < 20; $i++) {
     		Supplier::create([
     			'name'=>$fake->unique()->sentence(2),
-    			'acronym'=>$fake->unique()->sentence(1),
+    			// 'acronym'=>$fake->unique()->sentence(1),
     			'slug'=>$fake->unique()->slug,
     			'user_id'=>$fake->numberBetween($min = 1, $max = 20),
     			'phone'=>$fake->phoneNumber,

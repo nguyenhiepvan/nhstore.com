@@ -38,10 +38,9 @@ class BrandController extends Controller
         $request->validate([
             'name'=>['required','max:255','unique:brands'],
             'slug'=>['required','max:255','unique:brands'],
-            'acronym'=>['required','max:255','unique:brands'],
         ]);
         $brand = Brand::create($request->all());
-        return response()->json(['id'=>$brand->id,'name'=>$brand->name,'acronym'=>$brand->acronym]);
+        return response()->json(['id'=>$brand->id,'name'=>$brand->name]);
     }
 
     /**

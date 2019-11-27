@@ -38,10 +38,9 @@ class TagController extends Controller
       $request->validate([
         'name'=>['required','max:255','unique:tags'],
         'slug'=>['required','max:255','unique:tags'],
-        'acronym'=>['required','max:255','unique:tags'],
     ]);
       $tag = Tag::create($request->all());
-      return response()->json(['id'=>$tag->id,'name'=>$tag->name,'acronym'=>$tag->acronym]);
+      return response()->json(['id'=>$tag->id,'name'=>$tag->name]);
   }
 
     /**

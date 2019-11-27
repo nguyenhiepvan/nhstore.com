@@ -16,7 +16,7 @@ class CreateMaterialsTable extends Migration
         Schema::create('materials', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('acronym')->comment('viết tắt');
+            // $table->string('acronym')->comment('viết tắt');
             $table->string('slug')->comment('đường dẫn');
             $table->timestamps();
             $table->softDeletes();

@@ -16,7 +16,7 @@ class CreateBrandsTable extends Migration
         Schema::create('brands', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->comment('tên thương hiệu');
-            $table->string('acronym')->comment('viết tắt');
+            // $table->string('acronym')->comment('viết tắt');
             $table->string('slug')->comment('đường dẫn');
             $table->timestamps();
              $table->softDeletes();

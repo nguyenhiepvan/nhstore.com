@@ -7,21 +7,18 @@
 <link href="{{ asset('assets/backend/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 <link rel="stylesheet" href="{{mix('/css/card.css')}}">
-<link rel="stylesheet" href="{{asset('assets/backend/bower_components/select2/dist/css/select2.min.css')}}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.css">
 <link rel="stylesheet" href="{{mix('css/productList.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.css">
 @endsection
 @section('script')
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
 <script src="{{asset('assets/backend/dist/js/adminlte_.min.js')}}"></script>
 <script src="{{asset('assets/backend/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
-<script src="{{asset('assets/backend/dist/js/simple.money.format.js')}}"></script>
-<script type="text/javascript" src="{{mix('js/productsList.js')}}"></script>
-<script type="text/javascript" src="{{mix('js/common.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.js"></script>
+<script type="text/javascript" src="{{mix('js/productsList.js')}}"></script>
 @endsection
+@include('backend.admin.products.product_detail')
 @section('content')
 {{-- {{dd(url()->current())}} --}}
 {{-- Content Wrapper. Contains page content --}}
@@ -56,6 +53,9 @@
             {{-- /.card-header --}}
             {{-- card-body --}}
             <div class="card-body">
+              <a href="{{route('admin.products.create')}}" title="Thêm mới sản phẩm" class="btn btn-primary">
+                <i class="fa fa-plus"></i>
+              </a>
               <table id="product-table" class="table  table-striped table-bordered table-hover table-responsive ">
                 <thead>
                   <tr>
@@ -192,5 +192,4 @@
 {{-- /.content --}}
 </div>
 {{-- /.content-wrapper --}}
-@include('backend.admin.product_modal')
 @endsection

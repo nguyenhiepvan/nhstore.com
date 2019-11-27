@@ -22,6 +22,8 @@ class CreatePricesTable extends Migration
             $table->bigInteger('general_price')->nullable()->comment('giá thị trường');
             $table->bigInteger('sale_price')->comment('giá khuyến mãi')->nullable();
             $table->timestamps();
+            $table->timestamp('start_sale')->nullable();
+            $table->timestamp('end_sale')->nullable();
         });
     }
 

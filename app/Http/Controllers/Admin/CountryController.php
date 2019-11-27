@@ -38,10 +38,9 @@ class CountryController extends Controller
         $request->validate([
             'name'=>['required','max:255','unique:countries'],
             'slug'=>['required','max:255','unique:countries'],
-            'acronym'=>['required','max:255','unique:countries'],
         ]);
         $country = Country::create($request->all());
-        return response()->json(['id'=>$country->id,'name'=>$country->name,'acronym'=>$country->acronym]);
+        return response()->json(['id'=>$country->id,'name'=>$country->name]);
     }
 
     /**

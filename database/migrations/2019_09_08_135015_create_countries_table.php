@@ -16,7 +16,7 @@ class CreateCountriesTable extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('acronym')->comment('viết tắt');
+            // $table->string('acronym')->comment('viết tắt');
             $table->string('slug')->comment('đường dẫn');
              $table->softDeletes();
             $table->timestamps();

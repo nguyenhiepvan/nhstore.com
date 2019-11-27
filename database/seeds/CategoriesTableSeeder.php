@@ -15,7 +15,7 @@ class CategoriesTableSeeder extends Seeder
     	for ($i=0; $i < 20; $i++) {
     		Category::create([
     			'name'=>$fake->unique()->sentence(3),
-    			'acronym'=>$fake->unique()->sentence(3),
+    			// 'acronym'=>$fake->unique()->sentence(3),
     			'slug'=>$fake->unique()->slug,
     			'user_id'=>1,
     			'cover'=>$fake->imageUrl($width = 1864, $height = 1024),

@@ -17,8 +17,11 @@ class CreateWarehousesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('product_id')->unsigned()->comment('sản phẩm');
             $table->foreign('product_id')->references('id')->on('products');
-            $table->integer('quantitys')->comment('số lượng');
-            $table->timestamp('date_in')->comment('ngày nhập');
+            $table->integer('quantities')->comment('số lượng');
+            $table->unsignedBigInteger('color_id')->nullable();
+            $table->foreign('color_id')->references('id')->on('colors');
+            $table->unsignedBigInteger('size_id')->nullable();
+            $table->foreign('size_id')->references('id')->on('sizes');
             $table->timestamps();
         });
     }

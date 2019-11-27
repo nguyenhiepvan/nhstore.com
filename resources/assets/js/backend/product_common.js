@@ -11,22 +11,13 @@ $(document).ready(function () {
   });
 	// Dựng search select
 	$('.select2').select2();
-  // $('.productsSelect').select2();
-  // $('#sizesSelect').select2();
-  // $('#colorsSelect').select2();
-	// Hàm này dùng để tạo ký tự viết tắt
-	function acr(s){
-		let words, acronym, nextWord;
-		words = s.split(' ');
-		acronym= "";
-		index = 0
-		while (index<words.length) {
-			nextWord = words[index];
-			acronym = acronym + nextWord.charAt(0);
-			index = index + 1 ;
-		}
-		return acronym;
-	}
+  // Tạo ra slug khi nhập:
+  $(document).on('input','#name',function () {
+    $('#slug').val(ChangeToSlug($(this).val()));
+  });
+  $(document).on('input','.more-name',function () {
+    $('.more-slug').val(ChangeToSlug($(this).val()));
+  })
  	// Hàm này dùng đđể tạo ra slug
  	function ChangeToSlug(title)
  	{
@@ -56,29 +47,13 @@ $(document).ready(function () {
       		slug = slug.replace(/\@\-|\-\@|\@/gi, '');
           slug = slug.replace(/\s/g,'');
       		//In slug ra textbox có id “slug”
-      		return slug;
+         	return slug +'-'+ Date.now();
       	}
- 	// Hàm này tạo ra ký tự viết tắt và đường dẫn khi nhập tên
- 	$(document).on('input','.name',function () {
- 		let name = $(this).val();
- 		let slug = ChangeToSlug(name);
- 		let acronym = acr(name);
- 		$('.slug').val(slug);
- 		$('.acronym').val(acronym);
- 	});
-   $(document).on('input','.more-name',function () {
-    let name = $(this).val();
-    let slug = ChangeToSlug(name);
-    let acronym = acr(name);
-    $('.more-slug').val(slug);
-    $('.more-acronym').val(acronym);
-  });
  	// Hàm này dùng để reset form khi đóng modal
    $(document).on('hidden.bs.modal','.more-item',function () {
     $('.more-form').trigger("reset");
     $('.error').empty();
     $('.more-slug').val('');
-    $('.more-acronym').val('');
     $('.more-select').val(null).trigger('change');
   });
  	// hàm này dùng để reset error khi bấm submit mới
@@ -91,4 +66,19 @@ $(document).ready(function () {
      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
    }
  });
- })
+// Loại bỏ ảnh sản phẩm
+$(document).on('click','.remove-img',function () {
+  let value = $('#images').val();
+  let src = $(this).parent().find('img').attr('src');
+  value = value.replace(src +';', "");
+  $('#images').val(value);
+//Dùng khi sửa thông tin sản phẩm
+value = $('#images').val();
+value = value.replace(src +';', "");
+$('#images').val(value);
+images_changed = true;
+$('#btn').prop('disabled', false);
+$(this).parent().find('img').remove();
+$(this).remove();
+});
+})

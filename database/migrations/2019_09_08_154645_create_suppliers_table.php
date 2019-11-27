@@ -16,7 +16,7 @@ class CreateSuppliersTable extends Migration
         Schema::create('suppliers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->comment('tên nhà cung cấp');
-            $table->string('acronym')->comment('viết tắt');
+            // $table->string('acronym')->comment('viết tắt');
             $table->string('slug')->comment('đường dẫn');
             $table->string('phone')->comment('số điện thoại');
             $table->string('address')->comment('địa chỉ');

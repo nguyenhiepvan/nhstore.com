@@ -38,10 +38,9 @@ class SizeController extends Controller
       $request->validate([
         'name'=>['required','max:255','unique:colors'],
         'slug'=>['required','max:255','unique:colors'],
-        'acronym'=>['required','max:255','unique:colors'],
     ]);
       $size = Size::create($request->all());
-      return response()->json(['id'=>$size->id,'name'=>$size->name,'acronym'=>$size->acronym]);
+      return response()->json(['id'=>$size->id,'name'=>$size->name]);
   }
 
     /**

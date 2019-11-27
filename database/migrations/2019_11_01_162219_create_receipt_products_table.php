@@ -18,7 +18,7 @@ class CreateReceiptProductsTable extends Migration
        $table->bigInteger('product_id')->unsigned()->comment('sản phẩm');
        $table->bigInteger('color_id')->unsigned()->comment('Màu sắc');
        $table->bigInteger('size_id')->unsigned()->comment('kích thước');
-       $table->bigInteger('quantitys')->comment('số lượng');
+       $table->bigInteger('quantities')->comment('số lượng');
        $table->bigInteger('price')->comment('đơn giá');
        $table->foreign('product_id')->references('id')->on('products');
        $table->foreign('color_id')->references('id')->on('colors');

@@ -17,7 +17,7 @@ class AddUserIdCategoriesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamp('deleted_at')->nullable();
-            $table->string('acronym');
+            // $table->string('acronym');
         });
     }
 
@@ -30,7 +30,7 @@ class AddUserIdCategoriesTable extends Migration
     {
         Schema::table('categories', function (Blueprint $table) {
           $table->dropForeign(['user_id']);
-          $table->dropColumn(['user_id','deleted_at','acronym']);
+          $table->dropColumn(['user_id','deleted_at']);
       });
     }
 }

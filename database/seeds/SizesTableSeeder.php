@@ -14,25 +14,25 @@ class SizesTableSeeder extends Seeder
     	$fake = \Faker\Factory::create();
     	Size::create([
     		'name'=>'S',
-    		'acronym'=>'s',
+    		// 'acronym'=>'s',
     		'slug'=>'s',
     		'user_id'=>$fake->numberBetween($min = 1, $max = 20),
     	]);
     	Size::create([
     		'name'=>'M',
-    		'acronym'=>'m',
+    		// 'acronym'=>'m',
     		'slug'=>'m',
     		'user_id'=>$fake->numberBetween($min = 1, $max = 20),
     	]);
     	Size::create([
     		'name'=>'L',
-    		'acronym'=>'l',
+    		// 'acronym'=>'l',
     		'slug'=>'l',
     		'user_id'=>$fake->numberBetween($min = 1, $max = 20),
     	]);
     	Size::create([
     		'name'=>'XL',
-    		'acronym'=>'xl',
+    		// 'acronym'=>'xl',
     		'slug'=>'xl',
     		'user_id'=>$fake->numberBetween($min = 1, $max = 20),
     	]);

@@ -38,10 +38,9 @@ class MaterialController extends Controller
         $request->validate([
             'name'=>['required','max:255','unique:materials'],
             'slug'=>['required','max:255','unique:materials'],
-            'acronym'=>['required','max:255','unique:materials'],
         ]);
         $material = Material::create($request->all());
-        return response()->json(['id'=>$material->id,'name'=>$material->name,'acronym'=>$material->acronym]);
+        return response()->json(['id'=>$material->id,'name'=>$material->name]);
     }
 
     /**

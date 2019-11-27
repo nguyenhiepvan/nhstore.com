@@ -41,10 +41,9 @@ class SupplierController extends Controller
         'email'=>['required','max:255','unique:suppliers'],
         'phone'=>['required','unique:suppliers'],
         'slug'=>['required','max:255','unique:suppliers'],
-        'acronym'=>['required','max:255','unique:suppliers'],
     ]);
      $supplier = Supplier::create($request->all());
-     return response()->json(['id'=>$supplier->id,'name'=>$supplier->name,'acronym'=>$supplier->acronym]);
+     return response()->json(['id'=>$supplier->id,'name'=>$supplier->name]);
  }
 
     /**

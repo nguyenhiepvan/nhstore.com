@@ -14,7 +14,7 @@ class Product extends Model
 	*/
 	public function tags()
 	{
-		return $this->belongsToMany('nhstore\Models\Tag', 'product_tags', 'tag_id', 'product_id');
+		return $this->belongsToMany('nhstore\Models\Tag', 'product_tags', 'product_id','tag_id');
 	}
 	/**
 	* Hàm này dùng để kích cỡ sản phẩm
