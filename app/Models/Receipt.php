@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Receipt extends Model
 {
-	protected $fillable = ['type','code','product_id','color_id','size_id','quantitys','in_price','user_id'];
+	protected $fillable = ['type','code','user_id','deleted_at'];
 	public function user()
 	{
 		return $this->belongsTo('nhstore\Models\User');

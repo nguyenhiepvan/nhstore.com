@@ -40,6 +40,12 @@
     .loader{
       text-align: center;
     }
+    .popup-newsletter {
+      margin: 10% auto;
+      width: 896px;
+      height: 397px;
+      background-image: url('{{asset('/assets/fontend/images/stylish-men-s-images-2019-street-men-fashion.jpg')}}');
+    }
   </style>
   @yield('css')
 </head>

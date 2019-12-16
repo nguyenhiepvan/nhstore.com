@@ -5125,12 +5125,12 @@ blockquote p:before {
   ========================================
 */
 
-.popup-newsletter {
+/*.popup-newsletter {
     margin: 10% auto;
     width: 896px;
     height: 397px;
     background-image: url(http://placehold.it/896x397);
-}
+}*/
 #newsletter-popup {
     bottom: 50px;
     left: 45%;

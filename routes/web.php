@@ -14,9 +14,7 @@ Route::group([
 	'namespace'=>'Fontend',
 ],function ()
 {
-	Route::get('/', function() {
-		return view('fontend.homepage');
-	})->name('homepage');
+	Route::get('/', 'HomeController@index')->name('homepage');
 	Route::group(['middleware'=>'categories'],function ()
 	{
 		Route::get('/products','ProductController@index')->name('products');
@@ -79,6 +77,8 @@ Route::group([
 	Route::resource('tags','TagController');
 	// Quản lý hóa đơn nhập
 	Route::resource('in-receipts','ReceiptController');
+	// Quản lý hóa bộ sưu tập
+	Route::resource('collections','CollectionController');
 	// Route::get('out-receipts','ReceiptController')->name('out-receipts.index');
 });
 //end admin

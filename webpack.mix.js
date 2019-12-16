@@ -33,4 +33,7 @@ const mix = require('laravel-mix');
  .js('resources/assets/js/backend/receiptAdd.js','public/js')
  .js('resources/assets/js/backend/receiptEdit.js','public/js')
  .js('resources/assets/js/backend/categoriesList.js','public/js')
+ .js('resources/assets/js/backend/collections.js','public/js')
+ .js('resources/assets/js/backend/collectionAdd.js','public/js')
+ .js('resources/assets/js/backend/collection_common.js','public/js')
  .js('resources/assets/js/backend/particle.js','public/js');

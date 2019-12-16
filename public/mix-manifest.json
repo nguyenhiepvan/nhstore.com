@@ -1,6 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/categoriesList.js": "/js/categoriesList.js",
+    "/js/collectionAdd.js": "/js/collectionAdd.js",
+    "/js/collection_common.js": "/js/collection_common.js",
+    "/js/collections.js": "/js/collections.js",
     "/js/formatCurrency.js": "/js/formatCurrency.js",
     "/js/particle.js": "/js/particle.js",
     "/js/productAdd.js": "/js/productAdd.js",

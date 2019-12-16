@@ -20,6 +20,7 @@ class CreateReceiptsTable extends Migration
             $table->bigInteger('user_id')->unsigned()->comment('Người nhập');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

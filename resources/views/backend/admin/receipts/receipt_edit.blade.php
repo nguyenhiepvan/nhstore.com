@@ -23,13 +23,12 @@
  	<!-- Content Header (Page header) -->
  	<section class="content-header">
  		<h1>
- 			Thêm mới hóa đơn nhập
- 			<small>Thêm sản phẩm vào kho hàng</small>
+ 			Chỉnh sửa hóa đơn nhập
  		</h1>
  		<ol class="breadcrumb">
  			<li><a href="{{route('admin.')}}"><i class="fa fa-dashboard"></i>Trang chủ</a></li>
  			<li><a href="{{route('admin.in-receipts.index')}}">hóa đơn</a></li>
- 			<li class="active">Thêm mới</li>
+ 			<li class="active">Chỉnh sửa</li>
  		</ol>
  	</section>
  	<!-- Main content -->
@@ -37,7 +36,7 @@
  		<!-- Default box -->
  		<div class="box">
  			<div class="box-header with-border">
- 				<h3 class="box-title">Thêm mới hóa đơn nhập</h3>
+ 				<h3 class="box-title">Chỉnh sửa hóa đơn nhập</h3>
  				<div class="box-body">
  					<form id="warehouseForm" action="javascript:;">
  						<div class="modal-body">
@@ -82,7 +81,7 @@
  				</div>
  				<!-- /.box-body -->
  				<div class="box-footer">
- 					Thêm mới hòa đơn nhập
+ 					Chỉnh sửa hóa đơn nhập
  				</div>
  				<!-- /.box-footer-->
  			</div>

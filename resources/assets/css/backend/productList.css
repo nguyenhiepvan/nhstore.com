@@ -117,3 +117,7 @@ em{
 		background: #189eff;
 		border: 1px solid #189eff;
 	}
+	/*Ẩn ảnh khi slect lúc tạo phiếu nhập*/
+	.select2-selection__rendered img{
+		display:none;
+	}

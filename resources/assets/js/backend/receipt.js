@@ -79,4 +79,33 @@ $(document).on('click','.detail-receipt',function () {
 	$('#warehouseDetailModal #ModalTitle').html('<strong>Thông tin hóa đơn nhập '+code+'</strong>');
 	$('#warehouseDetailModal').modal('show');
 });
+//Hàm này để xóa hóa đơn:
+$(document).on('click','.delete',function () {
+	let id = $(this).data('id');
+	Swal.fire({
+		title: 'Xác nhận cập nhật hóa đơn?',
+		text: "Bạn sẽ cập nhật lại số lượng sản phẩm trong kho!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Xác nhận',
+		cancelButtonText: 'Hủy bỏ',
+	}).then((result) => {
+		$.ajax({
+			url:'/admin/in-receipts/'+id,
+			type:"DELETE",
+			success:function () {
+				Swal.fire({
+					position: 'center',
+					type: 'success',
+					title: 'Đã xóa hóa đơn',
+					showConfirmButton: false,
+					timer: 1000
+				});
+				in_receiptsTable.ajax.reload(null, false );
+			}
+		})
+	})
+})
 });

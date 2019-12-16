@@ -382,22 +382,10 @@ public function update(Request $request, $id)
         if (isset($request->status)) {
 // dd(($request->status == '0')?0:1);
             $product->update(['status'=>($request->status == '0')?0:1]);
-            if (Cache::has('products')) {
-                Cache::forget('products')->where('id',$id)->first();
-                $products = Cache::get('products');
-                $products->prepend($product);
-                Cache::put('products', $products, 3600);
-            }
         }
 //Nếu thay đổi thông tin sản phẩm
         if(isset($request->name)||isset($request->slug)||isset($request->name)||isset($request->material_id)||isset($request->country_id)||isset($request->supplier_id)||isset($request->category_id)||isset($request->overview)||isset($request->description)){
             $product->update($request->except(['_token','_method','images','tag_id','color_id','size_id','thumbnail']));
-            if (Cache::has('products')) {
-                Cache::forget('products')->where('id',$id)->first();
-                $products = Cache::get('products');
-                $products->prepend($product);
-                Cache::put('products', $products, 3600);
-            }
         }
 //Nếu thay đổi thumbnail
         if(isset($request->thumbnail)){
@@ -455,6 +443,7 @@ public function update(Request $request, $id)
         \DB::table('product_tags')->where('product_id',$id)->delete();
     }
     $this->addAttribute($request,$product->id);
+    Cache::forget('products');
 }
 }
 /******************************************************************************/
@@ -466,22 +455,22 @@ public function addAttribute(Request $request,$product_id)
     if (isset($request->thumbnail)) {
         Photo::configure(array('driver' => 'imagick'));
         $time = now()->timestamp;
-        $img = Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
+        Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
         ->resize(242, 314)
         ->save('photos/product/'.$time.'_242X314.jpg');
-        $img = Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
+        Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
         ->resize(255, 311)
         ->save('photos/product/'.$time.'_255X311.jpg');
-        $img = Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
+        Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
         ->resize(263, 341)
         ->save('photos/product/'.$time.'_263X341.jpg');
-        $img = Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
+        Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
         ->resize(75, 75)
         ->save('photos/product/'.$time.'_75X75.jpg');
-        $img = Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
+        Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
         ->resize(394, 511)
         ->save('photos/product/'.$time.'_394X511.jpg');
-        $img = Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
+        Photo::make(public_path(parse_url($request->thumbnail, PHP_URL_PATH)))
         ->resize(470, 610)
         ->save('photos/product/'.$time.'_470X610.jpg');
         $image = Image::create([

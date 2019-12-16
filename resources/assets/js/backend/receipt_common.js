@@ -1,4 +1,21 @@
 $(document).ready(function () {
+	//Hiển thị thumbnail sản phẩm trong selection
+	function formatState (opt) {
+		if (!opt.id) {
+			return opt.text.toUpperCase();
+		} 
+
+		var optimage = $(opt.element).attr('data-image'); 
+		console.log(optimage)
+		if(!optimage){
+			return opt.text.toUpperCase();
+		} else {                    
+			var $opt = $(
+				'<span><img src="' + optimage + '" /> ' + opt.text.toUpperCase() + '</span>'
+				);
+			return $opt;
+		}
+	};
 	// Thêm dòng:
 	window.globalCounter = 1;
 	$(document).on('click',' .add-row',function () {
@@ -7,7 +24,10 @@ $(document).ready(function () {
 			type:'GET',
 			success:function (res) {
 				$('#in-receipts-form-table tbody').append(res.row);
-				$('.select2').select2();
+				$('.select2').select2({
+					templateResult: formatState,
+					templateSelection: formatState
+				});
 			// Hàm này dùng để format giá tiền nhập vào:
 			$("input[data-type='currency']").on({
 				keyup: function() {
@@ -34,11 +54,9 @@ $(document).ready(function () {
 	// Hàm này dùng để format giá tiền nhập vào:
 	$("input[data-type='currency']").on({
 		keyup: function() {
-			alert('aaa');
 			formatCurrency($(this));
 		},
 		blur: function() {
-			alert('aaa');
 			formatCurrency($(this), "blur");
 		}
 	});
@@ -89,7 +107,10 @@ caret_pos = updated_len - original_len + caret_pos;
 input[0].setSelectionRange(caret_pos, caret_pos);
 }
 //dựng select 2
-$('.select2').select2();
+$('.select2').select2({
+	templateResult: formatState,
+	templateSelection: formatState
+});
 //Tính thành tiền:
 $(document).on('input','.unit-price',function () {
 	// alert('aaaaa');
@@ -130,7 +151,10 @@ $(document).on('submit','#colorAddForm',function () {
 				timer: 1000
 			});
 			$('.colorsSelect').append('<option  value="'+res.id+'">'+res.name+'</option>');
-			$('.colorsSelect').select2();
+			$('.colorsSelect').select2({
+				templateResult: formatState,
+				templateSelection: formatState
+			});
 		},
 		error: function(xhr, status, errors)
 		{
@@ -162,7 +186,10 @@ $(document).on('submit','#sizeAddForm',function () {
 				timer: 1000
 			});
 			$('.sizesSelect').append('<option value="'+res.id+'">'+res.name+'</option>');
-			$('.sizesSelect').select2();
+			$('.sizesSelect').select2({
+				templateResult: formatState,
+				templateSelection: formatState
+			});
 		},
 		error: function(xhr, status, errors)
 		{
